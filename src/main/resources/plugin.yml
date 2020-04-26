@@ -1,0 +1,9 @@
+name: UlityCore_v2
+version: ${project.version}
+main: fr.ulity.core.bukkit.MainBukkit
+api-version: "1.15"
+prefix: "UlityCore v2"
+softdepend: [Vault]
+authors: [360matt, Ulity, for_WixMC_server]
+description: "De grande utilité. Servant d'API et de librairies. Extensible pour ajouter de multitudes de commandes selon les besoins sur les serveurs"
+website: "https://discord.gg/jBFE4Bu"

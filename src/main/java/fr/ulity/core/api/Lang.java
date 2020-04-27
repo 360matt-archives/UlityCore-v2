@@ -53,9 +53,7 @@ public class Lang {
     }
 
     public static void reloadAddons () {
-
-        for (Class c : Initializer.getAllClass()) {
-
+        for (Class c : Initializer.lesClasses) {
             try {
                 Class.forName(c.getPackage() + ".languages." + Api.type);
 

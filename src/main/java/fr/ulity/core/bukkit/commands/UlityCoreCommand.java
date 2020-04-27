@@ -28,13 +28,12 @@ public class UlityCoreCommand extends CommandManager {
         addUsage("/ulitycore");
         addPermission(null);
         // addPermissionMessage(null);
-        addOneTabbComplete(1, "ulitycore");// /commande test
+        addOneTabbComplete(-1, "ulitycore");// /commande test
 
-        addOneTabbComplete(2, "lang");
-        addOneTabbComplete(3, null, "fr", "lang");
-        addOneTabbComplete(3, null, "en", "lang");
-
-        addOneTabbComplete(2, "ulitycore.admin", "reload");
+        addOneTabbComplete(0, "ulitycore.admin", "reload");
+        addOneTabbComplete(0, "lang");
+        addOneTabbComplete(1, "ulitycore.admin", "fr", "lang");
+        addOneTabbComplete(1, "ulitycore.admin", "en", "lang");
 
         registerCommand(commandMap);
     }

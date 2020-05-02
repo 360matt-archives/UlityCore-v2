@@ -9,6 +9,7 @@ public final class Initializer {
 
     public static void addClass (@NotNull Class uneClass) {
         lesClasses.add(uneClass);
+        Lang.reloadOneAddon(uneClass);
     }
 
     public static void removeClass ( Class uneClass) {

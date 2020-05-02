@@ -27,6 +27,7 @@ public class Lang {
         defaultLang = Api.config.getString("global.lang");
 
         reloadCore();
+        reloadAddons();
 
         MainBukkit.plugin.getLogger().info(Objects.equals(defaultLang, "fr")
         ? "§aLes fichiers de langue ont été rechargés"
@@ -115,7 +116,7 @@ public class Lang {
     public static String get (org.bukkit.command.CommandSender sender, String exp){
         // bukkit
         if (sender instanceof org.bukkit.entity.Player)
-            return withColours(getLangConf(((org.bukkit.entity.Player) sender).getLocale().toLowerCase()).getString(exp));
+            return withColours(getLangConf(((org.bukkit.entity.Player) sender).getLocale().toLowerCase().split("_")[0]).getString(exp));
         else
             return withColours(getLangConf(defaultLang).getString(exp));
     }

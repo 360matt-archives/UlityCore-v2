@@ -1,6 +1,6 @@
-plugin:
-  reloaded: "&7Le plugin a été rechargé"
-  no_perm: "&cVous n'avez pas les privilèges nécessaires"
-  lang:
-    actual: "&7La langue par défaut est le &bFrançais&7."
-    reloaded: "&7Les fichiers de langue ont été rechargés avec succès."
+plugin: 
+   reloaded: "&7Le plugin a Ã©tÃ© rechargÃ©"
+   no_perm: "&cVous n'avez pas les privilÃ¨ges nÃ©cessaires"
+   lang: 
+      reloaded: "&7Les fichiers de langue ont Ã©tÃ© rechargÃ©s avec succÃ¨s."
+      actual: "&7La langue par dÃ©faut est le &bFranÃ§ais&7."

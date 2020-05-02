@@ -22,8 +22,9 @@ public class Config extends Yaml {
 
         if (name.equals("config") && path.equals(""))
             new DefaultConfig();
-
     }
+
+
 
     public boolean isSet(String key) {
         return get(key) != null;

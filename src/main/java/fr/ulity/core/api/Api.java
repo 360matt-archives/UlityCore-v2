@@ -36,7 +36,7 @@ public class Api {
 
         type = "bukkit";
         name = ((org.bukkit.plugin.Plugin) pluginObj).getName();
-        prefix = folder.toString().replaceAll("\\\\", "/");
+        prefix = folder.getPath().replaceAll("\\\\", "/");
 
         runny();
     }

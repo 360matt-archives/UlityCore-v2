@@ -35,8 +35,8 @@ public class IsUpToDate {
         getVersion(latest -> {
             String present = plugin.getDescription().getVersion();
             if (!present.equalsIgnoreCase(latest)) {
-                this.plugin.getLogger().info("     §6Update available §c" + present + " (old version) §6--> §a" + latest + " (latest version) :)");
-                this.plugin.getLogger().info("§9█§f█§c█  §6Une mise à jour est disponible §c" + present + " (ancienne version) §6--> §a" + latest + " (dernière version) :)");
+                this.plugin.getLogger().info("     §eUpdate available §c" + present + " (old version) §6--> §a" + latest + " (latest) §e:)");
+                this.plugin.getLogger().info("§9█§f█§c█  §eMise à jour est disponible §c" + present + " (ancienne version) §6--> §a" + latest + " (récente) §e:)");
             }
         });
     }

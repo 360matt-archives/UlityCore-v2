@@ -23,17 +23,18 @@ public class UlityCoreCommand extends CommandManager {
 
     public UlityCoreCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "ulitycore");
-        addDescription((Lang.defaultLang) == "fr" ? "Affiche les informations du plugin" : "Show the plugin's informations");
+        addDescription(Lang.defaultLang.equals("fr") ? "Affiche les informations du plugin" : "Show the plugin's informations");
         addAliases("uc");
         addUsage("/ulitycore");
         addPermission(null);
-        // addPermissionMessage(null);
-        addOneTabbComplete(-1, "ulitycore");// /commande test
 
+        addOneTabbComplete(-1, "ulitycore");
+        addOneTabbComplete(0, null, "lang");
         addOneTabbComplete(0, "ulitycore.admin", "reload");
-        addOneTabbComplete(0, "lang");
-        addOneTabbComplete(1, "ulitycore.admin", "fr", "lang");
-        addOneTabbComplete(1, "ulitycore.admin", "en", "lang");
+        addListTabbComplete(1, "ulitycore.admin", new String[]{"lang"}, "fr", "en");
+
+        addListTabbComplete(1, "ulitycore.admin", new String[]{"reload", "lang"}, "");
+        addListTabbComplete(2, "ulitycore.admin", new String[]{"fr", "en"}, "");
 
         registerCommand(commandMap);
     }

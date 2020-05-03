@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 public final class MainBukkit extends JavaPlugin {
     public static MainBukkit plugin;
+    public static CommandMap commandMap;
 
     @Override
     public void onEnable() {
@@ -27,9 +28,12 @@ public final class MainBukkit extends JavaPlugin {
         try {
             Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             f.setAccessible(true);
-            CommandMap commandMap = (CommandMap) f.get(Bukkit.getServer());
+            commandMap = (CommandMap) f.get(Bukkit.getServer());
 
             new UlityCoreCommand(commandMap, this);
+
+
+            // getServer().getPluginManager().registerEvents(new X(), this);
 
         } catch (NoSuchFieldException | IllegalAccessException e) {
             getLogger().severe(e.getLocalizedMessage());

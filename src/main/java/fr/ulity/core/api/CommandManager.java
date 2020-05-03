@@ -132,20 +132,20 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
      * @param indice     index de la position de l'arguments dans la syntaxe. /myCmd est à l'index -1, donc
      *                   /myCmd index0 index1 ...
      * @param permission permission à ajouter (peut être null)
-     * @param arg        mots à ajouter
+     * @param args        array de mots à ajouter
      * @param beforeText texte précédant cet argument (peut être null)
      *
      * @return CommandManager, instance de cette classe
      */
-    protected CommandManager addListTabbComplete(int indice, String permission, String[] beforeText, String... arg) {
-        if (arg != null && arg.length > 0 && indice >= 0) {
+    public CommandManager addArrayTabbComplete (int indice, String permission, String[] beforeText, String[] args) {
+        if (args != null && args.length > 0 && indice >= 0) {
             if (tabComplete.containsKey(indice)) {
-                tabComplete.get(indice).addAll(Arrays.stream(arg).collect(
+                tabComplete.get(indice).addAll(Arrays.stream(args).collect(
                         ArrayList::new,
                         (tabCommands, s) -> tabCommands.add(new TabCommand(indice, s, permission, beforeText)),
                         ArrayList::addAll));
             } else {
-                tabComplete.put(indice, Arrays.stream(arg).collect(
+                tabComplete.put(indice, Arrays.stream(args).collect(
                         ArrayList::new,
                         (tabCommands, s) -> tabCommands.add(new TabCommand(indice, s, permission, beforeText)),
                         ArrayList::addAll)
@@ -154,6 +154,23 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
         }
         return this;
     }
+
+
+    /**
+     * Ajouter plusieurs arguments à cet index
+     *
+     * @param indice     index de la position de l'arguments dans la syntaxe. /myCmd est à l'index -1, donc
+     *                   /myCmd index0 index1 ...
+     * @param permission permission à ajouter (peut être null)
+     * @param arg        mot à ajouter, un par argument
+     * @param beforeText texte précédant cet argument (peut être null)
+     *
+     * @return CommandManager, instance de cette classe
+     */
+    protected CommandManager addListTabbComplete(int indice, String permission, String[] beforeText, String... arg) {
+        return addArrayTabbComplete(indice, permission, beforeText, arg);
+    }
+
 
     /**
      * Ajouter plusieurs arguments à cet index

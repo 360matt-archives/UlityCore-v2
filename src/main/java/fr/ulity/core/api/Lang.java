@@ -3,7 +3,9 @@ package fr.ulity.core.api;
 import de.leonhard.storage.Yaml;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
+import fr.ulity.core.utils.Text;
 import org.apache.commons.io.FileUtils;
+import org.bukkit.ChatColor;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 
@@ -79,7 +81,7 @@ public class Lang {
         Yaml tempoC = new Yaml(fileTemp.getName(), fileTemp.getParent());
         Config langHandle = getLangConf(lang);
         for (String i : tempoC.keySet())
-            langHandle.setDefault(i, tempoC.getString(i));
+            langHandle.setDefault(i, tempoC.get(i));
     }
 
     private static Config getLangConf (String lang) {
@@ -92,12 +94,7 @@ public class Lang {
         }
     }
 
-    private static String withColours (String message) {
-        if (Api.type.equals("bukkit"))
-            return org.bukkit.ChatColor.translateAlternateColorCodes('&', message);
-        else
-            return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
-    }
+
 
 
 
@@ -106,27 +103,51 @@ public class Lang {
     /* API use */
 
     public static String get (String exp){
-        return withColours(getLangConf(defaultLang).getString(exp));
+        return Text.withColours(getLangConf(defaultLang).getString(exp));
     }
 
     public static String get (String lang, String exp){
-        return withColours(getLangConf(lang).getString(exp));
+        return Text.withColours(getLangConf(lang).getString(exp));
     }
 
     public static String get (org.bukkit.command.CommandSender sender, String exp){
         // bukkit
         if (sender instanceof org.bukkit.entity.Player)
-            return withColours(getLangConf(((org.bukkit.entity.Player) sender).getLocale().toLowerCase().split("_")[0]).getString(exp));
+            return Text.withColours(getLangConf(((org.bukkit.entity.Player) sender).getLocale().toLowerCase().split("_")[0]).getString(exp));
         else
-            return withColours(getLangConf(defaultLang).getString(exp));
+            return Text.withColours(getLangConf(defaultLang).getString(exp));
     }
 
     public static String get (net.md_5.bungee.api.CommandSender sender, String exp){
         // bungee
         if (sender instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
-            return withColours(getLangConf(((net.md_5.bungee.api.connection.ProxiedPlayer) sender).getLocale().getLanguage()).getString(exp));
+            return Text.withColours(getLangConf(((net.md_5.bungee.api.connection.ProxiedPlayer) sender).getLocale().getLanguage()).getString(exp));
         else
-            return withColours(getLangConf(defaultLang).getString(exp));
+            return Text.withColours(getLangConf(defaultLang).getString(exp));
+    }
+
+    public static String[] getStringArray (String exp) {
+        List<?> list = getLangConf(defaultLang).getList(exp);
+        return list.toArray(new String[list.size()]);
+    }
+
+    public static String[] getStringArrayColor (String exp) {
+        Object[] list = getLangConf(defaultLang).getList(exp).toArray();
+        int hash = Arrays.hashCode(list);
+
+        if (Cache.isSet(hash))
+            return (String[]) Cache.get(hash);
+        else{
+            String[] value = new String[list.length];
+            int counter = 0;
+            for (Object x : list) {
+                value[counter] = Text.withColours(x.toString());
+                counter++;
+            }
+
+            Cache.set(hash, value);
+            return value;
+        }
     }
 
 }

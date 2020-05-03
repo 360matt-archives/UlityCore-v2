@@ -1,1 +1,11 @@
-jaaj: trucÃ©
+commands:
+  clearChat:
+    description: "Permet de clear le chat"
+    expressions:
+      notification: "&7le chat a été clear par &b%sender% &7pour &c%reason%"
+      unknown_reason: "une raison inconnue"
+      console: "la console"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité

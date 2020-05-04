@@ -4,3 +4,6 @@ plugin:
   lang:
     reloaded: "&7Les fichiers de langue ont été rechargés avec succès."
     actual: "&7La langue par défaut est le &bFrançais&7."
+global:
+  enable: "activer"
+  disable: "désactiver"

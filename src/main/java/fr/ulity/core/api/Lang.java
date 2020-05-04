@@ -5,17 +5,13 @@ import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
 import fr.ulity.core.utils.Text;
 import org.apache.commons.io.FileUtils;
-import org.bukkit.ChatColor;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,40 +95,47 @@ public class Lang {
 
 
 
+    private static Config getBrut (Object arg) {
+        if (arg instanceof String)
+            return getLangConf((String) arg);
+        else if (arg instanceof org.bukkit.entity.Player)
+            return getLangConf(((org.bukkit.entity.Player) arg).getLocale().toLowerCase().split("_")[0]);
+        else if (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
+            return getLangConf(((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getLocale().getLanguage());
+        else return getLangConf(defaultLang);
+    }
+
+
+
+
 
     /* API use */
 
+    public static String get (Object lang, String exp){
+        return Text.withColours(getBrut(lang).getString(exp));
+    }
     public static String get (String exp){
-        return Text.withColours(getLangConf(defaultLang).getString(exp));
+        return get(defaultLang, exp);
     }
 
-    public static String get (String lang, String exp){
-        return Text.withColours(getLangConf(lang).getString(exp));
+    public static int getInt (Object lang, String exp) {
+        return getBrut(lang).getInt(exp);
+    }
+    public static int getInt (String exp) {
+        return getInt(defaultLang, exp);
     }
 
-    public static String get (org.bukkit.command.CommandSender sender, String exp){
-        // bukkit
-        if (sender instanceof org.bukkit.entity.Player)
-            return Text.withColours(getLangConf(((org.bukkit.entity.Player) sender).getLocale().toLowerCase().split("_")[0]).getString(exp));
-        else
-            return Text.withColours(getLangConf(defaultLang).getString(exp));
-    }
-
-    public static String get (net.md_5.bungee.api.CommandSender sender, String exp){
-        // bungee
-        if (sender instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
-            return Text.withColours(getLangConf(((net.md_5.bungee.api.connection.ProxiedPlayer) sender).getLocale().getLanguage()).getString(exp));
-        else
-            return Text.withColours(getLangConf(defaultLang).getString(exp));
-    }
-
-    public static String[] getStringArray (String exp) {
-        List<?> list = getLangConf(defaultLang).getList(exp);
+    public static String[] getStringArray (Object lang, String exp) {
+        List<?> list = getBrut(lang).getList(exp);
         return list.toArray(new String[list.size()]);
     }
+    public static String[] getStringArray (String exp) {
+        return getStringArray(defaultLang, exp);
+    }
 
-    public static String[] getStringArrayColor (String exp) {
-        Object[] list = getLangConf(defaultLang).getList(exp).toArray();
+
+    public static String[] getStringArrayColor (Object lang, String exp) {
+        Object[] list = getBrut(lang).getList(exp).toArray();
         int hash = Arrays.hashCode(list);
 
         if (Cache.isSet(hash))
@@ -149,5 +152,9 @@ public class Lang {
             return value;
         }
     }
+    public static String[] getStringArrayColor (String exp) {
+        return getStringArrayColor(defaultLang, exp);
+    }
+
 
 }

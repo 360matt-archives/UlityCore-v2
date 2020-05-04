@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ClearChatCommand extends CommandManager {
 
@@ -20,20 +19,17 @@ public class ClearChatCommand extends CommandManager {
         setAliases(Arrays.asList("clc", "cc"));
 
         addUsage("/clearchat");
-        addPermission(null);
+        addPermission("ulity.mod.chat.clear");
+        addPermission("ulity.mod.chat");
 
         addOneTabbComplete(-1, "clearchat");
-
         addArrayTabbComplete(0, "ulity.mod.clearchat", new String[]{}, Lang.getStringArray("commands.clearChat.reasons_predefined"));
 
         registerCommand(commandMap);
-
-
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         StringBuilder looped = new StringBuilder();
         for (int i = 0; i<100; i++)
             looped.append(" \n");

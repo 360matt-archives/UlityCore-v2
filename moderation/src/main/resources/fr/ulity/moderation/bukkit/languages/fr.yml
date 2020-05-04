@@ -9,3 +9,15 @@ commands:
       - flood
       - spam
       - publicité
+  chat:
+    description: "Permet de gérer le chat"
+    usage: |-
+      &eActiver le chat: &7/chat &aactiver
+      &eDésactiver le chat: &7/chat &cdésactiver
+    expressions:
+      broadcast_chat_enabled: "&7le chat est maintenant &aactivé"
+      broadcast_chat_disabled: "&7le chat est maintenant &cdésactivé"
+      error_chat_is_disabled: "&7[&cX&7] le chat est &cdésactivé &7!"
+    warning_admin:
+      delay_minute: 3
+      message: "&cAttention: &7le chat est actuellement désactivé"

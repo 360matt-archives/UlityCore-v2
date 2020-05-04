@@ -46,6 +46,7 @@ public class Api {
         temp = new Temp();
         data = new Data();
 
+        temp.clear();
         Lang.reload();
     }
 }

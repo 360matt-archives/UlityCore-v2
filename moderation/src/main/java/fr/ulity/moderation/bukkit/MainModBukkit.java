@@ -3,6 +3,7 @@ package fr.ulity.moderation.bukkit;
 import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.bukkit.MainBukkit;
+import fr.ulity.moderation.bukkit.commands.ChatCommand;
 import fr.ulity.moderation.bukkit.commands.ClearChatCommand;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +24,7 @@ public final class MainModBukkit extends JavaPlugin {
 
         // register commands :
         new ClearChatCommand(MainBukkit.commandMap, this);
+        new ChatCommand(MainBukkit.commandMap, this);
 
     }
 

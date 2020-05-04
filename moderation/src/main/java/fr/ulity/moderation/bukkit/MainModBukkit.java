@@ -18,13 +18,16 @@ public final class MainModBukkit extends JavaPlugin {
         plugin = this;
         server = getServer();
 
-        Initializer.addClass(this.getClass());
-
+        Initializer.addPlugin(this);
         Lang.reloadOneAddon(MainModBukkit.class);
 
         // register commands :
         new ClearChatCommand(MainBukkit.commandMap, this);
         new ChatCommand(MainBukkit.commandMap, this);
+
+        // register/start modules :
+        StartModule.start();
+
 
     }
 

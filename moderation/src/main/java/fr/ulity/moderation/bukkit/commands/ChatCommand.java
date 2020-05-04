@@ -3,10 +3,8 @@ package fr.ulity.moderation.bukkit.commands;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
-import fr.ulity.core.api.Temp;
-import fr.ulity.core.utils.Text;
 import fr.ulity.moderation.bukkit.MainModBukkit;
-import fr.ulity.moderation.bukkit.events.ChatDisabled;
+import fr.ulity.moderation.bukkit.events.ChatDisabledEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -14,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -47,7 +43,7 @@ public class ChatCommand extends CommandManager  {
                 Api.temp.set("moderation.chat", true);
                 MainModBukkit.server.broadcastMessage(Lang.get("commands.chat.expressions.broadcast_chat_enabled"));
 
-                HandlerList.unregisterAll(new ChatDisabled());
+                HandlerList.unregisterAll(new ChatDisabledEvent());
                 warning(false);
                 return true;
             }
@@ -58,7 +54,7 @@ public class ChatCommand extends CommandManager  {
                 Api.temp.set("moderation.chat", false);
                 MainModBukkit.server.broadcastMessage(Lang.get("commands.chat.expressions.broadcast_chat_disabled"));
 
-                getPluginManager().registerEvents(new ChatDisabled(), MainModBukkit.plugin);
+                getPluginManager().registerEvents(new ChatDisabledEvent(), MainModBukkit.plugin);
                 warning(true);
                 return true;
             }

@@ -21,3 +21,28 @@ commands:
     warning_admin:
       delay_minute: 3
       message: "&cAttention: &7le chat est actuellement désactivé"
+
+
+module:
+  anti_insult:
+    enabled: true
+    chat:
+      error_message: "&7[&cX&7] votre message contient le mot prohibé &c%word% &7!"
+      error_message_staff: "&7[&cX&7] Un bon staff ne dirait pas le mot &c%word% &7!"
+      staff_bypass: false
+    words:
+      - ta gueule
+      - connard
+      - ta mère la
+      - pute
+      - pétasse
+      - salope
+      - connasse
+    commands:
+      error_message: "&7[&cX&7] le mot &c%word% &7est prohibé pour cette commande !"
+      error_message_staff: "&7[&cX&7] Un bon staff ne dirait pas le mot &c%word% &7 !"
+      staff_bypass: false
+      all: false
+      list:
+        - msg
+        - r

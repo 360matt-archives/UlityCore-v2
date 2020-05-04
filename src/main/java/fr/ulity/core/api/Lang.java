@@ -52,7 +52,7 @@ public class Lang {
     }
 
     public static void reloadAddons () {
-        for (Class c : Initializer.lesClasses)
+        for (Class c : Initializer.getClazzs())
             reloadOneAddon(c);
     }
 
@@ -131,6 +131,13 @@ public class Lang {
     }
     public static String[] getStringArray (String exp) {
         return getStringArray(defaultLang, exp);
+    }
+
+    public static boolean getBoolean (Object lang, String exp) {
+        return getBrut(lang).getBoolean(exp);
+    }
+    public static boolean getBoolean (String exp) {
+        return getBoolean(defaultLang, exp);
     }
 
 

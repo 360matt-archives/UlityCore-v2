@@ -1,5 +1,6 @@
 plugin:
   reloaded: "&7Le plugin a été rechargé"
+  addons_reloaded: "&e%count% &6extensions &7ont été rechargées"
   no_perm: "&cVous n'avez pas les privilèges nécessaires"
   lang:
     reloaded: "&7Les fichiers de langue ont été rechargés avec succès."

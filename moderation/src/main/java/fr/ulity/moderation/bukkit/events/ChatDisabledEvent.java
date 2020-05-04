@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class ChatDisabled implements Listener {
+public class ChatDisabledEvent implements Listener {
 
     @EventHandler
     private static void blockChat (AsyncPlayerChatEvent e) {

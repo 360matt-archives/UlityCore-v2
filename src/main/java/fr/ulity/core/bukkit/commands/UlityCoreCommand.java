@@ -2,12 +2,14 @@ package fr.ulity.core.bukkit.commands;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.bukkit.MainBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -47,7 +49,21 @@ public class UlityCoreCommand extends CommandManager {
                     MainBukkit.plugin.getPluginLoader().disablePlugin(MainBukkit.plugin);
                     MainBukkit.plugin.getPluginLoader().enablePlugin(MainBukkit.plugin);
 
+                    int count = 0;
+                    for (int i = Initializer.lesPlugins.size() - 1; i >= 0; i--) {
+                        JavaPlugin x = Initializer.lesPlugins.get(i);
+                        MainBukkit.plugin.getPluginLoader().disablePlugin(x);
+                        HandlerList.unregisterAll(x);
+
+                        MainBukkit.plugin.getPluginLoader().enablePlugin(x);
+                        count++;
+                    }
+                    // je suis obligé de reverse loop, sinon cela me cause une erreur
+
                     sender.sendMessage(Lang.get(sender, "plugin.reloaded"));
+                    sender.sendMessage(Lang.get(sender, "plugin.addons_reloaded")
+                        .replaceAll("%count%", count + ""));
+
                     return true;
                 }
                 else{

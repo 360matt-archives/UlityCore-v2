@@ -44,11 +44,11 @@ public class UnMuteCommand extends CommandManager {
                     sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.unmuted")
                             .replaceAll("%player%", player.getName()));
                     player.sendMessage(Lang.get(sender, "commands.unmute.expressions.you_are_unmuted")
-                            .replaceAll("%staff", sender.getName()));
+                            .replaceAll("%staff%", sender.getName()));
                 }
                 else
                     sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.is_not_muted")
-                        .replaceAll("%playerM", player.getName()));
+                        .replaceAll("%player%", player.getName()));
             }
             return true;
         }

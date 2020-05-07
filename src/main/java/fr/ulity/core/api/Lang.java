@@ -5,8 +5,6 @@ import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
 import fr.ulity.core.utils.Text;
 import org.apache.commons.io.FileUtils;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -18,8 +16,6 @@ import java.util.regex.Pattern;
 public class Lang {
     public static String defaultLang;
     private static Map<String, Config> langC = new HashMap<String, Config>();
-
-    private static ResourcesScanner scaner = new ResourcesScanner();
 
     public static void reload () {
         defaultLang = Api.config.getString("global.lang");
@@ -34,21 +30,18 @@ public class Lang {
     }
 
     public static void reloadCore () {
-        Reflections reflections = new Reflections("fr.ulity.core." + Api.type + ".languages.", scaner);
-        Set<String> fileNames = reflections.getResources(Pattern.compile(".*\\.yml"));
+        try {
+            String path = (MainBukkit.class.getPackage().getName() + "/languages/").replaceAll("\\.", "/");
 
-        for (String x : fileNames){
-            x = "/" + x;
-
-            Matcher m = Pattern.compile("/" + Api.type + "/languages/(.*).yml").matcher(x);
-            if (m.find()){
-                try {
-                    addFromReference(Lang.class.getResource(x), m.group(1));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            for (String x : ListingResources.getResourceListing(MainBukkit.class, path)) {
+                Matcher m = Pattern.compile("(.*).yml").matcher(x);
+                if (m.find())
+                    Lang.addFromReference(Objects.requireNonNull(MainBukkit.class.getClassLoader().getResource(path + x)), m.group(1));
             }
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     public static void reloadAddons () {

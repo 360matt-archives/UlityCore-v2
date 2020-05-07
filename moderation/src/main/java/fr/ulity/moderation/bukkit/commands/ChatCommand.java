@@ -23,7 +23,7 @@ public class ChatCommand extends CommandManager  {
         super(plugin, "chat");
         addDescription(Lang.get("commands.chat.description"));
 
-        addUsage("/chat < " + Lang.get("global.enable") + " / " + Lang.get("global.disable") + " >");
+        addUsage(Lang.get("commands.chat.usage"));
         addPermission("ulity.mod.chat");
 
         addOneTabbComplete(-1, "clearchat");
@@ -60,9 +60,7 @@ public class ChatCommand extends CommandManager  {
             }
         }
 
-        sender.sendMessage(Lang.get("commands.chat.usage"));
-
-        return true;
+        return false;
     }
 
 

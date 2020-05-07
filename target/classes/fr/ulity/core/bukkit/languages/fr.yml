@@ -8,3 +8,18 @@ plugin:
 global:
   enable: "activer"
   disable: "désactiver"
+  invalid_player: "&7[&cX&7] Le joueur &c%player% &7est invalide."
+period:
+  years: "années"
+  year: "année"
+  months: "mois"
+  month: "mois"
+  days: "jours"
+  day: "jour"
+  hours: "heures"
+  hour: "heure"
+  minutes: "minutes"
+  minute: "minute"
+  seconds: "secondes"
+  second: "seconde"
+  separator: ", "

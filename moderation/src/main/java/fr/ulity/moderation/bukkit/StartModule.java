@@ -2,9 +2,6 @@ package fr.ulity.moderation.bukkit;
 
 import fr.ulity.core.api.Lang;
 import fr.ulity.moderation.bukkit.events.AntiInsultEvent;
-import fr.ulity.moderation.bukkit.events.ChatDisabledEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 
 import static org.bukkit.Bukkit.getPluginManager;

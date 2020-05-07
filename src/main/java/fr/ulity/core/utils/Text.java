@@ -17,7 +17,7 @@ public class Text {
     }
 
     public static String full (String[] args, int indice) {
-        return full(Arrays.copyOfRange(args, 1, args.length));
+        return full(Arrays.copyOfRange(args, indice, args.length));
     }
 
     public static String fullColor (String[] args, int indice) {

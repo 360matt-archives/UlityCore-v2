@@ -9,6 +9,7 @@ commands:
       - flood
       - spam
       - publicité
+      - insultes
   chat:
     description: "Permet de gérer le chat"
     usage: |-
@@ -21,7 +22,63 @@ commands:
     warning_admin:
       delay_minute: 3
       message: "&cAttention: &7le chat est actuellement désactivé"
+  mute:
+    description: "Permet d'empecher un joueur de parler indéfinniment"
+    usage: |-
+      §eMute un joueur: &7/mute <joueur> [raison]
+    expressions:
+      unknown_reason: "une raison inconnue"
+      you_are_muted: "&7Vous avez été muté indéfinniment par &b%staff% &7pour &c%reason%"
+      when_chat_blocked: |-
+        &7[&cX&7] Vous avez été muté !
+        &cRaison: &7%reason%
+        &cStaff: &b%staff%
+      when_receive_message: |-
+        &c%player% &7ne pourra pas vous répondre.
+        &7Son mute se lèvera à nouvel ordre.
+        &7Mais en profitez pas pour le taquiner :/
+    broadcast:
+      enabled: true
+      message_without_reason: "&c%player% &7a été muté (&b%staff%&7)"
+      message: "&c%player% &7a été muté (%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité
+      - insultes
+  tempmute:
+    description: "Permet d'empecher un joueur de parler temporairement"
+    usage: |-
+      §eMute un joueur: &7/mute <joueur> <durée> [raison]
+    expressions:
+      unknown_reason: "une raison inconnue"
+      you_are_muted: "&7Vous avez été muté &c%time% &7par &b%staff% &7pour &c%reason%"
+      when_chat_blocked: |-
+        &7Vous avez été réduit au silence par un staff (&b%staff%&7)
 
+        &7Raison: &c%reason%
+        &7Temps restant: &c%timeLeft%
+      when_receive_message: |-
+        &c%player% &7ne pourra pas vous répondre.
+        &7Son mute se terminera dans &c%timeLeft%.
+        &7Mais en profitez pas pour le taquiner :/
+    broadcast:
+      enabled: true
+      message_without_reason: "&c%player% &7a été muté &c%time% &7(&b%staff%&7)"
+      message: "&c%player% &7a été muté &c%time% &7(%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité
+      - insultes
+  unmute:
+    description: "Permet de démute un joueur"
+    usage: |-
+      §eUnMute un joueur: &7/mute <joueur>
+    expressions:
+      is_not_muted: "&7Le joueur &c%player% &7n'est pas mute"
+      unmuted: "&7Le joueur &c%player% &7peut de nouveau parler."
+      you_are_unmuted: "&7Vous avez été unmute par un staff (&b%staff%&7)."
 
 module:
   anti_insult:

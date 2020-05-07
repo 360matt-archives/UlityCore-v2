@@ -33,8 +33,6 @@ public class MuteCommand extends CommandManager {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        System.out.println(Arrays.toString(Lang.getStringArray("commands.mute.reasons_predefined")));
-
         if (args.length >= 1) {
             Player player = Bukkit.getPlayer(args[0]);
             if (player == null)

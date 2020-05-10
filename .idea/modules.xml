@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Claims/Claims.iml" filepath="$PROJECT_DIR$/Claims/Claims.iml" />
       <module fileurl="file://$PROJECT_DIR$/UlityCore_V2.iml" filepath="$PROJECT_DIR$/UlityCore_V2.iml" />
       <module fileurl="file://$PROJECT_DIR$/moderation/moderation.iml" filepath="$PROJECT_DIR$/moderation/moderation.iml" />
     </modules>

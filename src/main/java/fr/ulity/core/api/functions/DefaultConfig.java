@@ -1,9 +1,10 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.functions;
 
 import de.leonhard.storage.Yaml;
+import fr.ulity.core.api.Api;
 
 public class DefaultConfig extends Yaml {
-    DefaultConfig() {
+    public DefaultConfig() {
         super("config", Api.prefix);
 
         if (Api.type.equals("bungeecord"))

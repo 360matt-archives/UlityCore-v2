@@ -3,6 +3,7 @@
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="moderation.jar">
       <element id="module-output" name="moderation" />
+      <element id="extracted-dir" path="I:/WorldBorderApi.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

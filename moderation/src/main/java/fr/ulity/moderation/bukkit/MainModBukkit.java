@@ -1,11 +1,10 @@
 package fr.ulity.moderation.bukkit;
 
-import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.moderation.bukkit.commands.*;
-import fr.ulity.moderation.bukkit.events.AntiInsultEvent;
+import fr.ulity.moderation.bukkit.events.BanEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,6 +31,9 @@ public final class MainModBukkit extends JavaPlugin {
         new MuteCommand(MainBukkit.commandMap, this);
         new TempMuteCommand(MainBukkit.commandMap, this);
         new UnMuteCommand(MainBukkit.commandMap, this);
+        new BanCommand(MainBukkit.commandMap, this);
+        new TempBanCommand(MainBukkit.commandMap, this);
+        new UnBanCommand(MainBukkit.commandMap, this);
 
         // register/start modules :
         StartModule.start();
@@ -39,6 +41,7 @@ public final class MainModBukkit extends JavaPlugin {
 
         // register events
         getPluginManager().registerEvents(new MuteEvent(), this);
+        getPluginManager().registerEvents(new BanEvent(), this);
 
 
     }

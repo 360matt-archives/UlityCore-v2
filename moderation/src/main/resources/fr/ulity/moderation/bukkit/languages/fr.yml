@@ -27,7 +27,7 @@ commands:
     usage: |-
       §eMute un joueur: &7/mute <joueur> [raison]
     expressions:
-      unknown_reason: "une raison inconnue"
+      unknown_reason: "raison inconnue"
       you_are_muted: "&7Vous avez été muté indéfinniment par &b%staff% &7pour &c%reason%"
       when_chat_blocked: |-
         &7[&cX&7] Vous avez été muté !
@@ -51,7 +51,7 @@ commands:
     usage: |-
       §eMute un joueur: &7/mute <joueur> <durée> [raison]
     expressions:
-      unknown_reason: "une raison inconnue"
+      unknown_reason: "raison inconnue"
       you_are_muted: "&7Vous avez été muté &c%time% &7par &b%staff% &7pour &c%reason%"
       when_chat_blocked: |-
         &7Vous avez été réduit au silence par un staff (&b%staff%&7)
@@ -79,6 +79,57 @@ commands:
       is_not_muted: "&7Le joueur &c%player% &7n'est pas mute"
       unmuted: "&7Le joueur &c%player% &7peut de nouveau parler."
       you_are_unmuted: "&7Vous avez été unmute par un staff (&b%staff%&7)."
+  ban:
+    description: "Permet de bannir un joueur définitivement"
+    usage: |-
+      §eBan un joueur: &7/ban <joueur> [raison]
+    expressions:
+      unknown_reason: "raison inconnue"
+      you_are_banned: |-
+        &eVous avez été banni de ce serveur
+
+
+        &cDurée: &7Indéfiniment
+        &cResponsable: &b%staff%
+        &cRaison: &7%reason%
+    broadcast:
+      enabled: true
+      message_without_reason: "&c%player% &7a été banni (&b%staff%&7)"
+      message: "&c%player% &7a été banni (%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité
+      - insultes
+  tempban:
+    description: "Permet de bannir un joueur temporairement"
+    usage: |-
+      §eBan un joueur temporairement: &7/tempban <joueur> <durée> [raison]
+    expressions:
+      unknown_reason: "raison inconnue"
+      you_are_banned: |-
+        &eVous avez été banni de ce serveur
+
+
+        &cDurée: &7%timeLeft%
+        &cResponsable: &b%staff%
+        &cRaison: &7%reason%
+    broadcast:
+      enabled: true
+      message_without_reason: "&c%player% &7a été banni &c%time% &7(&b%staff%&7)"
+      message: "&c%player% &7a été banni &c%time% &7(%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité
+      - insultes
+  unban:
+    description: "Permet de débannir un joueur"
+    usage: |-
+      §eUnBan un joueur: &7/mute <joueur>
+    expressions:
+      is_not_banned: "&7Le joueur &c%player% &7n'est pas banni"
+      unbanned: "&7Le joueur &c%player% &7peut de nouveau rejoindre."
 
 module:
   anti_insult:

@@ -8,6 +8,7 @@ import fr.ulity.core.utils.Time;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -33,7 +34,7 @@ public class UnMuteCommand extends CommandManager {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
-            Player player = Bukkit.getPlayer(args[0]);
+            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
             if (player == null)
                 sender.sendMessage(Lang.get("global.invalid_player").replaceAll("%player%", args[0]));
             else {
@@ -43,7 +44,9 @@ public class UnMuteCommand extends CommandManager {
                     playerMute.unmute();
                     sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.unmuted")
                             .replaceAll("%player%", player.getName()));
-                    player.sendMessage(Lang.get(sender, "commands.unmute.expressions.you_are_unmuted")
+
+                    if (player.isOnline())
+                        Bukkit.getPlayer(args[0]).sendMessage(Lang.get(sender, "commands.unmute.expressions.you_are_unmuted")
                             .replaceAll("%staff%", sender.getName()));
                 }
                 else

@@ -1,6 +1,7 @@
 package fr.ulity.core.api;
 
 import de.leonhard.storage.Yaml;
+import fr.ulity.core.api.functions.DefaultConfig;
 
 public class Config extends Yaml {
 

@@ -30,6 +30,8 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <debug>false</debug>
+                    <optimize>true</optimize>
                 </configuration>
             </plugin>
             <plugin>
@@ -43,7 +45,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <createDependencyReducedPom>true</createDependencyReducedPom>
                         </configuration>
                     </execution>
                 </executions>

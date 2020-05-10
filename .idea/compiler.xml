@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/moderation/src/main/java/fr/ulity/moderation/bukkit/commands/TempBanCommand.java" />
+      <file url="file://$PROJECT_DIR$/moderation/src/main/java/fr/ulity/moderation/bukkit/commands/MuteCommand.java" />
+      <file url="file://$PROJECT_DIR$/moderation/src/main/java/fr/ulity/moderation/bukkit/commands/TempMuteCommand.java" />
+      <file url="file://$PROJECT_DIR$/moderation/src/main/java/fr/ulity/moderation/bukkit/commands/UnMuteCommand.java" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Claims" />
         <module name="UlityCore_V2" />
         <module name="moderation" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Claims" target="1.8" />
       <module name="moderation" target="1.8" />
       <module name="UlityCore_V2" target="8" />
     </bytecodeTargetLevel>

@@ -1,0 +1,8 @@
+name: Claims
+version: ${project.version}
+main: fr.ulity.claims.MainClaimBukkit
+api-version: 1.15
+softdepend: [UlityCore, WorldBorderAPI]
+authors: [360matt, Hyrezzz]
+description: Plugin de claim de base cree pour le serveur WixMC
+website: https://discord.gg/jBFE4Bu

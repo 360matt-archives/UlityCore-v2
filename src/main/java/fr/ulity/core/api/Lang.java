@@ -45,7 +45,7 @@ public class Lang {
     }
 
     public static void reloadAddons () {
-        for (Class c : Initializer.getClazzs())
+        for (Class c : Initializer.lesClass)
             reloadOneAddon(c);
     }
 

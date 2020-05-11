@@ -1,5 +1,6 @@
 package fr.ulity.moderation.bukkit;
 
+import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.bukkit.MainBukkit;
@@ -21,28 +22,29 @@ public final class MainModBukkit extends JavaPlugin {
         plugin = this;
         server = getServer();
 
-        Initializer.addPlugin(this);
-        Lang.reloadOneAddon(MainModBukkit.class);
+        Initializer init = new Initializer(this);
+        init.requireVersion("2.0");
+
+        if (init.ok){
+            // register commands :
+            new ClearChatCommand(Api.Bukkit.commandMap, this);
+            new ChatCommand(Api.Bukkit.commandMap, this);
+            new MuteCommand(Api.Bukkit.commandMap, this);
+            new TempMuteCommand(Api.Bukkit.commandMap, this);
+            new UnMuteCommand(Api.Bukkit.commandMap, this);
+            new BanCommand(Api.Bukkit.commandMap, this);
+            new TempBanCommand(Api.Bukkit.commandMap, this);
+            new UnBanCommand(Api.Bukkit.commandMap, this);
+
+            // register/start modules :
+            StartModule.start();
 
 
-        // register commands :
-        new ClearChatCommand(MainBukkit.commandMap, this);
-        new ChatCommand(MainBukkit.commandMap, this);
-        new MuteCommand(MainBukkit.commandMap, this);
-        new TempMuteCommand(MainBukkit.commandMap, this);
-        new UnMuteCommand(MainBukkit.commandMap, this);
-        new BanCommand(MainBukkit.commandMap, this);
-        new TempBanCommand(MainBukkit.commandMap, this);
-        new UnBanCommand(MainBukkit.commandMap, this);
+            // register events
+            getPluginManager().registerEvents(new MuteEvent(), this);
+            getPluginManager().registerEvents(new BanEvent(), this);
 
-        // register/start modules :
-        StartModule.start();
-
-
-        // register events
-        getPluginManager().registerEvents(new MuteEvent(), this);
-        getPluginManager().registerEvents(new BanEvent(), this);
-
+        }
 
     }
 

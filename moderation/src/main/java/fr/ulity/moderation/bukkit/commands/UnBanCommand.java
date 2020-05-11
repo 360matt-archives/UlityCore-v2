@@ -34,22 +34,19 @@ public class UnBanCommand extends CommandManager {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
+            @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            if (player == null)
-                sender.sendMessage(Lang.get("global.invalid_player").replaceAll("%player%", args[0]));
-            else {
-                Ban playerMute = new Ban(player.getName());
 
-                if (playerMute.isBan()){
-                    playerMute.unban();
-                    sender.sendMessage(Lang.get(sender, "commands.unban.expressions.unbanned")
-                            .replaceAll("%player%", player.getName()));
-                }
-                else
-                    sender.sendMessage(Lang.get(sender, "commands.unban.expressions.is_not_banned")
-                            .replaceAll("%player%", player.getName()));
+            Ban playerMute = new Ban(player.getName());
 
-            }
+            if (playerMute.isBan()){
+                playerMute.unban();
+                sender.sendMessage(Lang.get(sender, "commands.unban.expressions.unbanned")
+                        .replaceAll("%player%", player.getName()));
+            } else
+                sender.sendMessage(Lang.get(sender, "commands.unban.expressions.is_not_banned")
+                        .replaceAll("%player%", player.getName()));
+
             return true;
         }
         return false;

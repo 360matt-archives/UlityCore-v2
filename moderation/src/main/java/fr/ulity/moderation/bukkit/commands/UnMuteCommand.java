@@ -34,25 +34,22 @@ public class UnMuteCommand extends CommandManager {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
+            @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            if (player == null)
-                sender.sendMessage(Lang.get("global.invalid_player").replaceAll("%player%", args[0]));
-            else {
-                Mute playerMute = new Mute(player.getName());
+            Mute playerMute = new Mute(player.getName());
 
-                if (playerMute.isMute()){
-                    playerMute.unmute();
-                    sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.unmuted")
-                            .replaceAll("%player%", player.getName()));
-
-                    if (player.isOnline())
-                        Bukkit.getPlayer(args[0]).sendMessage(Lang.get(sender, "commands.unmute.expressions.you_are_unmuted")
-                            .replaceAll("%staff%", sender.getName()));
-                }
-                else
-                    sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.is_not_muted")
+            if (playerMute.isMute()){
+                playerMute.unmute();
+                sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.unmuted")
                         .replaceAll("%player%", player.getName()));
-            }
+
+                if (player.isOnline())
+                    Bukkit.getPlayer(args[0]).sendMessage(Lang.get(sender, "commands.unmute.expressions.you_are_unmuted")
+                            .replaceAll("%staff%", sender.getName()));
+            } else
+                sender.sendMessage(Lang.get(sender, "commands.unmute.expressions.is_not_muted")
+                        .replaceAll("%player%", player.getName()));
+
             return true;
         }
         return false;

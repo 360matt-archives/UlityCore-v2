@@ -34,33 +34,31 @@ public class BanCommand extends CommandManager {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
+            @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            if (player == null)
-                sender.sendMessage(Lang.get("global.invalid_player").replaceAll("%player%", args[0]));
-            else {
-                String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.ban.expressions.unknown_reason");
 
-                Ban playerBan = new Ban(player.getName());
-                playerBan.timestamp = new Date().getTime();
-                playerBan.reason = reason;
-                playerBan.expire = 0;
-                playerBan.responsable = sender.getName();
-                playerBan.ban();
+            String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.ban.expressions.unknown_reason");
 
-                if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
-                    String keyName = (args.length >= 2) ? "message" : "message_without_reason";
-                    Bukkit.broadcastMessage(Lang.get("commands.ban.broadcast." + keyName)
-                            .replaceAll("%player%", player.getName())
-                            .replaceAll("%staff%", sender.getName())
-                            .replaceAll("%reason%", reason));
-                }
+            Ban playerBan = new Ban(player.getName());
+            playerBan.timestamp = new Date().getTime();
+            playerBan.reason = reason;
+            playerBan.expire = 0;
+            playerBan.responsable = sender.getName();
+            playerBan.ban();
 
-                if (player.isOnline())
-                    Bukkit.getPlayer(args[0]).kickPlayer(Lang.get(player, "commands.ban.expressions.you_are_banned")
+            if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
+                String keyName = (args.length >= 2) ? "message" : "message_without_reason";
+                Bukkit.broadcastMessage(Lang.get("commands.ban.broadcast." + keyName)
+                        .replaceAll("%player%", player.getName())
+                        .replaceAll("%staff%", sender.getName())
+                        .replaceAll("%reason%", reason));
+            }
+
+            if (player.isOnline())
+                Bukkit.getPlayer(args[0]).kickPlayer(Lang.get(player, "commands.ban.expressions.you_are_banned")
                         .replaceAll("%staff%", sender.getName())
                         .replaceAll("%reason%", reason));
 
-            }
             return true;
         }
         return false;

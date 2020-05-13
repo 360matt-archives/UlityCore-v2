@@ -2,8 +2,6 @@ package fr.ulity.moderation.bukkit;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Initializer;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
@@ -24,6 +22,8 @@ public final class MainModBukkit extends JavaPlugin {
 
         Initializer init = new Initializer(this);
         init.requireVersion("2.0");
+        init.reloadLang();
+        
 
         if (init.ok){
             // register commands :

@@ -7,3 +7,17 @@ softdepend: [UlityCore]
 authors: [360matt]
 description: Permet implementer les commandes de moderation dans le noyau UlityCore
 website: https://discord.gg/jBFE4Bu
+
+
+permissions:
+  ulity.mod:
+    default: op
+    children:
+      ulity.mod.ban: true
+      ulity.mod.tempban: true
+      ulity.mod.unban: true
+      ulity.mod.mute: true
+      ulity.mod.tempmute: true
+      ulity.mod.unmute: true
+      ulity.mod.chat: true
+      ulity.mod.clc: true

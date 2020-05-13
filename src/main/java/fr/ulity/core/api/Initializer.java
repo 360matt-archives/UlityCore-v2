@@ -1,5 +1,6 @@
 package fr.ulity.core.api;
 
+import fr.ulity.core.bukkit.loaders.IsUpToDate;
 import fr.ulity.core.utils.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +43,10 @@ public final class Initializer {
             plugin.getLogger().severe("§9█§f█§c█  §eCe plugin requiert la version minimum §a" + version + " §ede UlityCore");
             ok = false;
         }
+    }
+
+    public void checkUpdates (int SpigotMcResourceID) {
+        new IsUpToDate(plugin, SpigotMcResourceID).noticeUpdate();
     }
 
 }

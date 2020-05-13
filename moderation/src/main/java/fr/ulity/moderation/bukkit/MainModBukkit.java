@@ -23,6 +23,7 @@ public final class MainModBukkit extends JavaPlugin {
         Initializer init = new Initializer(this);
         init.requireVersion("2.0");
         init.reloadLang();
+        init.checkUpdates(78787);
 
         
 

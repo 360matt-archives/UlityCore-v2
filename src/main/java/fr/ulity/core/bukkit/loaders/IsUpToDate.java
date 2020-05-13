@@ -1,6 +1,8 @@
 package fr.ulity.core.bukkit.loaders;
 
 
+import fr.ulity.core.api.Api;
+import fr.ulity.core.utils.Version;
 import org.bukkit.Bukkit;
 
 import java.io.IOException;
@@ -34,7 +36,8 @@ public class IsUpToDate {
     public void noticeUpdate(){
         getVersion(latest -> {
             String present = plugin.getDescription().getVersion();
-            if (!present.equalsIgnoreCase(latest)) {
+
+            if (new Version(latest).compareTo(new Version(present)) < 0){
                 this.plugin.getLogger().info("     §eUpdate available §c" + present + " (old version) §6--> §a" + latest + " (latest) §e:)");
                 this.plugin.getLogger().info("§9█§f█§c█  §eMise à jour est disponible §c" + present + " (ancienne version) §6--> §a" + latest + " (récente) §e:)");
             }

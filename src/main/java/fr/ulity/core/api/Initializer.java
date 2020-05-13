@@ -21,8 +21,6 @@ public final class Initializer {
             lesPlugins.add(plugin);
             lesClass.add(plugin.getClass());
         }
-
-        Lang.reloadOneAddon(plugin.getClass());
     }
 
     public void reloadLang () {

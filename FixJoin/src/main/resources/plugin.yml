@@ -1,0 +1,9 @@
+name: Fixjoin
+version: ${project.version}
+main: fr.ulity.fixjoin.bukkit.MainFixBukkit
+api-version: 1.15
+prefix: Fixjoin
+depend: [UlityCore]
+authors: [360matt]
+description: Plugin a usage personnel permettant de fix le teleport lorsqu'on join
+website: https://discord.gg/jBFE4Bu

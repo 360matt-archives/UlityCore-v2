@@ -147,6 +147,25 @@ commands:
     usage: |-
       §eEnvoyer des messages aux staff: &7/sc <message ...>
     output: "&e[StaffChat] &b%player% &8: &7%message%"
+  kick:
+    description: "Permet d'expulser un joueur pouvant revenir"
+    usage: |-
+      §eExpulser un joueur: &7/kick <joueur> [raison]
+    expressions:
+      unknown_reason: "raison inconnue"
+      you_are_kicked: |-
+        &eVous avez été expulsé de ce serveur
+
+
+        &cResponsable: &b%staff%
+        &cRaison: &7%reason%
+    broadcast:
+      enabled: false
+      message_without_reason: "&c%player% &7a été expulsé (&b%staff%&7)"
+      message: "&c%player% &7a été expulsé (%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - calme toi
+      - spam
 
 module:
   anti_insult:

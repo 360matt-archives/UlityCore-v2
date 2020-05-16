@@ -6,6 +6,10 @@
     <file url="file://$PROJECT_DIR$/Claims/src/main/java/fr/ulity/claims/commands" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/Claims/src/main/java/fr/ulity/claims/events" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/Claims/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FixJoin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FixJoin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FixJoin/src/main/resources/fr/ulity/fixjoin/bukkit/languages/fr.yml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/FixJoin/src/main/resources/fr/ulity/fixjoin/bukkit/languages/fr.yml" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/moderation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/moderation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/moderation/src/main/resources/fr/ulity/moderation/bukkit/languages/fr.yml" charset="windows-1252" />

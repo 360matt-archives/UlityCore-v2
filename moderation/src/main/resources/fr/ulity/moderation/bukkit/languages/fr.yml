@@ -130,6 +130,18 @@ commands:
     expressions:
       is_not_banned: "&7Le joueur &c%player% &7n'est pas banni"
       unbanned: "&7Le joueur &c%player% &7peut de nouveau rejoindre."
+  vanish:
+    description: "Permet de définir son invisibilité"
+    usage: |-
+      §Toggle l'invisibilité de sois-même: &7/mute
+      §Toggle l'invisibilité d'un joueur: &7/mute [<joueur>]
+    expressions:
+      no_perm_self: "&cVous ne pouvez pas vous &6vanish &cvous même"
+      no_perm_other: "&cVous ne pouvez pas &6vanish &cun autre joueur"
+      vanished_notification: "&7Vous avez été &avanish."
+      unvanished_notification: "&7Vous avez été &cunvanish."
+      vanished_other: "&b%player% &7Va été &avanish."
+      unvanished_other: "&b%player% &7Va été &cunvanish."
 
 module:
   anti_insult:

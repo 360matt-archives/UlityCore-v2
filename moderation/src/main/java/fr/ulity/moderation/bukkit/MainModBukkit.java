@@ -21,7 +21,7 @@ public final class MainModBukkit extends JavaPlugin {
         server = getServer();
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.0");
+        init.requireVersion("2.0.2");
         init.reloadLang();
         init.checkUpdates(78787);
 
@@ -37,6 +37,7 @@ public final class MainModBukkit extends JavaPlugin {
             new BanCommand(Api.Bukkit.commandMap, this);
             new TempBanCommand(Api.Bukkit.commandMap, this);
             new UnBanCommand(Api.Bukkit.commandMap, this);
+            new VanishCommand(Api.Bukkit.commandMap, this);
 
             // register/start modules :
             StartModule.start();

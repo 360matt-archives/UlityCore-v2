@@ -9,6 +9,7 @@ global:
   enable: "activer"
   disable: "désactiver"
   invalid_player: "&7[&cX&7] Le joueur &c%player% &7est invalide."
+  player_only: "&7[&cX&7] Cette commande doit être éxécutée par un joueur."
 period:
   years: "années"
   year: "année"

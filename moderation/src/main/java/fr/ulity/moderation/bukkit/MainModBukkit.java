@@ -38,6 +38,7 @@ public final class MainModBukkit extends JavaPlugin {
             new TempBanCommand(Api.Bukkit.commandMap, this);
             new UnBanCommand(Api.Bukkit.commandMap, this);
             new VanishCommand(Api.Bukkit.commandMap, this);
+            new StaffChatCommand(Api.Bukkit.commandMap, this);
 
             // register/start modules :
             StartModule.start();

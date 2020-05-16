@@ -133,8 +133,8 @@ commands:
   vanish:
     description: "Permet de définir son invisibilité"
     usage: |-
-      §Toggle l'invisibilité de sois-même: &7/mute
-      §Toggle l'invisibilité d'un joueur: &7/mute [<joueur>]
+      §eToggle l'invisibilité de sois-même: &7/mute
+      §eToggle l'invisibilité d'un joueur: &7/mute [<joueur>]
     expressions:
       no_perm_self: "&cVous ne pouvez pas vous &6vanish &cvous même"
       no_perm_other: "&cVous ne pouvez pas &6vanish &cun autre joueur"
@@ -142,6 +142,11 @@ commands:
       unvanished_notification: "&7Vous avez été &cunvanish."
       vanished_other: "&b%player% &7Va été &avanish."
       unvanished_other: "&b%player% &7Va été &cunvanish."
+  staffchat:
+    description: "Permet de parler aux staff seulement"
+    usage: |-
+      §eEnvoyer des messages aux staff: &7/sc <message ...>
+    output: "&e[StaffChat] &b%player% &8: &7%message%"
 
 module:
   anti_insult:

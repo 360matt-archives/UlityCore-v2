@@ -1,5 +1,5 @@
 name: Moderation
-version: 1.3
+version: 1.4
 main: fr.ulity.moderation.bukkit.MainModBukkit
 api-version: 1.15
 prefix: Moderation
@@ -24,3 +24,5 @@ permissions:
       ulity.mod.vanish: true
       ulity.mod.staffchat: true
       ulity.mod.kick: true
+      ulity.mod.banip: true
+      ulity.mod.unbanip: true

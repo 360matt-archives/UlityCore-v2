@@ -3,19 +3,13 @@ package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
 import fr.ulity.moderation.bukkit.api.Ban;
-import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
-import java.util.Date;
 
 public class UnBanCommand extends CommandManager {
 
@@ -37,15 +31,16 @@ public class UnBanCommand extends CommandManager {
             @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
 
-            Ban playerMute = new Ban(player.getName());
-
-            if (playerMute.isBan()){
-                playerMute.unban();
-                sender.sendMessage(Lang.get(sender, "commands.unban.expressions.unbanned")
-                        .replaceAll("%player%", player.getName()));
+            Ban playerBan = new Ban(player.getName());
+            String result;
+            if (playerBan.isBan()){
+                playerBan.unban();
+                result = "unbanned";
             } else
-                sender.sendMessage(Lang.get(sender, "commands.unban.expressions.is_not_banned")
-                        .replaceAll("%player%", player.getName()));
+                result = "is_not_banned";
+
+            sender.sendMessage(Lang.get(sender, "commands.unban.expressions." + result)
+                    .replaceAll("%player%", player.getName()));
 
             return true;
         }

@@ -5,16 +5,13 @@ import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
 import fr.ulity.moderation.bukkit.api.Ban;
-import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
 import java.util.Date;
 
 public class BanCommand extends CommandManager {
@@ -53,6 +50,9 @@ public class BanCommand extends CommandManager {
                         .replaceAll("%staff%", sender.getName())
                         .replaceAll("%reason%", reason));
             }
+            else
+                sender.sendMessage(Lang.get(sender, "commands.banip.expressions.result")
+                        .replaceAll("%player%", player.getName()));
 
             if (player.isOnline())
                 Bukkit.getPlayer(args[0]).kickPlayer(Lang.get(player, "commands.ban.expressions.you_are_banned")

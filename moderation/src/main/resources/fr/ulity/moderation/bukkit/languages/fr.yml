@@ -37,6 +37,7 @@ commands:
         &c%player% &7ne pourra pas vous répondre.
         &7Son mute se lèvera à nouvel ordre.
         &7Mais en profitez pas pour le taquiner :/
+      result: "&c%player% &7est maintenant mute"
     broadcast:
       enabled: true
       message_without_reason: "&c%player% &7a été muté (&b%staff%&7)"
@@ -62,6 +63,7 @@ commands:
         &c%player% &7ne pourra pas vous répondre.
         &7Son mute se terminera dans &c%timeLeft%.
         &7Mais en profitez pas pour le taquiner :/
+      result: "&c%player% &7est maintenant mute temporairement"
     broadcast:
       enabled: true
       message_without_reason: "&c%player% &7a été muté &c%time% &7(&b%staff%&7)"
@@ -92,6 +94,7 @@ commands:
         &cDurée: &7Indéfiniment
         &cResponsable: &b%staff%
         &cRaison: &7%reason%
+      result: "&c%player% &7est maintenant banni"
     broadcast:
       enabled: true
       message_without_reason: "&c%player% &7a été banni (&b%staff%&7)"
@@ -114,6 +117,7 @@ commands:
         &cDurée: &7%timeLeft%
         &cResponsable: &b%staff%
         &cRaison: &7%reason%
+      result: "&c%player% &7est maintenant banni temporairement"
     broadcast:
       enabled: true
       message_without_reason: "&c%player% &7a été banni &c%time% &7(&b%staff%&7)"
@@ -126,7 +130,7 @@ commands:
   unban:
     description: "Permet de débannir un joueur"
     usage: |-
-      §eUnBan un joueur: &7/mute <joueur>
+      §eUnBan un joueur: &7/unban <joueur>
     expressions:
       is_not_banned: "&7Le joueur &c%player% &7n'est pas banni"
       unbanned: "&7Le joueur &c%player% &7peut de nouveau rejoindre."
@@ -159,6 +163,7 @@ commands:
 
         &cResponsable: &b%staff%
         &cRaison: &7%reason%
+      result: "&c%player% &7est a été kick"
     broadcast:
       enabled: false
       message_without_reason: "&c%player% &7a été expulsé (&b%staff%&7)"
@@ -166,6 +171,37 @@ commands:
     reasons_predefined:
       - calme toi
       - spam
+  banip:
+    description: "Permet de bannir une ip, ou celle d'un joueur par son nom"
+    usage: |-
+      §eBan une ip: &7/ban <IP> [raison]
+      §eBan l'ip d'un joueur: &7/ban <joueur> [raison]
+    expressions:
+      unknown_reason: "raison inconnue"
+      you_are_banned: |-
+        &eVous avez été banni de ce serveur
+
+
+        &cDurée: &7Indéfiniment
+        &cResponsable: &b%staff%
+        &cRaison: &7%reason%
+      result: "&c%player% &7est maintenant banni"
+    broadcast:
+      enabled: false
+      message_without_reason: "&c%player% &7a été banni par IP (&b%staff%&7)"
+      message: "&c%player% &7a été banni par IP (%reason% - &b%staff%&7)"
+    reasons_predefined:
+      - flood
+      - spam
+      - publicité
+      - insultes
+  unbanip:
+    description: "Permet de débannir une IP"
+    usage: |-
+      §eUnBan une IP: &7/unbanip <ip>
+    expressions:
+      is_not_banned: "&7L'IP &c%ip% &7n'est pas bannie"
+      unbanned: "&7L'IP &c%ip% &7peut de nouveau se connecter."
 
 module:
   anti_insult:

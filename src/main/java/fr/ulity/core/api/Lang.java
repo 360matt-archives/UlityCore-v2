@@ -85,17 +85,24 @@ public class Lang {
 
 
 
+    private static String getLangOfPlayer (Object arg) {
+        try {
+            Class.forName("org.bukkit.entity.Player");
 
-
+            return (arg instanceof org.bukkit.entity.Player)
+                    ? ((org.bukkit.entity.Player) arg).getLocale().toLowerCase().split("_")[0]
+                    : Lang.defaultLang;
+        } catch (ClassNotFoundException ignored) {
+            return (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
+                    ? ((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getLocale().getLanguage()
+                    : Lang.defaultLang;
+        }
+    }
 
     private static Config getBrut (Object arg) {
         if (arg instanceof String)
             return getLangConf((String) arg);
-        else if (arg instanceof org.bukkit.entity.Player)
-            return getLangConf(((org.bukkit.entity.Player) arg).getLocale().toLowerCase().split("_")[0]);
-        else if (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
-            return getLangConf(((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getLocale().getLanguage());
-        else return getLangConf(defaultLang);
+        return getLangConf(getLangOfPlayer(arg));
     }
 
 

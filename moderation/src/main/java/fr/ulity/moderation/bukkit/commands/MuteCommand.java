@@ -45,10 +45,14 @@ public class MuteCommand extends CommandManager {
                         .replaceAll("%player%", player.getName())
                         .replaceAll("%staff%", sender.getName())
                         .replaceAll("%reason%", reason));
-            } else if (player.isOnline())
-                Bukkit.getPlayer(args[0]).sendMessage(Lang.get(player, "commands.mute.expressions.you_are_muted")
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason));
+            } else {
+                if (player.isOnline())
+                    Bukkit.getPlayer(args[0]).sendMessage(Lang.get(player, "commands.mute.expressions.you_are_muted")
+                            .replaceAll("%staff%", sender.getName())
+                            .replaceAll("%reason%", reason));
+                sender.sendMessage(Lang.get(sender, "commands.mute.expressions.result")
+                        .replaceAll("%player%", player.getName()));
+            }
 
             return true;
         }

@@ -13,19 +13,25 @@ public class BanEvent implements Listener {
     public static void onLogin (PlayerLoginEvent e) {
         Player p = e.getPlayer();
 
-        if (p.hasPermission("ulity.mod.ban"))
-            return;
+        if (!p.hasPermission("ulity.mod.ban")){
+            String messageBanned;
 
-        Ban playerBan = new Ban(p.getName());
+            Ban playerBan = new Ban(p.getName());
 
-        if (playerBan.isBan()){
-            String messageBanned = Lang.get("commands.ban.expressions.you_are_banned")
-                    .replaceAll("%staff%", playerBan.responsable)
-                    .replaceAll("%reason%", playerBan.reason)
-                    .replaceAll("%timeLeft%", playerBan.expire_text);
+            String ip = e.getAddress().getAddress().toString()
+                    .replaceAll("/", "")
+                    .replaceAll("\\.", "_");
 
-            e.disallow(PlayerLoginEvent.Result.KICK_BANNED, messageBanned);
+            Ban playerBanIP = new Ban("ip_" + ip);
 
-        }
+            if (playerBan.isBan() || playerBanIP.isBan()){
+                messageBanned = Lang.get("commands.ban.expressions.you_are_banned")
+                        .replaceAll("%staff%", playerBan.responsable)
+                        .replaceAll("%reason%", playerBan.reason)
+                        .replaceAll("%timeLeft%", playerBan.expire_text);
+
+                e.disallow(PlayerLoginEvent.Result.KICK_BANNED, messageBanned);
+            }
+       }
     }
 }

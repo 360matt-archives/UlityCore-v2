@@ -5,7 +5,6 @@ import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -46,6 +45,9 @@ public class KickCommand extends CommandManager {
                             .replaceAll("%staff%", sender.getName())
                             .replaceAll("%reason%", reason));
                 }
+                else
+                    sender.sendMessage(Lang.get(sender, "commands.kick.expressions.result")
+                            .replaceAll("%player%", player.getName()));
 
                 player.kickPlayer(Lang.get(player, "commands.kick.expressions.you_are_kicked")
                         .replaceAll("%staff%", sender.getName())

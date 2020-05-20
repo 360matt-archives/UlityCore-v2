@@ -1,18 +1,15 @@
 package fr.ulity.moderation.bukkit.commands;
 
-import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
 import fr.ulity.core.utils.Time;
-import fr.ulity.moderation.bukkit.MainModBukkit;
 import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Date;
@@ -53,11 +50,16 @@ public class TempMuteCommand extends CommandManager {
                         .replaceAll("%staff%", sender.getName())
                         .replaceAll("%reason%", reason)
                         .replaceAll("%time%", time.text));
-            } else if (player.isOnline())
-                Bukkit.getPlayer(args[0]).sendMessage(Lang.get(player, "commands.tempmute.expressions.you_are_muted")
+            } else {
+                if (player.isOnline())
+                    Bukkit.getPlayer(args[0]).sendMessage(Lang.get(player, "commands.tempmute.expressions.you_are_muted")
                         .replaceAll("%staff%", sender.getName())
                         .replaceAll("%reason%", reason)
                         .replaceAll("%time%", time.text));
+
+                sender.sendMessage(Lang.get(sender, "commands.tempmute.expressions.result")
+                        .replaceAll("%player%", player.getName()));
+            }
 
             return true;
         }

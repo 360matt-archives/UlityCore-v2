@@ -2,6 +2,7 @@ package fr.ulity.moderation.bukkit;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Initializer;
+import fr.ulity.core.api.Metrics;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
@@ -21,10 +22,11 @@ public final class MainModBukkit extends JavaPlugin {
         server = getServer();
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.0.2");
+        init.requireVersion("2.0.4");
         init.reloadLang();
         init.checkUpdates(78787);
 
+        Metrics metrics = new Metrics(this, 7588);
         
 
         if (init.ok){
@@ -40,6 +42,8 @@ public final class MainModBukkit extends JavaPlugin {
             new VanishCommand(Api.Bukkit.commandMap, this);
             new StaffChatCommand(Api.Bukkit.commandMap, this);
             new KickCommand(Api.Bukkit.commandMap, this);
+            new BanIpCommand(Api.Bukkit.commandMap, this);
+            new UnBanIpCommand(Api.Bukkit.commandMap, this);
 
             // register/start modules :
             StartModule.start();

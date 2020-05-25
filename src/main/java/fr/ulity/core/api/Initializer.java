@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public final class Initializer {
@@ -24,8 +26,14 @@ public final class Initializer {
         }
     }
 
-    public void reloadLang () {
-        Lang.reloadOneAddon(plugin.getClass());
+    public boolean reloadLang () {
+        try {
+            Lang.reloadOneAddon(plugin.getClass());
+            return true;
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public static void removeClass ( JavaPlugin plugin) {

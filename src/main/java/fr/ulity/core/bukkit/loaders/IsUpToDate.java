@@ -21,16 +21,17 @@ public class IsUpToDate {
     }
 
     public void getVersion(final Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
-            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
-                if (scanner.hasNext())
-                    consumer.accept(scanner.next());
-            } catch (IOException exception) {
-                this.plugin.getLogger().info("     §6Cannot update this plugin :/");
-                this.plugin.getLogger().info("§9█§f█§c█  §6Impossible de mettre à jour le plugin :/");
-                this.plugin.getLogger().severe(exception.getMessage());
-            }
-        });
+        if (plugin.isEnabled())
+            Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+                try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
+                    if (scanner.hasNext())
+                        consumer.accept(scanner.next());
+                } catch (IOException exception) {
+                    this.plugin.getLogger().info("     §6Cannot update this plugin :/");
+                    this.plugin.getLogger().info("§9█§f█§c█  §6Impossible de mettre à jour le plugin :/");
+                    this.plugin.getLogger().severe(exception.getMessage());
+                }
+            });
     }
 
     public void noticeUpdate(){

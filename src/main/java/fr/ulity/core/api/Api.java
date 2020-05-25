@@ -1,10 +1,11 @@
 package fr.ulity.core.api;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.URISyntaxException;
 
 public class Api {
     public static boolean ok = true;
@@ -24,7 +25,7 @@ public class Api {
 
     public static void initialize(@NotNull Object plugin) {
         pluginObj = plugin;
-        File folder = null;
+        File folder;
 
         try {
             Class.forName("net.md_5.bungee.api.plugin.Plugin");
@@ -53,7 +54,12 @@ public class Api {
         data = new Data();
 
         temp.clear();
-        Lang.reload();
+
+        try {
+            Lang.reload();
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
 

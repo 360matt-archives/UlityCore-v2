@@ -2,6 +2,8 @@ package fr.ulity.core.utils;
 
 import fr.ulity.core.api.Api;
 
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Text {
@@ -30,5 +32,20 @@ public class Text {
         else
             return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
     }
+
+    public static String convertEncodage (String str) {
+        return new String(str.getBytes(), StandardCharsets.UTF_8);
+    }
+
+    public static String[] convertEncodage (String[] arr) {
+        ArrayList<String> newArr = new ArrayList<String>();
+
+        for (String x : arr)
+            newArr.add(convertEncodage(x));
+
+        return newArr.toArray(new String[0]);
+    }
+
+
 
 }

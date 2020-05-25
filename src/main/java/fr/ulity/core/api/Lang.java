@@ -1,10 +1,8 @@
 package fr.ulity.core.api;
 
-import de.leonhard.storage.Yaml;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
 import fr.ulity.core.utils.Text;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -17,7 +15,7 @@ public class Lang {
     public static String defaultLang;
     private static Map<String, Config> langC = new HashMap<String, Config>();
 
-    public static void reload () {
+    public static void reload () throws IOException, URISyntaxException {
         defaultLang = Api.config.getString("global.lang");
 
         reloadCore();
@@ -29,48 +27,36 @@ public class Lang {
         );
     }
 
-    public static void reloadCore () {
-        try {
-            String path = (MainBukkit.class.getPackage().getName() + "/languages/").replaceAll("\\.", "/");
+    public static void reloadCore () throws IOException, URISyntaxException {
+        String path = (MainBukkit.class.getPackage().getName() + "/languages/").replaceAll("\\.", "/");
 
-            for (String x : ListingResources.getResourceListing(MainBukkit.class, path)) {
-                Matcher m = Pattern.compile("(.*).yml").matcher(x);
-                if (m.find())
-                    Lang.addFromReference(Objects.requireNonNull(MainBukkit.class.getClassLoader().getResource(path + x)), m.group(1));
-            }
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+        for (String x : ListingResources.getResourceListing(MainBukkit.class, path)) {
+            Matcher m = Pattern.compile("(.*).yml").matcher(x);
+            if (m.find())
+                Lang.addFromReference(Objects.requireNonNull(MainBukkit.class.getClassLoader().getResource(path + x)), m.group(1));
         }
-
     }
 
-    public static void reloadAddons () {
+    public static void reloadAddons () throws IOException, URISyntaxException {
         for (Class c : Initializer.lesClass)
             reloadOneAddon(c);
     }
 
-    public static void reloadOneAddon (Class clazz) {
-        try {
-            String path = (clazz.getPackage().getName() + "/languages/").replaceAll("\\.", "/");
+    public static void reloadOneAddon (Class clazz) throws IOException, URISyntaxException {
+        String path = (clazz.getPackage().getName() + "/languages/").replaceAll("\\.", "/");
 
-            for (String x : ListingResources.getResourceListing(clazz, path)) {
-                Matcher m = Pattern.compile("(.*).yml").matcher(x);
-                if (m.find())
-                    Lang.addFromReference(Objects.requireNonNull(clazz.getClassLoader().getResource(path + x)), m.group(1));
-            }
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+        for (String x : ListingResources.getResourceListing(clazz, path)) {
+            Matcher m = Pattern.compile("(.*).yml").matcher(x);
+            if (m.find())
+                Lang.addFromReference(Objects.requireNonNull(clazz.getClassLoader().getResource(path + x)), m.group(1));
         }
     }
 
-    public static void addFromReference (URL url, String lang) throws IOException {
-        File fileTemp = File.createTempFile("ulitycore_lang_" + lang, ".yml");
-        FileUtils.copyURLToFile(url, fileTemp);
 
-        Yaml tempoC = new Yaml(fileTemp.getName(), fileTemp.getParent());
+    public static void addFromReference (URL url, String lang) throws IOException {
+        InputStream input = new URL(url.toString()).openStream();
         Config langHandle = getLangConf(lang);
-        for (String i : tempoC.keySet())
-            langHandle.setDefault(i, tempoC.get(i));
+        langHandle.addDefaultsFromInputStream(input);
     }
 
     private static Config getLangConf (String lang) {
@@ -83,19 +69,25 @@ public class Lang {
         }
     }
 
-
-
     private static String getLangOfPlayer (Object arg) {
         try {
             Class.forName("org.bukkit.entity.Player");
 
-            return (arg instanceof org.bukkit.entity.Player)
-                    ? ((org.bukkit.entity.Player) arg).getLocale().toLowerCase().split("_")[0]
-                    : Lang.defaultLang;
+            if (arg instanceof org.bukkit.entity.Player)
+                if (Api.data.isSet("player." + ((org.bukkit.entity.Player) arg).getName() + ".lang"))
+                    return Api.data.getString("player." + ((org.bukkit.entity.Player) arg).getName() + ".lang");
+                else
+                    return ((org.bukkit.entity.Player) arg).getLocale().toLowerCase().split("_")[0];
+            else
+                return Lang.defaultLang;
         } catch (ClassNotFoundException ignored) {
-            return (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
-                    ? ((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getLocale().getLanguage()
-                    : Lang.defaultLang;
+            if (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer)
+                if (Api.data.isSet("player." + ((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getName() + ".lang"))
+                    return Api.data.getString("player." + ((org.bukkit.entity.Player) arg).getName() + ".lang");
+                else
+                    return ((net.md_5.bungee.api.connection.ProxiedPlayer) arg).getLocale().getLanguage();
+            else
+                return Lang.defaultLang;
         }
     }
 
@@ -109,10 +101,12 @@ public class Lang {
 
 
 
+
+
     /* API use */
 
     public static String get (Object lang, String exp){
-        return Text.withColours(getBrut(lang).getString(exp));
+        return Text.withColours(Text.convertEncodage(getBrut(lang).getString(exp)));
     }
     public static String get (String exp){
         return get(defaultLang, exp);
@@ -127,19 +121,11 @@ public class Lang {
 
     public static String[] getStringArray (Object lang, String exp) {
         List<?> list = getBrut(lang).getList(exp);
-        return list.toArray(new String[list.size()]);
+        return Text.convertEncodage(list.toArray(new String[list.size()]));
     }
     public static String[] getStringArray (String exp) {
         return getStringArray(defaultLang, exp);
     }
-
-    public static boolean getBoolean (Object lang, String exp) {
-        return getBrut(lang).getBoolean(exp);
-    }
-    public static boolean getBoolean (String exp) {
-        return getBoolean(defaultLang, exp);
-    }
-
 
     public static String[] getStringArrayColor (Object lang, String exp) {
         Object[] list = getBrut(lang).getList(exp).toArray();
@@ -151,7 +137,7 @@ public class Lang {
             String[] value = new String[list.length];
             int counter = 0;
             for (Object x : list) {
-                value[counter] = Text.withColours(x.toString());
+                value[counter] = Text.withColours(Text.convertEncodage(x.toString()));
                 counter++;
             }
 
@@ -163,5 +149,11 @@ public class Lang {
         return getStringArrayColor(defaultLang, exp);
     }
 
+    public static boolean getBoolean (Object lang, String exp) {
+        return getBrut(lang).getBoolean(exp);
+    }
+    public static boolean getBoolean (String exp) {
+        return getBoolean(defaultLang, exp);
+    }
 
 }

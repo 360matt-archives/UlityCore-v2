@@ -2,8 +2,8 @@ package fr.ulity.core.bukkit;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Metrics;
+import fr.ulity.core.bukkit.commands.*;
 import fr.ulity.core.bukkit.loaders.IsUpToDate;
-import fr.ulity.core.bukkit.commands.UlityCoreCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +17,8 @@ public final class MainBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        System.setProperty("file.encoding","UTF-8");
+
         plugin = this;
         Api.initialize(this);
 
@@ -31,6 +33,7 @@ public final class MainBukkit extends JavaPlugin {
             commandMap = (CommandMap) f.get(Bukkit.getServer());
 
             new UlityCoreCommand(commandMap, this);
+            new LangCommand(commandMap, this);
 
 
             // getServer().getPluginManager().registerEvents(new X(), this);

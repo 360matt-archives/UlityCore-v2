@@ -1,5 +1,5 @@
 name: Moderation
-version: 1.4
+version: 1.4.1
 main: fr.ulity.moderation.bukkit.MainModBukkit
 api-version: 1.15
 prefix: Moderation
@@ -7,6 +7,8 @@ depend: [UlityCore]
 authors: [360matt]
 description: Permet implementer les commandes de moderation dans le noyau UlityCore
 website: https://discord.gg/jBFE4Bu
+
+loadbefore: [Essentials]
 
 
 permissions:

@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 
 /**
  * @author redsarow
@@ -77,8 +80,13 @@ public class UlityCoreCommand extends CommandManager {
                         sender.sendMessage(Lang.get("plugin.lang.actual"));
                     else{
                         Api.config.set("global.lang", args[1]);
-                        Lang.reload();
-                        sender.sendMessage(Lang.get(sender, "plugin.lang.reloaded"));
+                        try {
+                            Lang.reload();
+                            sender.sendMessage(Lang.get(sender, "plugin.lang.reloaded"));
+                        } catch (IOException | URISyntaxException e) {
+                            sender.sendMessage(Lang.get(sender, "plugin.lang.fail_reload"));
+                            e.printStackTrace();
+                        }
                     }
                     return true;
                 }

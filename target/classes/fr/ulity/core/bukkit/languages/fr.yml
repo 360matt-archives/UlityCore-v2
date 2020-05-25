@@ -1,18 +1,30 @@
 plugin:
-  reloaded: "&7Le plugin a été rechargé"
-  addons_reloaded: "&e%count% &6extensions &7ont été rechargées"
-  no_perm: "&cVous n'avez pas les privilèges nécessaires"
+  reloaded: "&7Le plugin a Ã©tÃ© rechargÃ©"
+  addons_reloaded: "&e%count% &6extensions &7ont Ã©tÃ© rechargÃ©es"
+  no_perm: "&cVous n'avez pas les privilÃ¨ges nÃ©cessaires"
   lang:
-    reloaded: "&7Les fichiers de langue ont été rechargés avec succès."
-    actual: "&7La langue par défaut est le &bFrançais&7."
+    reloaded: "&7Les fichiers de langue ont Ã©tÃ© rechargÃ©s avec succÃ©s."
+    fail_reload: "&7[&cX&7] Les fichiers de langue n'ont pas pu Ãªtre rechargÃ©e"
+    actual: "&7La langue par dÃ©faut est le &bFranÃ§ais&7."
+  commands:
+    lang:
+      aliases:
+        - langue
+        - lengua
+        - sprache
+      lang_changed: '&7La langue a Ã©tÃ© changÃ©e en &bFranÃ§ais'
+      lang_unknown: '&7La langue demandÃ©e &c%lang% &7est inconnue'
+      lang_required: |-
+        &7Une langue est attendue au format deux lettres.
+        &7La langue de votre client est: &bFranÃ§ais
 global:
   enable: "activer"
-  disable: "désactiver"
+  disable: "dÃ©sactiver"
   invalid_player: "&7[&cX&7] Le joueur &c%player% &7est invalide."
-  player_only: "&7[&cX&7] Cette commande doit être éxécutée par un joueur."
+  player_only: "&7[&cX&7] Cette commande doit Ãªtre Ã©xÃ©cutÃ©e par un joueur."
 period:
-  years: "années"
-  year: "année"
+  years: "annÃ©es"
+  year: "annÃ©e"
   months: "mois"
   month: "mois"
   days: "jours"

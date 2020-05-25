@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 /**
@@ -79,14 +81,19 @@ public class UlityCoreCommand extends CommandManager {
                     if (args.length == 1)
                         sender.sendMessage(Lang.get("plugin.lang.actual"));
                     else{
-                        Api.config.set("global.lang", args[1]);
-                        try {
-                            Lang.reload();
-                            sender.sendMessage(Lang.get(sender, "plugin.lang.reloaded"));
-                        } catch (IOException | URISyntaxException e) {
-                            sender.sendMessage(Lang.get(sender, "plugin.lang.fail_reload"));
-                            e.printStackTrace();
+                        if (Files.exists(Paths.get(Api.full_prefix + "/languages/" + args[1] + ".yml"))){
+                            Api.config.set("global.lang", args[1]);
+                            try {
+                                Lang.reload();
+                                sender.sendMessage(Lang.get(sender, "plugin.lang.reloaded"));
+                            } catch (IOException | URISyntaxException e) {
+                                sender.sendMessage(Lang.get(sender, "plugin.lang.fail_reload"));
+                                e.printStackTrace();
+                            }
                         }
+                        else
+                            sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_unknown")
+                                    .replaceAll("%lang%", args[1]));
                     }
                     return true;
                 }

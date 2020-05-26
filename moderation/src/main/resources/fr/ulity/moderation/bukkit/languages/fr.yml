@@ -202,6 +202,16 @@ commands:
     expressions:
       is_not_banned: "&7L'IP &c%ip% &7n'est pas bannie"
       unbanned: "&7L'IP &c%ip% &7peut de nouveau se connecter."
+  invsee:
+    description: "Permet de visualiser [et changer un inventaire]"
+    usage: |-
+      &eVisualiser un inventaire IP: &7/invsee <joueur>
+
+      &cSi permission accordée:
+      &eModifier un inventaire IP: &7/invsee <joueur>
+    expressions:
+      inventory_opened: "&7Vous consultez l'inventaire de &b%player%"
+
 
 module:
   anti_insult:

@@ -1,10 +1,12 @@
 package fr.ulity.moderation.bukkit;
 
 import fr.ulity.core.api.Api;
+import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Metrics;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
+import fr.ulity.moderation.bukkit.events.InvSeeCancelEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +16,7 @@ import static org.bukkit.Bukkit.getPluginManager;
 public final class MainModBukkit extends JavaPlugin {
     public static MainModBukkit plugin;
     public static Server server;
-
+    public static Config config;
 
     @Override
     public void onEnable() {
@@ -27,9 +29,15 @@ public final class MainModBukkit extends JavaPlugin {
         init.checkUpdates(78787);
 
         Metrics metrics = new Metrics(this, 7588);
+
+
         
 
         if (init.ok){
+            // register config field
+            config = new Config("config", "moderation");
+            DefaultConfig.make();
+
             // register commands :
             new ClearChatCommand(Api.Bukkit.commandMap, this);
             new ChatCommand(Api.Bukkit.commandMap, this);
@@ -44,6 +52,7 @@ public final class MainModBukkit extends JavaPlugin {
             new KickCommand(Api.Bukkit.commandMap, this);
             new BanIpCommand(Api.Bukkit.commandMap, this);
             new UnBanIpCommand(Api.Bukkit.commandMap, this);
+            new InvSeeCommand(Api.Bukkit.commandMap, this);
 
             // register/start modules :
             StartModule.start();
@@ -52,6 +61,7 @@ public final class MainModBukkit extends JavaPlugin {
             // register events
             getPluginManager().registerEvents(new MuteEvent(), this);
             getPluginManager().registerEvents(new BanEvent(), this);
+            getPluginManager().registerEvents(new InvSeeCancelEvent(), this);
 
         }
 

@@ -1,6 +1,8 @@
 package fr.ulity.core.utils;
 
 import fr.ulity.core.api.Api;
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -46,6 +48,11 @@ public class Text {
         return newArr.toArray(new String[0]);
     }
 
+    public String centerText(String text) {
+        int maxWidth = 80,
+                spaces = (int) Math.round((maxWidth-1.4* ChatColor.stripColor(text).length())/2);
+        return StringUtils.repeat(" ", spaces)+text;
+    }
 
 
 }

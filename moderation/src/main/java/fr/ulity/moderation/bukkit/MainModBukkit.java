@@ -6,6 +6,7 @@ import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Metrics;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
+import fr.ulity.moderation.bukkit.events.FreezeEvent;
 import fr.ulity.moderation.bukkit.events.InvSeeCancelEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
 import org.bukkit.Server;
@@ -53,6 +54,8 @@ public final class MainModBukkit extends JavaPlugin {
             new BanIpCommand(Api.Bukkit.commandMap, this);
             new UnBanIpCommand(Api.Bukkit.commandMap, this);
             new InvSeeCommand(Api.Bukkit.commandMap, this);
+            new FreezeCommand(Api.Bukkit.commandMap, this);
+            new UnFreezeCommand(Api.Bukkit.commandMap, this);
 
             // register/start modules :
             StartModule.start();
@@ -62,6 +65,7 @@ public final class MainModBukkit extends JavaPlugin {
             getPluginManager().registerEvents(new MuteEvent(), this);
             getPluginManager().registerEvents(new BanEvent(), this);
             getPluginManager().registerEvents(new InvSeeCancelEvent(), this);
+            getPluginManager().registerEvents(new FreezeEvent(), this);
 
         }
 

@@ -211,6 +211,35 @@ commands:
       &eModifier un inventaire IP: &7/invsee <joueur>
     expressions:
       inventory_opened: "&7Vous consultez l'inventaire de &b%player%"
+  freeze:
+    description: "Permet d'immobiliser un joueur, et l'empêcher d'envoyer de message sauf aux modérateurs"
+    usage: |-
+      &eImmobiliser un joueur: &7/freeze <joueur>
+    expressions:
+      player_freezed: "&7Le joueur &b%player% &7a été immobilisé"
+      unknown_reason: "inconnue"
+      notification: |-
+        &b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-
+        &7vous êtes à présent &b&lfreeze
+        &6Un bonhomme de neige ne bouge pas et ne parle pas !
+         &7
+        &c&oRaison: &7%reason%
+        &c&oStaff: &b%staff%
+        &b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-
+      reasons_predefined:
+      - triche
+      - grief
+      - troll
+  unfreeze:
+    description: "Permet d'annuler un freeze"
+    usage: |-
+      &eAnnule le freeze d'un joueur: &7/unfreeze <joueur>
+    expressions:
+      player_unfreezed: "&7Le joueur &b%player% &7a été &c&o&lunfreeze"
+      is_not_freezed: "&7Le joueur &b%player% &7n'est pas &b&o&lfreeze"
+      unknown_reason: "inconnue"
+      notification: "&7Vous avez été &c&o§lunfreeze"
+
 
 
 module:

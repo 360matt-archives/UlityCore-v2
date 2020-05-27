@@ -1,7 +1,6 @@
 package fr.ulity.core.api;
 
 import de.leonhard.storage.Json;
-import de.leonhard.storage.Yaml;
 import fr.ulity.core.api.functions.DefaultData;
 
 public class Data extends Json {

@@ -2,10 +2,10 @@
   <artifact type="jar" build-on-make="true" name="UlityCore_V2:jar">
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="UlityCore_V2.jar">
-      <element id="module-output" name="UlityCore_V2" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.6/commons-io-2.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/joda-time/joda-time/2.10.6/joda-time-2.10.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/JavaFactoryDev/LightningStorage/3.1.3/LightningStorage-3.1.3.jar" path-in-jar="/" />
+      <element id="module-output" name="UlityCore" />
     </root>
   </artifact>
 </component>

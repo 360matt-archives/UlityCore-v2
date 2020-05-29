@@ -1,0 +1,33 @@
+name: Moderation
+version: 1.6.1
+main: fr.ulity.moderation.bukkit.MainModBukkit
+api-version: 1.15
+prefix: Moderation
+depend: [UlityCore]
+authors: [360matt]
+description: Permet implementer les commandes de moderation dans le noyau UlityCore
+website: https://discord.gg/jBFE4Bu
+
+loadbefore: [Essentials]
+
+
+permissions:
+  ulity.mod:
+    default: op
+    children:
+      ulity.mod.ban: true
+      ulity.mod.tempban: true
+      ulity.mod.unban: true
+      ulity.mod.mute: true
+      ulity.mod.tempmute: true
+      ulity.mod.unmute: true
+      ulity.mod.chat: true
+      ulity.mod.clc: true
+      ulity.mod.vanish: true
+      ulity.mod.staffchat: true
+      ulity.mod.kick: true
+      ulity.mod.banip: true
+      ulity.mod.unbanip: true
+      ulity.mod.invsee: true
+      ulity.mod.freeze: true
+      ulity.mod.unfreeze: true

@@ -1,0 +1,9 @@
+name: SuperJails
+version: ${project.version}
+main: fr.ulity.superjails.bukkit.MainJailsBukkit
+api-version: 1.13
+prefix: SuperJails
+depend: [UlityCore]
+authors: [360matt, Ulity]
+description: Un plugin spécialement dédié pour les Jails, emprisonnez vos joueurs
+website: https://discord.gg/jBFE4Bu

@@ -6,16 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="SuperJails" />
         <module name="Claims" />
-        <module name="FixJoin" />
-        <module name="UlityCore_V2" />
-        <module name="moderation" />
+        <module name="Moderation" />
+        <module name="UlityCore" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Claims" target="1.8" />
       <module name="FixJoin" target="1.8" />
+      <module name="main" target="8" />
+      <module name="Moderation" target="1.8" />
       <module name="moderation" target="1.8" />
+      <module name="SuperJails" target="1.8" />
+      <module name="UlityCore" target="1.8" />
       <module name="UlityCore_V2" target="8" />
     </bytecodeTargetLevel>
   </component>

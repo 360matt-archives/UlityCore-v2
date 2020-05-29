@@ -9,10 +9,14 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/moderation/pom.xml" />
         <option value="$PROJECT_DIR$/Claims/pom.xml" />
         <option value="$PROJECT_DIR$/FixJoin/pom.xml" />
+        <option value="$PROJECT_DIR$/SuperJails/pom.xml" />
+        <option value="$PROJECT_DIR$/Moderation/pom.xml" />
+        <option value="$PROJECT_DIR$/Moderation-2/pom.xml" />
+        <option value="$PROJECT_DIR$/Mooooo/pom.xml" />
+        <option value="$PROJECT_DIR$/UlityCore/pom.xml" />
       </list>
     </option>
   </component>

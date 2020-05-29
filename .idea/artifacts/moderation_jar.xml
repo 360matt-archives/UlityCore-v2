@@ -2,7 +2,7 @@
   <artifact type="jar" build-on-make="true" name="moderation:jar">
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="moderation.jar">
-      <element id="module-output" name="moderation" />
+      <element id="module-output" name="Moderation" />
     </root>
   </artifact>
 </component>

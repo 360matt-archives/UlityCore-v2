@@ -77,14 +77,14 @@ public class Freeze {
 
 
     public void unfreeze () {
-        freeze.delete(playername);
+        freeze.remove(playername);
         Bukkit.getScheduler().cancelTask(task);
 
         recallUnFreeze();
     }
 
     public void recallUnFreeze () {
-        freeze.delete(playername);
+        freeze.remove(playername);
         Player player = Bukkit.getPlayer(this.playername);
         if (player != null) {
             player.removePotionEffect(PotionEffectType.BLINDNESS);

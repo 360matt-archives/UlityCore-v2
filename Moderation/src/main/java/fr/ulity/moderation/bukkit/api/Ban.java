@@ -43,13 +43,13 @@ public class Ban {
     }
 
     public void unban () {
-        ban.delete(playername);
+        ban.remove(playername);
     }
 
     public boolean isBan () {
         if (ban.get(playername) != null){
             if (playerBan.getLong("expire") != 0 && playerBan.getLong("expire") <= new Date().getTime()) {
-                ban.delete(playername);
+                ban.remove(playername);
                 return false;
             }
             return true;

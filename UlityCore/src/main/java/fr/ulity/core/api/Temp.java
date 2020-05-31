@@ -11,8 +11,4 @@ public class Temp extends Json {
         return get(key) != null;
     }
 
-    public void delete(String key) {
-        set(key, null);
-    }
-
 }

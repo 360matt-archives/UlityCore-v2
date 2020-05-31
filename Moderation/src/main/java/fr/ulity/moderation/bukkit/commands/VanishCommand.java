@@ -74,7 +74,7 @@ public class VanishCommand extends CommandManager {
 
 
         } else{
-            Api.temp.delete(target.getName() + ".vanish");
+            Api.temp.remove(target.getName() + ".vanish");
 
             for (Player onePlayer : Bukkit.getOnlinePlayers())
                 onePlayer.showPlayer(MainModBukkit.plugin, target);

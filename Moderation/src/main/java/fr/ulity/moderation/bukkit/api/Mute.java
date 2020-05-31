@@ -40,13 +40,13 @@ public class Mute {
     }
 
     public void unmute () {
-        mute.delete(playername);
+        mute.remove(playername);
     }
 
     public boolean isMute () {
         if (mute.get(playername) != null){
             if (playerMute.getLong("expire") != 0 && playerMute.getLong("expire") <= new Date().getTime()) {
-                mute.delete(playername);
+                mute.remove(playername);
                 return false;
             }
             return true;

@@ -36,8 +36,4 @@ public class Config extends Yaml {
         return get(key) != null;
     }
 
-    public void delete(String key) {
-        set(key, null);
-    }
-
 }

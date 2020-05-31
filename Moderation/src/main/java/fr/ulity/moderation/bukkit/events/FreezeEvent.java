@@ -53,6 +53,7 @@ public class FreezeEvent implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("deprecation")
     private static void onCommand (PlayerInteractEvent e) {
         e.setCancelled(e.isCancelled() || new Freeze(e.getPlayer().getName()).isFreeze());
     }

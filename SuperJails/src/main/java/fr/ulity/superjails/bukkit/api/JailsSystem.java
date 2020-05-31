@@ -17,7 +17,7 @@ public final class JailsSystem {
         if (jails.isSet(name))
             response.setStatus(false, "already exist");
         else {
-            FlatFileSection section = jails.getSection(name);
+            FlatFileSection section = jails.getSection("jails." + name);
             section.set("x", loc.getX());
             section.set("y", loc.getY());
             section.set("z", loc.getZ());
@@ -30,16 +30,16 @@ public final class JailsSystem {
     public static Status removeJail (String name) {
         Status response = new Status();
 
-        if (!jails.isSet(name))
+        if (!jails.isSet("jails." + name))
             response.setStatus(false, "no exist");
         else
-            jails.delete(name);
+            jails.remove("jails." + name);
 
         return response;
     }
 
     public static boolean exist (String name) {
-        return jails.isSet(name);
+        return jails.isSet("jails." + name);
     }
 
     public static Status isValid (String name) {
@@ -61,19 +61,51 @@ public final class JailsSystem {
         if (!checkValid.success)
             response.setStatus(false, checkValid.code, checkValid.data);
         else {
-            FlatFileSection section = jails.getSection(name);
+            FlatFileSection section = jails.getSection("jails." + name);
             World world = Bukkit.getWorld(section.getString("world"));
             Location loc = new Location(world, section.getDouble("x"), section.getDouble("y"), section.getDouble("z"));
 
-            response.setStatus(true, "success", loc);
+            response.data = loc;
         }
-
-
-
 
         return response;
     }
 
+    public static Status setCustomMessage (String name, String message) {
+        Status response = new Status();
+
+        if (!jails.isSet(name))
+            response.setStatus(false, "no exist");
+        else {
+            FlatFileSection section = jails.getSection("jails." + name);
+            section.set("message", message);
+        }
+
+        return response;
+    }
+
+
+    public static Status getCustomMessage (String name) {
+        Status response = new Status();
+
+        if (!jails.isSet(name))
+            response.setStatus(false, "no exist");
+        else {
+            FlatFileSection section = jails.getSection("jails." + name);
+            String message = section.getString("message");
+
+            if (message == null)
+                response.setStatus(false, "message undefined");
+            else
+                response.data = message;
+        }
+
+        return response;
+    }
+
+    public static String[] getAllJails () {
+        return jails.singleLayerKeySet("jails").toArray(new String[]{});
+    }
 
 
 

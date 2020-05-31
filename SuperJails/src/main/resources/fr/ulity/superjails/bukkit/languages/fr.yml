@@ -6,8 +6,10 @@ commands:
       &eSupprimer un Jail: &7/jailsadmin remove <nom du jail>
 
       &eSe TP à un Jail: &7/jailsadmin tp <nom du jail>
+      &eModifier le message personnalisé du jail: &7/jailsadmin setmessage <nom du jail> <message>
     expressions:
       jail_name_expected: "&7[&cX&7] Le nom d'un Jail est attendue"
+      message_expected: "&7[&cX&7] Un message est attendue"
       no_exist: "&7[&cX&7] Le jail &6%name% &7n'existe pas"
       world_no_exist: "&7[&cX&7] le jail &6%name% &7 est corrompu: le monde &6%worldname% &7n'existe plus !"
       create:
@@ -17,3 +19,5 @@ commands:
         success: "&7Le jail &6%name% &7a bien été supprimé"
       tp:
         success: "&7Vous avez été téléporté au jail &6%name%"
+      setmessage:
+        success: "&7Votre message a bien été défini pour le claim &6%name%"

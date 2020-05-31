@@ -30,7 +30,7 @@ public class JailsAdminCommand extends CommandManager implements Listener {
         addUsage(Lang.get("commands.jailsadmin.usage"));
         addPermission("ulity.jails.admin");
 
-        addArrayTabbComplete(0, "ulity.jails.admin", new String[]{}, new String[]{"create", "remove", "tp", "setmessage"});
+        addArrayTabbComplete(0, "ulity.jails.admin", new String[]{}, new String[]{"create", "remove", "tp", "setmessage", "list"});
         addOneTabbComplete(1, "ulity.jails.admin", "§AllJails", "remove", "tp", "setmessage");
 
         getPluginManager().registerEvents(this, getPlugin());
@@ -134,6 +134,15 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                     }
 
                     break;
+
+                case "list":
+                    String[] list = JailsSystem.getAllJails();
+                    String noms = (list.length != 0) ? Text.full(list).trim().replaceAll(" ", ", ") : Lang.get(sender, "commands.jailsadmin.expressions.list.empty");
+
+                    sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.list.show_list")
+                            .replaceAll("%list%", noms));
+                    break;
+
                 default:
                     return false;
 

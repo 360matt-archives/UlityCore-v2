@@ -21,3 +21,6 @@ commands:
         success: "&7Vous avez été téléporté au jail &6%name%"
       setmessage:
         success: "&7Votre message a bien été défini pour le claim &6%name%"
+      list:
+        show_list: "&8Liste des jails: &7%list%"
+        empty: "aucun jails"

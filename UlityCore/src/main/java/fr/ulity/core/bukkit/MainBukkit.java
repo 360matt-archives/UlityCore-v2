@@ -1,6 +1,7 @@
 package fr.ulity.core.bukkit;
 
 import fr.ulity.core.api.Api;
+import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Metrics;
 import fr.ulity.core.bukkit.commands.*;
 import fr.ulity.core.bukkit.loaders.IsUpToDate;
@@ -27,21 +28,36 @@ public final class MainBukkit extends JavaPlugin {
         Metrics metrics = new Metrics(this, 6520);
         metrics.addCustomChart(new Metrics.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
 
-        try {
-            Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            f.setAccessible(true);
-            commandMap = (CommandMap) f.get(Bukkit.getServer());
+        if (Api.ok) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                System.out.println(" §c____ ___.__  .__  __          _________                       \n" +
+                        "§c|    |   \\  | |__|/  |_ ___.__.\\_   ___ \\  ___________   ____  \n" +
+                        "§c|    |   /  | |  \\   __<   |  |/    \\  \\/ /  _ \\_  __ \\_/ __ \\ \n" +
+                        "§c|    |  /|  |_|  ||  |  \\___  |\\     \\___(  <_> )  | \\/\\  ___/ \n" +
+                        "§c|______/ |____/__||__|  / ____| \\______  /\\____/|__|    \\___  >\n" +
+                        "§c                        \\/             \\/                   \\/ \n" +
+                        "\n" +
+                        "§e>_   §bCore - Library - API \n" +
+                        "§e>_   §6" + Initializer.lesPlugins.size() + " §bextensions loaded");
+            });
 
-            new UlityCoreCommand(commandMap, this);
-            new LangCommand(commandMap, this);
+            try {
+                Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                f.setAccessible(true);
+                commandMap = (CommandMap) f.get(Bukkit.getServer());
+
+                new UlityCoreCommand(commandMap, this);
+                new LangCommand(commandMap, this);
 
 
-            // getServer().getPluginManager().registerEvents(new X(), this);
+                // getServer().getPluginManager().registerEvents(new X(), this);
 
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            getLogger().severe(e.getLocalizedMessage());
-            e.printStackTrace();
-            this.getPluginLoader().disablePlugin(this);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                getLogger().severe(e.getLocalizedMessage());
+                e.printStackTrace();
+                this.getPluginLoader().disablePlugin(this);
+            }
+
         }
     }
 

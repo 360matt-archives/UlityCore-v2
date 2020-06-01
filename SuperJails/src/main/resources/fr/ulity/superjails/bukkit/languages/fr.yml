@@ -2,6 +2,7 @@ commands:
   jailsadmin:
     description: "Permet aux administrateurs de modifier et gérer des Jails"
     usage: |-
+      &eLister les jails: &7/jailsadmin list
       &eCréer un Jail: &7/jailsadmin create <nom du jail>
       &eSupprimer un Jail: &7/jailsadmin remove <nom du jail>
 
@@ -11,7 +12,8 @@ commands:
       jail_name_expected: "&7[&cX&7] Le nom d'un Jail est attendue"
       message_expected: "&7[&cX&7] Un message est attendue"
       no_exist: "&7[&cX&7] Le jail &6%name% &7n'existe pas"
-      world_no_exist: "&7[&cX&7] le jail &6%name% &7 est corrompu: le monde &6%worldname% &7n'existe plus !"
+      world_no_exist: "&7[&cX&7] Le jail &6%name% &7 est corrompu: le monde &6%worldname% &7n'existe plus !"
+      action_name_expected: "&7[&cX&7] Une action était attendue"
       create:
         success: "&7Le jail &6%name% &7a bien été créé"
         already_exist: "&7[&cX&7] Le jail &6%name% &7existe déjà :/"

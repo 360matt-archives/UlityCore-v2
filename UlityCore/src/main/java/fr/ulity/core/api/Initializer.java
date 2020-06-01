@@ -16,7 +16,7 @@ public final class Initializer {
 
     public boolean ok = Api.ok;
 
-    private JavaPlugin plugin;
+    private final JavaPlugin plugin;
 
     public Initializer (@NotNull JavaPlugin plugin) {
         this.plugin = plugin;

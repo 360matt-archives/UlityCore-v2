@@ -74,7 +74,7 @@ public final class JailsSystem {
     public static Status setCustomMessage (String name, String message) {
         Status response = new Status();
 
-        if (!jails.isSet(name))
+        if (!exist(name))
             response.setStatus(false, "no exist");
         else {
             FlatFileSection section = jails.getSection("jails." + name);

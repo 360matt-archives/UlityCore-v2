@@ -26,3 +26,7 @@ commands:
       list:
         show_list: "&8Liste des jails: &7%list%"
         empty: "aucun jails"
+      getmessage:
+        success: |-
+          &7Message du jail &6%name%: &r
+          %message%

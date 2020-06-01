@@ -45,12 +45,8 @@ public class JailsAdminCommand extends CommandManager implements Listener {
             if (e.getCompletions().contains("§AllJails"))
                 e.setCompletions(Arrays.asList(JailsSystem.getAllJails()));
             else if (args.length == 3 && args[1].equalsIgnoreCase("edit"))
-                e.setCompletions(Arrays.asList("setmessage"));
+                e.setCompletions(Arrays.asList("setmessage", "getmessage"));
         }
-
-
-
-
     }
 
     @Override
@@ -83,15 +79,9 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                         sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.jail_name_expected"));
                     else {
                         JailsSystem.Status status = JailsSystem.removeJail(args[1]);
-                        if (status.success) {
+                        if (status.success)
                             response = Lang.get(sender, "commands.jailsadmin.expressions.remove.success");
-
-
-
-                           // removeOneTabbComplete(1, args[1]);
-                           // registerCommand(Api.Bukkit.commandMap);
-
-                        } else if (status.code.equalsIgnoreCase("no exist"))
+                        else if (status.code.equalsIgnoreCase("no exist"))
                             response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
 
                         if (response != null)
@@ -124,27 +114,6 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                     }
 
                     break;
-                /* case "setmessage":
-                    if (args.length < 2)
-                        sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.jail_name_expected"));
-                    else if (args.length < 3)
-                        sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.message_expected"));
-                    else {
-                        JailsSystem.Status status = JailsSystem.setCustomMessage(args[1], Text.full(args, 2));
-
-                        if (status.success)
-                            response = Lang.get(sender, "commands.jailsadmin.expressions.setmessage.success");
-                        else if (status.code.equalsIgnoreCase("no exist"))
-                            response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
-
-                        if (response != null)
-                            sender.sendMessage(response
-                                    .replaceAll("%name%", args[1]));
-                    }
-
-                    break; */
-
-
                 case "edit":
                     if (args.length < 2)
                         sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.jail_name_expected"));
@@ -167,10 +136,23 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                                         sender.sendMessage(response
                                                 .replaceAll("%name%", args[1]));
                                 }
+                                break;
+                            case "getmessage":
+                                JailsSystem.Status status = JailsSystem.getCustomMessage(args[1]);
+
+                                if (status.success)
+                                    response = Lang.get(sender, "commands.jailsadmin.expressions.getmessage.success")
+                                            .replaceAll("%message%", status.data.toString());
+                                else if (status.code.equalsIgnoreCase("no exist"))
+                                    response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
+
+                                    if (response != null)
+                                        sender.sendMessage(response
+                                                .replaceAll("%name%", args[1]));
 
                                 break;
-                        }
 
+                        }
                     break;
 
                 case "list":

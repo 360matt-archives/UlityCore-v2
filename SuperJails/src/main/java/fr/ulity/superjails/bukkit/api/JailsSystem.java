@@ -3,6 +3,7 @@ package fr.ulity.superjails.bukkit.api;
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -88,7 +89,7 @@ public final class JailsSystem {
     public static Status getCustomMessage (String name) {
         Status response = new Status();
 
-        if (!jails.isSet(name))
+        if (!exist(name))
             response.setStatus(false, "no exist");
         else {
             FlatFileSection section = jails.getSection("jails." + name);
@@ -97,7 +98,7 @@ public final class JailsSystem {
             if (message == null)
                 response.setStatus(false, "message undefined");
             else
-                response.data = message;
+                response.data = ChatColor.translateAlternateColorCodes('&', message);
         }
 
         return response;

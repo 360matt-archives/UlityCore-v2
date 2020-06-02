@@ -37,3 +37,6 @@ commands:
       getType:
         success: "&7Le type du jail &6%name% &7est défini sur &c%type%"
         undefined_type: "&7Le type du jail &6%name% &7est indéfini :/"
+  jail:
+    description: "Permet aux modérateurs ou aux joueurs policiers d'emprisonner un joueur dans une prison (sanction ou gameplay selon le jail choisi)."
+    usage: " @ null @ "

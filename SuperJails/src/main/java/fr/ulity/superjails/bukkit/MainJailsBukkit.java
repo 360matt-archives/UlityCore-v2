@@ -21,6 +21,7 @@ public final class MainJailsBukkit extends JavaPlugin {
 
             // la suite du code de l'Addons
             new JailsAdminCommand(Api.Bukkit.commandMap, this);
+            new JailCommand(Api.Bukkit.commandMap, this);
 
         }
 

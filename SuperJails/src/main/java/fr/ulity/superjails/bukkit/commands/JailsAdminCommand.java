@@ -28,7 +28,7 @@ public class JailsAdminCommand extends CommandManager implements Listener {
         addDescription(Lang.get("commands.jailsadmin.description"));
 
         addUsage(Lang.get("commands.jailsadmin.usage"));
-        addPermission("ulity.jails.admin");
+        addPermission("ulity.superjails.admin");
 
         addArrayTabbComplete(0, "ulity.jails.admin", new String[]{}, new String[]{"create", "remove", "tp", "edit", "list"});
         addOneTabbComplete(1, "ulity.jails.admin", "§AllJails", "remove", "tp", "edit");

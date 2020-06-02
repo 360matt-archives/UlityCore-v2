@@ -2,6 +2,7 @@ package fr.ulity.superjails.bukkit.api;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
+import fr.ulity.core.api.Data;
 import fr.ulity.core.utils.EnumUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,10 +10,12 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 
 public final class JailsSystem {
     public static Config jails = new Config("jails", "jails");
+    public static Data players = new Data("jails", "players");
 
     public static Status createJail (String name, Location loc) {
         Status response = new Status();
@@ -26,6 +29,7 @@ public final class JailsSystem {
             section.set("y", loc.getY());
             section.set("z", loc.getZ());
             section.set("world", Objects.requireNonNull(loc.getWorld()).getName());
+            section.set("permission", "ulity.superjails.jails.default");
         }
 
         return response;
@@ -48,12 +52,17 @@ public final class JailsSystem {
 
     public static Status isValid (String name) {
         Status response = new Status();
+
+        FlatFileSection section = jails.getSection("jails." + name);
         String worldname = jails.getString(name + ".world");
+        String type = section.getString("type");
 
         if (!exist(name))
             response.setStatus(false, "no exist");
         else if (Bukkit.getWorld(worldname) == null)
             response.setStatus(false, "world no exist", worldname);
+        else if (type == null || !EnumUtil.contains(Arrays.asList(JailsSystem.JailType.values()), type.toUpperCase()))
+            response.setStatus(false, "type undefined");
 
         return response;
     }
@@ -140,6 +149,23 @@ public final class JailsSystem {
                 response.data = JailsSystem.JailType.valueOf(type.toUpperCase());
         }
 
+        return response;
+    }
+
+    public static Status getPermission (String name) {
+        Status response = new Status();
+
+        if (!exist(name))
+            response.setStatus(false, "no exist");
+        else {
+            FlatFileSection section = jails.getSection("jails." + name);
+            String permission = section.getString("permission");
+
+            if (permission == null)
+                response.setStatus(false, "type undefined");
+            else
+                response.data = permission;
+        }
 
         return response;
     }
@@ -151,7 +177,30 @@ public final class JailsSystem {
 
 
 
+    public static Status jailPlayer (String playername, String jailname, JailData data) {
+        Status response = new Status();
+        Status valid = isValid(jailname);
 
+        if (!valid.success)
+            response.setStatus(false, valid.code, valid.data);
+        else {
+            FlatFileSection sectionJail = jails.getSection("jails." + jailname);
+            FlatFileSection sectionPlayer = players.getSection("players." + playername);
+            FlatFileSection sectionPlayerNewJail = players.getSection("players." + playername + ".jails." + getType(jailname).data.toString());
+            sectionPlayerNewJail.set("", data);
+        }
+
+        return response;
+    }
+
+
+    public static class JailData {
+        public String reason;
+        public long timestamp = new Date().getTime();
+        public String staff;
+        public long expire;
+        public String jailname;
+    }
 
     public static class Status {
         public Boolean success = true;

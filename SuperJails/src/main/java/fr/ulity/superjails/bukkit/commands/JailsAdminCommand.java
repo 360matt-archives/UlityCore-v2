@@ -2,6 +2,7 @@ package fr.ulity.superjails.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
+import fr.ulity.core.utils.EnumUtil;
 import fr.ulity.core.utils.Text;
 import fr.ulity.superjails.bukkit.api.JailsSystem;
 import org.bukkit.Location;
@@ -15,6 +16,8 @@ import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -45,7 +48,9 @@ public class JailsAdminCommand extends CommandManager implements Listener {
             if (e.getCompletions().contains("§AllJails"))
                 e.setCompletions(Arrays.asList(JailsSystem.getAllJails()));
             else if (args.length == 3 && args[1].equalsIgnoreCase("edit"))
-                e.setCompletions(Arrays.asList("setmessage", "getmessage"));
+                e.setCompletions(Arrays.asList("setmessage", "getmessage", "setType"));
+            else if (args.length == 4 && args[3].equalsIgnoreCase("setType"))
+                e.setCompletions(EnumSet.allOf(JailsSystem.JailType.class).stream().map(v -> v.name().toLowerCase()).collect(Collectors.toList()));
         }
     }
 
@@ -138,17 +143,42 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                                 }
                                 break;
                             case "getmessage":
-                                JailsSystem.Status status = JailsSystem.getCustomMessage(args[1]);
+                                if (true) { // lol, si je n'avais pas fais ça, je le pouvais pas définir status dans la case setType.
+                                    JailsSystem.Status status = JailsSystem.getCustomMessage(args[1]);
 
-                                if (status.success)
-                                    response = Lang.get(sender, "commands.jailsadmin.expressions.getmessage.success")
-                                            .replaceAll("%message%", status.data.toString());
-                                else if (status.code.equalsIgnoreCase("no exist"))
-                                    response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
+                                    if (status.success)
+                                        response = Lang.get(sender, "commands.jailsadmin.expressions.getmessage.success")
+                                                .replaceAll("%message%", status.data.toString());
+                                    else if (status.code.equalsIgnoreCase("no exist"))
+                                        response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
 
                                     if (response != null)
                                         sender.sendMessage(response
                                                 .replaceAll("%name%", args[1]));
+                                }
+
+                                break;
+                            case "setType":
+                                if (args.length < 4)
+                                    sender.sendMessage(Lang.get(sender, "commands.jailsadmin.expressions.type_expected"));
+                                else{
+                                    if (EnumUtil.contains(Arrays.asList(JailsSystem.JailType.values()), args[3])) {
+                                        JailsSystem.Status status = JailsSystem.setType(args[1], JailsSystem.JailType.valueOf(args[3].toUpperCase()));
+
+                                        if (status.success)
+                                            response = Lang.get(sender, "commands.jailsadmin.expressions.setType.success");
+                                        else if (status.code.equalsIgnoreCase("no exist"))
+                                            response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
+                                    } else
+                                        response = Lang.get(sender, "commands.jailsadmin.expressions.setType.unknown_type");
+
+                                    if (response != null)
+                                        sender.sendMessage(response
+                                                .replaceAll("%name%", args[1])
+                                                .replaceAll("%type%", args[3]));
+                                }
+
+
 
                                 break;
 

@@ -2,11 +2,13 @@ package fr.ulity.superjails.bukkit.api;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
+import fr.ulity.core.utils.EnumUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class JailsSystem {
@@ -19,6 +21,7 @@ public final class JailsSystem {
             response.setStatus(false, "already exist");
         else {
             FlatFileSection section = jails.getSection("jails." + name);
+            section.set("type", "MODERATION");
             section.set("x", loc.getX());
             section.set("y", loc.getY());
             section.set("z", loc.getZ());
@@ -107,6 +110,46 @@ public final class JailsSystem {
     public static String[] getAllJails () {
         return jails.singleLayerKeySet("jails").toArray(new String[]{});
     }
+
+    public static Status setType (String name, JailType type) {
+        Status response = new Status();
+
+        if (!exist(name))
+            response.setStatus(false, "no exist");
+        else {
+            FlatFileSection section = jails.getSection("jails." + name);
+            section.set("type", type);
+        }
+
+        return response;
+    }
+
+
+    public static Status getType (String name) {
+        Status response = new Status();
+
+        if (!exist(name))
+            response.setStatus(false, "no exist");
+        else {
+            FlatFileSection section = jails.getSection("jails." + name);
+            String type = section.getString("type");
+
+            if (type == null || EnumUtil.contains(Arrays.asList(JailsSystem.JailType.values()), type))
+                response.setStatus(false, "type undefined");
+            else
+                response.data = JailsSystem.JailType.valueOf(type.toUpperCase());
+        }
+
+
+        return response;
+    }
+
+    public enum JailType {
+        MODERATION,
+        RP;
+    }
+
+
 
 
 

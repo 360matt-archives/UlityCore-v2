@@ -14,6 +14,7 @@ commands:
       no_exist: "&7[&cX&7] Le jail &6%name% &7n'existe pas"
       world_no_exist: "&7[&cX&7] Le jail &6%name% &7 est corrompu: le monde &6%worldname% &7n'existe plus !"
       action_name_expected: "&7[&cX&7] Une action était attendue"
+      type_expected: "&7[&cX&7] un type était attendu"
       create:
         success: "&7Le jail &6%name% &7a bien été créé"
         already_exist: "&7[&cX&7] Le jail &6%name% &7existe déjà :/"
@@ -30,3 +31,6 @@ commands:
         success: |-
           &7Message du jail &6%name%: &r
           %message%
+      setType:
+        success: "&7Le type du jail &6%name% &7est défini sur &c%type%"
+        unknown_type: "&7[&cX&7] Le type &c%type% &7est inconnu :/"

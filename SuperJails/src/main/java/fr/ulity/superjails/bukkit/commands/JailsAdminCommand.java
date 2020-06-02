@@ -48,7 +48,7 @@ public class JailsAdminCommand extends CommandManager implements Listener {
             if (e.getCompletions().contains("§AllJails"))
                 e.setCompletions(Arrays.asList(JailsSystem.getAllJails()));
             else if (args.length == 3 && args[1].equalsIgnoreCase("edit"))
-                e.setCompletions(Arrays.asList("setmessage", "getmessage", "setType"));
+                e.setCompletions(Arrays.asList("setmessage", "getmessage", "setType", "getType"));
             else if (args.length == 4 && args[3].equalsIgnoreCase("setType"))
                 e.setCompletions(EnumSet.allOf(JailsSystem.JailType.class).stream().map(v -> v.name().toLowerCase()).collect(Collectors.toList()));
         }
@@ -177,10 +177,24 @@ public class JailsAdminCommand extends CommandManager implements Listener {
                                                 .replaceAll("%name%", args[1])
                                                 .replaceAll("%type%", args[3]));
                                 }
+                                break;
+                            case "getType":
+                                JailsSystem.Status status = JailsSystem.getType(args[1]);
 
+                                if (status.success)
+                                    response = Lang.get(sender, "commands.jailsadmin.expressions.getType.success")
+                                            .replaceAll("%type%", status.data.toString().toLowerCase());
+                                else if (status.code.equalsIgnoreCase("no exist"))
+                                    response = Lang.get(sender, "commands.jailsadmin.expressions.no_exist");
+                                else if (status.code.equalsIgnoreCase("type undefined"))
+                                    response = Lang.get(sender, "commands.jailsadmin.expressions.getType.undefined_type");
 
+                                if (response != null)
+                                    sender.sendMessage(response
+                                            .replaceAll("%name%", args[1]));
 
                                 break;
+
 
                         }
                     break;

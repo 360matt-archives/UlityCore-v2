@@ -134,7 +134,7 @@ public final class JailsSystem {
             FlatFileSection section = jails.getSection("jails." + name);
             String type = section.getString("type");
 
-            if (type == null || EnumUtil.contains(Arrays.asList(JailsSystem.JailType.values()), type))
+            if (type == null || !EnumUtil.contains(Arrays.asList(JailsSystem.JailType.values()), type.toUpperCase()))
                 response.setStatus(false, "type undefined");
             else
                 response.data = JailsSystem.JailType.valueOf(type.toUpperCase());

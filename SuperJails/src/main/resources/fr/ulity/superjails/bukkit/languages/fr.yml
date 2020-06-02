@@ -32,5 +32,8 @@ commands:
           &7Message du jail &6%name%: &r
           %message%
       setType:
-        success: "&7Le type du jail &6%name% &7est défini sur &c%type%"
+        success: "&7Le type du jail &6%name% &7est maintenant défini sur &c%type%"
         unknown_type: "&7[&cX&7] Le type &c%type% &7est inconnu :/"
+      getType:
+        success: "&7Le type du jail &6%name% &7est défini sur &c%type%"
+        undefined_type: "&7Le type du jail &6%name% &7est indéfini :/"

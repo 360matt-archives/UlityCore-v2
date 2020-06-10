@@ -34,6 +34,13 @@ public class BanCommand extends CommandManager {
             @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
 
+            if (player.hasPlayedBefore() && Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
+                sender.sendMessage(Lang.get(sender, "commands.ban.expressions.cant_ban_staff")
+                        .replaceAll("%player%", args[0]));
+                return true;
+            }
+
+
             String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.ban.expressions.unknown_reason");
 
             Ban playerBan = new Ban(player.getName());

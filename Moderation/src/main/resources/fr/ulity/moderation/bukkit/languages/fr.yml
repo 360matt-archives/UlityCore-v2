@@ -28,6 +28,7 @@ commands:
       §eMute un joueur: &7/mute <joueur> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_mute_staff: "&7Vous ne pouvez pas mute le staff &b%player%"
       you_are_muted: "&7Vous avez été muté indéfinniment par &b%staff% &7pour &c%reason%"
       when_chat_blocked: |-
         &7[&cX&7] Vous avez été muté !
@@ -53,6 +54,7 @@ commands:
       §eMute un joueur: &7/mute <joueur> <durée> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_mute_staff: "&7Vous ne pouvez pas mute le staff &b%player%"
       you_are_muted: "&7Vous avez été muté &c%time% &7par &b%staff% &7pour &c%reason%"
       when_chat_blocked: |-
         &7Vous avez été réduit au silence par un staff (&b%staff%&7)
@@ -87,6 +89,7 @@ commands:
       §eBan un joueur: &7/ban <joueur> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_ban_staff: "&7Vous ne pouvez pas bannir le staff &b%player%"
       you_are_banned: |-
         &eVous avez été banni de ce serveur
 
@@ -110,6 +113,7 @@ commands:
       §eBan un joueur temporairement: &7/tempban <joueur> <durée> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_ban_staff: "&7Vous ne pouvez pas bannir le staff &b%player%"
       you_are_banned: |-
         &eVous avez été banni de ce serveur
 
@@ -157,6 +161,7 @@ commands:
       §eExpulser un joueur: &7/kick <joueur> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_kick_staff: "&7Vous ne pouvez pas kick le staff &b%player%"
       you_are_kicked: |-
         &eVous avez été expulsé de ce serveur
 
@@ -178,6 +183,7 @@ commands:
       §eBan l'ip d'un joueur: &7/ban <joueur> [raison]
     expressions:
       unknown_reason: "raison inconnue"
+      cant_ban_staff_ip: "&7Vous ne pouvez pas bannir l'ip du staff &b%player%"
       you_are_banned: |-
         &eVous avez été banni de ce serveur
 
@@ -216,8 +222,10 @@ commands:
     usage: |-
       &eImmobiliser un joueur: &7/freeze <joueur>
     expressions:
-      player_freezed: "&7Le joueur &b%player% &7a été immobilisé"
       unknown_reason: "inconnue"
+      cant_freeze_staff: "&7Vous ne pouvez pas bannir le staff &b%player%"
+      player_freezed: "&7Le joueur &b%player% &7a été immobilisé"
+
       notification: |-
         &b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-&b-&b&m-
         &7vous êtes à présent &b&lfreeze

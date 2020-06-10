@@ -24,7 +24,7 @@ public class JailCommand extends CommandManager implements Listener {
         addUsage(Lang.get("commands.jail.usage"));
         addPermission("ulity.superjails.commands.jail");
 
-        addOneTabbComplete(1, "ulity.superjails.commands.jail", "§AllJails", null);
+        addOneTabbComplete(1, "ulity.superjails.commands.jail", "§AllJails", (String) null);
 
 
         getPluginManager().registerEvents(this, getPlugin());

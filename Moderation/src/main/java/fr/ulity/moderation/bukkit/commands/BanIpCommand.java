@@ -34,31 +34,36 @@ public class BanIpCommand extends CommandManager {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
             Player player = Bukkit.getPlayer(args[0]);
+
             if (player != null){
-                String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.banip.expressions.unknown_reason");
-                String ip = player.getAddress().getAddress().toString().replaceAll("/", "").replaceAll("\\.", "_");
+                if (player.hasPermission("ulity.mod")){
+                    sender.sendMessage(Lang.get(sender, "commands.banip.expressions.cant_ban_staff_ip")
+                            .replaceAll("%player%", args[0]));
+                } else {
+                    String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.banip.expressions.unknown_reason");
+                    String ip = player.getAddress().getAddress().toString().replaceAll("/", "").replaceAll("\\.", "_");
 
-                Ban playerBan = new Ban("ip_" + ip);
-                playerBan.timestamp = new Date().getTime();
-                playerBan.reason = reason;
-                playerBan.expire = 0;
-                playerBan.responsable = sender.getName();
-                playerBan.ban();
+                    Ban playerBan = new Ban("ip_" + ip);
+                    playerBan.timestamp = new Date().getTime();
+                    playerBan.reason = reason;
+                    playerBan.expire = 0;
+                    playerBan.responsable = sender.getName();
+                    playerBan.ban();
 
-                if (Lang.getBoolean("commands.banip.broadcast.enabled")) {
-                    String keyName = (args.length >= 2) ? "message" : "message_without_reason";
-                    Bukkit.broadcastMessage(Lang.get("commands.banip.broadcast." + keyName)
-                            .replaceAll("%player%", player.getName())
+                    if (Lang.getBoolean("commands.banip.broadcast.enabled")) {
+                        String keyName = (args.length >= 2) ? "message" : "message_without_reason";
+                        Bukkit.broadcastMessage(Lang.get("commands.banip.broadcast." + keyName)
+                                .replaceAll("%player%", player.getName())
+                                .replaceAll("%staff%", sender.getName())
+                                .replaceAll("%reason%", reason));
+                    } else
+                        sender.sendMessage(Lang.get(sender, "commands.banip.expressions.result")
+                                .replaceAll("%player%", player.getName()));
+
+                    player.kickPlayer(Lang.get(player, "commands.banip.expressions.you_are_banned")
                             .replaceAll("%staff%", sender.getName())
                             .replaceAll("%reason%", reason));
                 }
-                else
-                    sender.sendMessage(Lang.get(sender, "commands.banip.expressions.result")
-                            .replaceAll("%player%", player.getName()));
-
-                player.kickPlayer(Lang.get(player, "commands.banip.expressions.you_are_banned")
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason));
             }
             else{
                 sender.sendMessage(Lang.get(sender, "global.invalid_player")

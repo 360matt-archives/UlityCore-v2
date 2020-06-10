@@ -35,6 +35,13 @@ public class TempBanCommand extends CommandManager {
         if (args.length >= 2) {
             @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+            if (player.hasPlayedBefore()){
+                if (Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
+                    sender.sendMessage(Lang.get(sender, "commands.tempban.expressions.cant_ban_staff")
+                            .replaceAll("%player%", args[0]));
+                    return true;
+                }
+            }
 
             String reason = (args.length >= 3) ? Text.fullColor(args, 2) : Lang.get("commands.tempban.expressions.unknown_reason");
             Time time = new Time(args[1]);

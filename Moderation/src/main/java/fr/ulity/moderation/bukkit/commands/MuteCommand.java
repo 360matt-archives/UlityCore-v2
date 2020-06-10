@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MuteCommand extends CommandManager {
@@ -30,6 +31,14 @@ public class MuteCommand extends CommandManager {
         if (args.length >= 1) {
             @SuppressWarnings("deprecation")
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+
+            if (player != null && player.hasPlayedBefore()){
+                if (Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
+                    sender.sendMessage(Lang.get(sender, "commands.mute.expressions.cant_mute_staff")
+                            .replaceAll("%player%", args[0]));
+                    return true;
+                }
+            }
 
             String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.mute.expressions.unknown_reason");
 

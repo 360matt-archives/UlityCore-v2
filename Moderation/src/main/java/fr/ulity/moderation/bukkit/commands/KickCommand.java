@@ -30,28 +30,32 @@ public class KickCommand extends CommandManager {
         if (args.length >= 1) {
             @SuppressWarnings("deprecation")
             Player player = Bukkit.getPlayer(args[0]);
-
             if (player == null){
                 sender.sendMessage(Lang.get(sender, "global.invalid_player")
                         .replaceAll("%player%", args[0]));
             }
             else{
-                String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.kick.expressions.unknown_reason");
+                if (player.hasPermission("ulity.mod")){
+                    sender.sendMessage(Lang.get(sender, "commands.kick.expressions.cant_kick_staff")
+                            .replaceAll("%player%", args[0]));
+                } else{
+                    String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.kick.expressions.unknown_reason");
 
-                if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
-                    String keyName = (args.length >= 2) ? "message" : "message_without_reason";
-                    Bukkit.broadcastMessage(Lang.get("commands.kick.broadcast." + keyName)
-                            .replaceAll("%player%", player.getName())
+                    if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
+                        String keyName = (args.length >= 2) ? "message" : "message_without_reason";
+                        Bukkit.broadcastMessage(Lang.get("commands.kick.broadcast." + keyName)
+                                .replaceAll("%player%", player.getName())
+                                .replaceAll("%staff%", sender.getName())
+                                .replaceAll("%reason%", reason));
+                    }
+                    else
+                        sender.sendMessage(Lang.get(sender, "commands.kick.expressions.result")
+                                .replaceAll("%player%", player.getName()));
+
+                    player.kickPlayer(Lang.get(player, "commands.kick.expressions.you_are_kicked")
                             .replaceAll("%staff%", sender.getName())
                             .replaceAll("%reason%", reason));
                 }
-                else
-                    sender.sendMessage(Lang.get(sender, "commands.kick.expressions.result")
-                            .replaceAll("%player%", player.getName()));
-
-                player.kickPlayer(Lang.get(player, "commands.kick.expressions.you_are_kicked")
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason));
 
             }
 

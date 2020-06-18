@@ -32,8 +32,8 @@ public class FreezeCommand extends CommandManager {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
             @SuppressWarnings("deprecation")
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-            if (target.hasPlayedBefore() && Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
+            Player target = Bukkit.getPlayer(args[0]);
+            if (target != null && target.hasPermission("ulity.mod")){
                 sender.sendMessage(Lang.get(sender, "commands.freeze.expressions.cant_freeze_staff")
                         .replaceAll("%player%", args[0]));
                     return true;

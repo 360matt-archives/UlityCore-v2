@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Claims/Claims.iml" filepath="$PROJECT_DIR$/Claims/Claims.iml" />
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperJails/SuperJails.iml" filepath="$PROJECT_DIR$/SuperJails/SuperJails.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SuperRTP/SuperRTP.iml" filepath="$PROJECT_DIR$/SuperRTP/SuperRTP.iml" />
       <module fileurl="file://$PROJECT_DIR$/UlityCore/UlityCore.iml" filepath="$PROJECT_DIR$/UlityCore/UlityCore.iml" />
     </modules>
   </component>

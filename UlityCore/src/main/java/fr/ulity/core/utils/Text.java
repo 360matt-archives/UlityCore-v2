@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Text {
     public static String full (String[] args) {
@@ -35,6 +36,24 @@ public class Text {
             return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
     }
 
+    public static String[] withColours (String[] arr) {
+        ArrayList<String> newArr = new ArrayList<String>();
+
+        for (String x : arr)
+            newArr.add(withColours(x));
+
+        return newArr.toArray(new String[0]);
+    }
+
+    public static List<String> withColours (List<String> arr) {
+        ArrayList<String> newArr = new ArrayList<String>();
+
+        for (String x : arr)
+            newArr.add(withColours(x));
+
+        return newArr;
+    }
+
     public static String convertEncodage (String str) {
         return new String(str.getBytes(), StandardCharsets.UTF_8);
     }
@@ -46,6 +65,15 @@ public class Text {
             newArr.add(convertEncodage(x));
 
         return newArr.toArray(new String[0]);
+    }
+
+    public static List<String> convertEncodage (List<String> list) {
+        ArrayList<String> newArr = new ArrayList<>();
+
+        for (String x : list)
+            newArr.add(convertEncodage(x));
+
+        return newArr;
     }
 
     public String centerText(String text) {

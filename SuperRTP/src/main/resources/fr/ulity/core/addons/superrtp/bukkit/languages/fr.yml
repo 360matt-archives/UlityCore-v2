@@ -1,0 +1,20 @@
+super_RTP:
+  staff_error:
+    invalid_material: "&6Super_RTP: &7%title%: &cl'item &7%material% &7est invalide"
+    economy_not_supported: "&6Super_RTP: &8%name%&7: un achat n'a pas pu avoir lieu en raison du manque du plugin &c&lVault &7ainsi d'un plugin d'économie (ex: EssentialsEconomy, etc ...)"
+    location_no_set: "&6Super_RTP: &8%title%&7: les délimitations de position n'ont pas été définies"
+    unknown_world: "&6Super_RTP: &8%title%&7: le monde &6%world% &7n'existe pas"
+  gui:
+    cost_price: "&6Coût: &e$%price%"
+    cooldown: "&6Cooldown: &e%cooldown%"
+    permission: "&6Permission: %stat%"
+    cooldown_left: "&c&lTemps restant: &c%cooldown%"
+    staff_mod: "&c&lMode staff"
+  err_messages:
+    no_permission: "&7[&cX&7] Votre grade ne vous permet pas d'utiliser &8%title%"
+    no_finished_cooldown: "&7[&cX&7] Vous devez patienter encore &e%left%"
+    no_money: "&7[&cX&7] Il vous manque &6$%left% &7pour utiliser &8%title%"
+  fails:
+    economy_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
+    location_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
+    world_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"

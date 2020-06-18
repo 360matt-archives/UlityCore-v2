@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SuperRTP:jar">
+    <output-path>I:/serveurs/Test/plugins</output-path>
+    <root id="archive" name="SuperRTP.jar">
+      <element id="module-output" name="SuperRTP" />
+      <element id="module-output" name="UlityCore" />
+    </root>
+  </artifact>
+</component>

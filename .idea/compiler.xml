@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Moderation" />
         <module name="SuperJails" />
         <module name="Claims" />
-        <module name="Moderation" />
+        <module name="SuperRTP" />
         <module name="UlityCore" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="Moderation" target="1.8" />
       <module name="moderation" target="1.8" />
       <module name="SuperJails" target="1.8" />
+      <module name="SuperRTP" target="1.8" />
       <module name="UlityCore" target="1.8" />
       <module name="UlityCore_V2" target="8" />
     </bytecodeTargetLevel>

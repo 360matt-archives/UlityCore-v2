@@ -1,0 +1,4 @@
+global:
+  menu_name: "&c&lTéléportation aléatoire"
+  cache_glass_panel: false
+  staff_bypass: false

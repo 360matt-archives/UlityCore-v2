@@ -1,0 +1,22 @@
+gui:
+  01:
+    title: Exemple
+    description:
+     - une simple description
+    randomWorld:
+      Spawn:
+        min:
+          x: -4000
+          z: -4000
+        max:
+          x: 4000
+          z: 4000
+    item:
+      line: 2
+      column: 5
+      material: DIAMOND
+    extra:
+      cost: 200
+      animation: true
+      cooldown: 3600
+      message: "&7Et vous voici à présent dans la prairie de Satan ..."

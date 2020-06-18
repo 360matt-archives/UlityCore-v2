@@ -18,3 +18,7 @@ super_RTP:
     economy_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
     location_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
     world_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
+commands:
+  rtp:
+    usage: "§eOuvrir l'interface de sélection: &7/rtp"
+    description: "Permet d'ouvrir l'interface de sélection afin de choisir le type de téléportation défini par le serveur"

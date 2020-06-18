@@ -32,9 +32,9 @@ public class CommandRTP extends CommandManager implements Listener {
 
     public CommandRTP(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "rtp");
-        addDescription(Lang.get("commands.SuperRTP.description"));
-        addUsage(Lang.get("commands.SuperRTP.usage"));
-        addPermission("ulity.SuperRTP.commands.SuperRTP");
+        addDescription(Lang.get("commands.rtp.description"));
+        addUsage(Lang.get("commands.rtp.usage"));
+        addPermission("ulity.SuperRTP.commands.rtp");
 
         registerCommand(commandMap);
     }

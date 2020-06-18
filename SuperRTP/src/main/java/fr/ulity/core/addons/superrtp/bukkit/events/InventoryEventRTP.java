@@ -80,10 +80,18 @@ public class InventoryEventRTP implements Listener {
 
                                                         // ENFIN ! ... il ne peut plus rien nous arriver ...
 
-                                                        player.closeInventory();
-                                                        obtain.eco.withdrawPlayer(player, cost);
-                                                        cooldownObj.applique(cooldown);
-                                                        // on applique les obligations du joueurs (retrait d'argent, cooldolwn, etc... )
+
+
+                                                        if (!staffBypass) {
+                                                            // seulement si le joueur n'est pas en status bypass/staff ...
+
+                                                            player.closeInventory();
+                                                            obtain.eco.withdrawPlayer(player, cost);
+                                                            cooldownObj.applique(cooldown);
+                                                            // ... on applique les obligations du joueurs (retrait d'argent, cooldolwn, etc... )
+                                                        }
+
+
 
                                                         Material blockBottom = null;
                                                         Location locFinal = null;

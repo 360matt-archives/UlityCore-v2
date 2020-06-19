@@ -1,0 +1,24 @@
+super_RTP:
+  staff_error:
+    invalid_material: "&6Super_RTP: &7%title%: &cItem &7%material% &7is invalid"
+    economy_not_supported: "&6Super_RTP: &8%name%&7: a purchase could not take place due to the lack of the &c&lVault &7plugin as well as an economy plugin (ex: EssentialsEconomy, etc ...)"
+    location_no_set: "&6Super_RTP: &8%title%&7: position boundaries have not been defined"
+    unknown_world: "&6Super_RTP: &8%title%&7: the world %world% &7does not exist"
+  gui:
+    cost_price: "&6Cost: &e%price%"
+    cooldown: "&6Cooldown: &e%cooldown%"
+    permission: "&6Permission: %stat%"
+    cooldown_left: "&c&lRemaining time: &c%cooldown%"
+    staff_mod: "&c&lStaff mode"
+  err_messages:
+    no_permission: "&7[&cX&7] Your grade does not allow you to use &8%title%"
+    no_finished_cooldown: "&7[&cX&7] You have to wait again &e%left%"
+    no_money: "&7[&cX&7] You are &6$%left% &7short to use &8%title%"
+  fails:
+    economy_missing: "&7[&cX&7] Can't buy &8%title% &7right now"
+    location_missing: "&7[&cX&7] Can't buy &8%title% &7right now"
+    world_missing: "&7[&cX&7] Can't buy &8%title% &7right now"
+commands:
+  rtp:
+    usage: "&eOpen the selection interface: &7/rtp"
+    description: "Allows to open the selection interface to choose the type of teleportation defined by the server"

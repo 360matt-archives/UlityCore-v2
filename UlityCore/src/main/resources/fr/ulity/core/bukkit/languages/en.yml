@@ -1,0 +1,38 @@
+plugin:
+  reloaded: "&7The plugin has been reloaded"
+  addons_reloaded: "&e%count% &6extensions &7are reloaded"
+  no_perm: "&cYou do not have the necessary privileges"
+  lang:
+    reloaded: "&7The language files have been reloaded successfully."
+    fail_reload: "&7[&cX&7] Language files could not be reloaded"
+    actual: "&7The default lang is the &bEnglish&7."
+  commands:
+    lang:
+      aliases:
+        - langue
+        - lengua
+        - sprache
+      lang_changed: '&7The language has been changed to &bEnglish'
+      lang_unknown: '&7The requested language &c%lang% &7is unknown'
+      lang_required: |-
+        &7A language is expected in two letter format.
+        &7Your client's language is: &bEnglish
+global:
+  enable: "enable"
+  disable: "disable"
+  invalid_player: "&7[&cX&7] The player &c%player% &7is invalid."
+  player_only: "&7[&cX&7] This command must be executed by a player."
+period:
+  years: "years"
+  year: "year"
+  months: "months"
+  month: "month"
+  days: "days"
+  day: "day"
+  hours: "hours"
+  hour: "hour"
+  minutes: "minutes"
+  minute: "minute"
+  seconds: "seconds"
+  second: "second"
+  separator: ", "

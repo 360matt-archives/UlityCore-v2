@@ -5,7 +5,6 @@ import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
 import fr.ulity.moderation.bukkit.api.Ban;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -14,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Date;
-import java.util.Objects;
 
 public class BanIpCommand extends CommandManager {
 

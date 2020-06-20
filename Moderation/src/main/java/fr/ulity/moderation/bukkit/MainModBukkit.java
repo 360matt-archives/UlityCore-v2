@@ -1,9 +1,7 @@
 package fr.ulity.moderation.bukkit;
 
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Initializer;
-import fr.ulity.core.api.Metrics;
+
+import fr.ulity.core.api.*;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
 import fr.ulity.moderation.bukkit.events.FreezeEvent;
@@ -11,6 +9,9 @@ import fr.ulity.moderation.bukkit.events.InvSeeCancelEvent;
 import fr.ulity.moderation.bukkit.events.MuteEvent;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -31,12 +32,9 @@ public final class MainModBukkit extends JavaPlugin {
 
         Metrics metrics = new Metrics(this, 7588);
 
-
-        
-
         if (init.ok){
             // register config field
-            config = new Config("config", "moderation");
+            config = new Config("config", "addons/moderation");
             DefaultConfig.make();
 
             // register commands :

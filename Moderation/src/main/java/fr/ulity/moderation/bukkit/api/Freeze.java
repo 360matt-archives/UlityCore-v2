@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 
 
 public class Freeze {
-    private static final Config freeze = new Config("freeze", "moderation");
+    private static final Config freeze = new Config("freeze", "addons/moderation");
 
     private final FlatFileSection playerFreeze;
     private final String playername;

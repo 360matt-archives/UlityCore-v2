@@ -49,7 +49,8 @@ public final class MainBukkitRTP extends JavaPlugin {
         plugin = this;
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.1.1");
+        init.requireVersion("2.2");
+        init.checkUpdates(80372);
         init.reloadLang();
 
         Metrics metrics = new Metrics(this, 7891);
@@ -57,17 +58,13 @@ public final class MainBukkitRTP extends JavaPlugin {
 
 
         if (init.ok) {
-            config = new Config("config", "super_rtp");
+            config = new Config("config", "addons/superRTP");
             ConfigCopy.setDefault();
 
 
             new CommandRTP(Api.Bukkit.commandMap, this);
 
-
             getPluginManager().registerEvents(new InventoryEventRTP(), this);
-
-
-
         }
 
 

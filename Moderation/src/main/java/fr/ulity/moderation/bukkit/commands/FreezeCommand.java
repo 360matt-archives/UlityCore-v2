@@ -5,7 +5,6 @@ import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
 import fr.ulity.moderation.bukkit.api.Freeze;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;

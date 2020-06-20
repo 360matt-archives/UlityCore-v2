@@ -22,3 +22,5 @@ commands:
   rtp:
     usage: "§eOuvrir l'interface de sélection: &7/rtp"
     description: "Permet d'ouvrir l'interface de sélection afin de choisir le type de téléportation défini par le serveur"
+    expressions:
+      menu_title: "&c&lTéléportation aléatoire"

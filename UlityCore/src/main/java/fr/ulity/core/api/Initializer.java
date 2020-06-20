@@ -28,7 +28,7 @@ public final class Initializer {
 
     public boolean reloadLang () {
         try {
-            Lang.reloadOneAddon(plugin.getClass());
+            Lang.reloadOneAddon(plugin);
             return true;
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();

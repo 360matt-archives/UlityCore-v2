@@ -7,7 +7,7 @@ import fr.ulity.core.utils.Time;
 import java.util.Date;
 
 public class Mute {
-    private static final Config mute = new Config("mute", "moderation");
+    private static final Config mute = new Config("mute", "addons/moderation");
 
     private final FlatFileSection playerMute;
     private final String playername;

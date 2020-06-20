@@ -19,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,13 +38,13 @@ public class CommandRTP extends CommandManager implements Listener {
         registerCommand(commandMap);
     }
 
-    public static Inventory randomiseAndCaching () {
+    public static Inventory randomiseAndCaching (Player player) {
         boolean cacheStat = MainBukkitRTP.config.getBoolean("global.cache_glass_panel");
 
         if (preInvMenu != null && cacheStat)
             return preInvMenu;
         else {
-            Inventory teleportInvMenu = Bukkit.createInventory(null, 6 * 9, Text.withColours(Text.convertEncodage(MainBukkitRTP.config.getString("global.menu_name"))));
+            Inventory teleportInvMenu = Bukkit.createInventory(null, 6 * 9, Lang.get(player, "commands.rtp.expressions.menu_title"));
 
             for (int k = 0; k <= (6 * 9) - 1; k++) {
                 int randomNum = ThreadLocalRandom.current().nextInt(0, 7 + 1);
@@ -87,7 +86,7 @@ public class CommandRTP extends CommandManager implements Listener {
             sender.sendMessage(Lang.get("global.player_only"));
         else {
             Player player = (Player) sender;
-            Inventory teleportInvMenu = randomiseAndCaching();
+            Inventory teleportInvMenu = randomiseAndCaching(player);
 
             for (String x : MainBukkitRTP.config.singleLayerKeySet("gui")) {
                 FlatFileSection section = MainBukkitRTP.config.getSection("gui." + x);
@@ -103,7 +102,7 @@ public class CommandRTP extends CommandManager implements Listener {
                 }
                 catch (Exception e) {
                     material = Material.DIRT;
-                    System.out.println(Lang.get("super_RTP.staff_error.invalid_material")
+                    System.out.println(Lang.get(player, "super_RTP.staff_error.invalid_material")
                             .replaceAll("%name%", title)
                             .replaceAll("%material%", section.getString("item.material")));
                 }
@@ -115,29 +114,30 @@ public class CommandRTP extends CommandManager implements Listener {
                 Double price = section.getDouble("extra.cost");
                 if (!staffBypass && price != 0){
                     description.add(" ");
-                    description.add(Lang.get("super_RTP.gui.cost_price")
+                    description.add(Lang.get(player, "super_RTP.gui.cost_price")
                             .replaceAll("%price%", price.toString()));
                 }
 
                 String permission = section.getString("extra.permission");
                 if (!staffBypass && permission != null) {
                     description.add(" ");
-                    description.add(Lang.get("super_RTP.gui.permission")
+                    description.add(Lang.get(player, "super_RTP.gui.permission")
                             .replaceAll("%stat%", (player.hasPermission(permission)) ? "&a✔" : "&c❌"));
                 }
 
                 int cooldown = section.getInt("extra.cooldown");
                 if (!staffBypass && cooldown != 0){
-                    Time cooldownTime = new Time(cooldown);
+                    Time cooldownTime = new Time(cooldown, player);
 
                     description.add(" ");
-                    description.add(Lang.get("super_RTP.gui.cooldown")
+                    description.add(Lang.get(player, "super_RTP.gui.cooldown")
                             .replaceAll("%cooldown%", cooldownTime.text));
 
                     Cooldown cooldownObj = new Cooldown("rtp_gui_" + x, player.getName());
+                    cooldownObj.setPlayer(player);
 
                     if (cooldownObj.isInitialized() && !cooldownObj.isEnded()) {
-                        description.add(Lang.get("super_RTP.gui.cooldown_left")
+                        description.add(Lang.get(player, "super_RTP.gui.cooldown_left")
                                 .replaceAll("%cooldown%", cooldownObj.getTimeLeft().text));
                     }
                 }

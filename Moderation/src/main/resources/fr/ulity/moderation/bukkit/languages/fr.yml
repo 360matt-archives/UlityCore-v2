@@ -223,7 +223,7 @@ commands:
       &eImmobiliser un joueur: &7/freeze <joueur>
     expressions:
       unknown_reason: "inconnue"
-      cant_freeze_staff: "&7Vous ne pouvez pas bannir le staff &b%player%"
+      cant_freeze_staff: "&7Vous ne pouvez pas freeze le staff &b%player%"
       player_freezed: "&7Le joueur &b%player% &7a été immobilisé"
 
       notification: |-

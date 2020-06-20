@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="SuperJails:jar">
+  <artifact type="jar" name="SuperJails:jar">
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="SuperJails.jar">
       <element id="module-output" name="SuperJails" />

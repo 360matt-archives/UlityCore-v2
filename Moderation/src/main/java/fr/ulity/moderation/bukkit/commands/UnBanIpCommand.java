@@ -3,11 +3,9 @@ package fr.ulity.moderation.bukkit.commands;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.moderation.bukkit.api.Ban;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UnBanIpCommand extends CommandManager {

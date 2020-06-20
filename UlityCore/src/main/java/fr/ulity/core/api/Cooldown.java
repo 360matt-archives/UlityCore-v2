@@ -8,6 +8,8 @@ public class Cooldown {
     public String type;
     public String id = "default";
 
+    private Object player = Lang.defaultLang;
+
     private static final Config cooldownConfig = new Config("cooldown");
 
     public Cooldown (String type) {
@@ -17,6 +19,10 @@ public class Cooldown {
     public Cooldown (String type, String id) {
         this.type = type;
         this.id = id;
+    }
+
+    public void setPlayer (Object player) {
+        this.player = player;
     }
 
     public void applique (int seconds) {
@@ -37,15 +43,10 @@ public class Cooldown {
 
     public Time getTimeLeft () {
         long timestamp = cooldownConfig.getLong("cooldown." + type + "." + id);
-
-
-        if (timestamp > new Date().getTime()) {
-            long left = ((timestamp - new Date().getTime()) / 1000);
-
-           return new Time((int) left);
-        }
-        else
-            return new Time(0);
+        return new Time(
+                (timestamp > new Date().getTime() ? (int) ((timestamp - new Date().getTime()) / 1000) : 0)
+                , player
+        );
     }
 
     public boolean isEnded () {

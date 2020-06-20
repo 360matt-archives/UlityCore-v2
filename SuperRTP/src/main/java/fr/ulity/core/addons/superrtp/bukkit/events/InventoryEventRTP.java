@@ -5,6 +5,7 @@ import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
 import fr.ulity.core.api.Cooldown;
 import fr.ulity.core.api.Lang;
 import fr.ulity.core.utils.Text;
+import fr.ulity.core.utils.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,15 +25,14 @@ public class InventoryEventRTP implements Listener {
 
     @EventHandler
     private static void onInventory (InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
 
-        if (e.getView().getTitle().equals(Text.withColours(Text.convertEncodage(MainBukkitRTP.config.getString("global.menu_name"))))) {
+        if (e.getView().getTitle().equals(Lang.get(player, "commands.rtp.expressions.menu_title"))) {
 
             if (e.getClick().isRightClick())
                 e.setCancelled(true);
             else if (e.getClick().isLeftClick()) {
                 e.setCancelled(true);
-
-                Player player = (Player) e.getWhoClicked();
 
                 if (e.getCurrentItem() != null) {
                     if (e.getCurrentItem().getItemMeta() != null) {
@@ -51,6 +51,8 @@ public class InventoryEventRTP implements Listener {
 
                                 int cooldown = section.getInt("extra.cooldown");
                                 Cooldown cooldownObj = new Cooldown("rtp_gui_" + x, player.getName());
+                                cooldownObj.setPlayer(player);
+
                                 if (staffBypass || cooldown == 0 || !cooldownObj.isInitialized() || cooldownObj.isEnded()) {
                                     // si le joueur n'a pas un délai en cours
 
@@ -122,12 +124,12 @@ public class InventoryEventRTP implements Listener {
 
                                                     } else {
                                                         // si le monde n'existe pas, n'est pas chargé
-                                                        player.sendMessage(Lang.get("super_RTP.fails.world_missing")
+                                                        player.sendMessage(Lang.get(player, "super_RTP.fails.world_missing")
                                                                 .replaceAll("%title%", title)
                                                                 .replaceAll("%world%", worldName));
 
                                                         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                            onlinePlayer.sendMessage(Lang.get("super_RTP.unknown_world")
+                                                            onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.unknown_world")
                                                                     .replaceAll("%title%", title)
                                                                     .replaceAll("%world%", worldName));
                                                         }
@@ -136,11 +138,11 @@ public class InventoryEventRTP implements Listener {
 
                                                 } else {
                                                     // si la propriété "randomWorld" est mal configurée
-                                                    player.sendMessage(Lang.get("super_RTP.fails.location_no_set")
+                                                    player.sendMessage(Lang.get(player, "super_RTP.fails.location_no_set")
                                                             .replaceAll("%title%", title));
 
                                                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                        onlinePlayer.sendMessage(Lang.get("super_RTP.location_no_set")
+                                                        onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.location_no_set")
                                                                 .replaceAll("%title%", title));
                                                     }
                                                 }
@@ -148,39 +150,39 @@ public class InventoryEventRTP implements Listener {
 
                                             } else {
                                                 // si la propriété "randomWorld" n'existe pas
-                                                player.sendMessage(Lang.get("super_RTP.fails.location_no_set")
+                                                player.sendMessage(Lang.get(player, "super_RTP.fails.location_no_set")
                                                         .replaceAll("%title%", title));
 
                                                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                    onlinePlayer.sendMessage(Lang.get("super_RTP.staff_error.location_no_set")
+                                                    onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.location_no_set")
                                                             .replaceAll("%title%", title));
                                                 }
                                             }
 
 
                                         } else { // si le joueur n'a pas assez de money
-                                            player.sendMessage(Lang.get("super_RTP.err_messages.no_money")
+                                            player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_money")
                                                     .replaceAll("%left%", String.valueOf(cost - obtain.eco.getBalance(player)))
                                                     .replaceAll("%title%", title));
                                         }
                                     } else { // si l'économie n'est pas disponible
-                                        player.sendMessage(Lang.get("super_RTP.fails.economy_missing")
+                                        player.sendMessage(Lang.get(player, "super_RTP.fails.economy_missing")
                                                 .replaceAll("%title%", title));
 
                                         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                            onlinePlayer.sendMessage(Lang.get("super_RTP.staff_error.economy_not_supported")
+                                            onlinePlayer.sendMessage(Lang.get(player, "super_RTP.staff_error.economy_not_supported")
                                                     .replaceAll("%title%", title));
                                         }
                                     }
 
 
                                 } else { // si un cooldown est en cours pour le joueur
-                                    player.sendMessage(Lang.get("super_RTP.err_messages.no_finished_cooldown")
+                                    player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_finished_cooldown")
                                             .replaceAll("%left%", cooldownObj.getTimeLeft().text));
                                 }
 
                             } else { // si le joueur n'a pas la permission
-                                player.sendMessage(Lang.get("super_RTP.err_messages.no_permission")
+                                player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_permission")
                                         .replaceAll("%title%", title));
                             }
                         }

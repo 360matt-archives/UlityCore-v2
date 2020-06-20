@@ -15,8 +15,8 @@ import java.util.Arrays;
 public class LangCommand extends CommandManager {
     public LangCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "lang");
-        addDescription(Lang.get("commands.tempmute.description"));
-        addUsage(Lang.get("commands.tempmute.usage"));
+        addDescription(Lang.get("commands.lang.description"));
+        addUsage(Lang.get("commands.lang.usage"));
         setAliases(Arrays.asList(Lang.getStringArray("plugin.commands.lang.aliases")));
 
         addOneTabbComplete(-1, null, "lang");
@@ -28,14 +28,11 @@ public class LangCommand extends CommandManager {
 
         if (args.length != 1)
             sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_required"));
-        else
-            if (Files.exists(Paths.get(Api.full_prefix + "/languages/" + args[0] + ".yml"))){
-                Api.data.set("player." + sender.getName() + ".lang", args[0]);
-                sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_changed"));
-            }
-            else
-                sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_unknown")
-                        .replaceAll("%lang%", args[0]));
+        else {
+            Api.data.set("player." + sender.getName() + ".lang", args[0]);
+            sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_changed"));
+        }
+
 
         return true;
     }

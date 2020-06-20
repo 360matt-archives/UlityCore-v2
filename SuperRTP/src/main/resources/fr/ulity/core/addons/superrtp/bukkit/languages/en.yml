@@ -22,3 +22,5 @@ commands:
   rtp:
     usage: "&eOpen the selection interface: &7/rtp"
     description: "Allows to open the selection interface to choose the type of teleportation defined by the server"
+    expressions:
+      menu_title: "&c&lRandom Teleport"

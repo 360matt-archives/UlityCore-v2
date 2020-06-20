@@ -7,7 +7,7 @@ import fr.ulity.core.utils.Time;
 import java.util.Date;
 
 public class Ban {
-    private static final Config ban = new Config("ban", "moderation");
+    private static final Config ban = new Config("ban", "addons/moderation");
 
     private final FlatFileSection playerBan;
     private final String playername;

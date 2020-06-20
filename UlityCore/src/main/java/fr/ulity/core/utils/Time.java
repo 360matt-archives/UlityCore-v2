@@ -13,7 +13,16 @@ public class Time {
     public int milliseconds;
     public String text = "";
 
+    private String playerLang = Lang.defaultLang;
+
     public Time(String text) {
+        SecondFromText(text);
+        this.milliseconds = this.seconds*1000;
+        TextFromSeconds(this.seconds);
+    }
+    public Time(String text, Object lang) {
+        this.playerLang = Lang.getLangOfPlayer(lang);
+
         SecondFromText(text);
         this.milliseconds = this.seconds*1000;
         TextFromSeconds(this.seconds);
@@ -24,7 +33,13 @@ public class Time {
         this.milliseconds = this.seconds*1000;
         TextFromSeconds(this.seconds);
     }
+    public Time(int seconds, Object player) {
+        this.playerLang = Lang.getLangOfPlayer(player);
 
+        this.seconds = seconds;
+        this.milliseconds = this.seconds*1000;
+        TextFromSeconds(this.seconds);
+    }
 
     private void SecondFromText (String text) {
         final Pattern pattern = Pattern.compile("([0-9]+)([A-z])", Pattern.MULTILINE);
@@ -44,8 +59,8 @@ public class Time {
         }
     }
 
-    private static String exp(String exp) {
-        return ((exp.equals("separator") ? "" : " ")) + Lang.get("period." + exp);
+    private String exp(String exp) {
+        return ((exp.equals("separator") ? "" : " ")) + Lang.get(playerLang, "period." + exp);
     }
 
     private void TextFromSeconds (int seconds) {

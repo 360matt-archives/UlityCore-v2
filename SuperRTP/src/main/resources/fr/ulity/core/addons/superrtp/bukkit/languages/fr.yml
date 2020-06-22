@@ -18,6 +18,7 @@ super_RTP:
     economy_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
     location_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
     world_missing: "&7[&cX&7] Impossible d'acheter &8%title% &7pour le moment"
+    unsafe_location: "&7Nous réessayons une nouvelle téléportation !"
 commands:
   rtp:
     usage: "§eOuvrir l'interface de sélection: &7/rtp"

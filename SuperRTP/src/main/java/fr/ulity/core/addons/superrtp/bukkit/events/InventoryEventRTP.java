@@ -2,13 +2,10 @@ package fr.ulity.core.addons.superrtp.bukkit.events;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
+import fr.ulity.core.addons.superrtp.bukkit.api.SuperRtpApi;
 import fr.ulity.core.api.Cooldown;
 import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
-import fr.ulity.core.utils.Time;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -83,7 +80,6 @@ public class InventoryEventRTP implements Listener {
                                                         // ENFIN ! ... il ne peut plus rien nous arriver ...
 
 
-
                                                         if (!staffBypass) {
                                                             // seulement si le joueur n'est pas en status bypass/staff ...
 
@@ -93,33 +89,7 @@ public class InventoryEventRTP implements Listener {
                                                             // ... on applique les obligations du joueurs (retrait d'argent, cooldolwn, etc... )
                                                         }
 
-
-
-                                                        Material blockBottom = null;
-                                                        Location locFinal = null;
-
-                                                        while (blockBottom == null || !blockBottom.isSolid()) {
-                                                            int minX = (int) Math.round(section.getDouble("randomWorld." + worldName + ".min.x"));
-                                                            int maxX = (int) Math.round(section.getDouble("randomWorld." + worldName + ".max.x") + 1);
-                                                            int locX = (int) Math.round((Math.random() * ((maxX - minX) + 1)) + minX);
-
-                                                            int minZ = (int) Math.round(section.getDouble("randomWorld." + worldName + ".min.z"));
-                                                            int maxZ = (int) Math.round(section.getDouble("randomWorld." + worldName + ".max.z"));
-                                                            int locZ = (int) Math.round((Math.random() * ((maxZ - minZ) + 1)) + minZ);
-
-                                                            int locY = world.getHighestBlockYAt(locX, locZ);
-
-                                                            locFinal = new Location(world, locX, locY + 1, locZ);
-
-                                                            blockBottom = world.getBlockAt(locX, locY, locZ).getType();
-                                                        }
-                                                        player.teleport(locFinal);
-
-
-                                                        if (section.singleLayerKeySet("extra").contains("message")) {
-                                                            // si un message est défini, il serait plus commode de l'envoyer au joueur ;)
-                                                            player.sendMessage(Text.withColours(Text.convertEncodage(section.getString("extra.message"))));
-                                                        }
+                                                        SuperRtpApi.playerRTP(player, world, x, true);
 
 
                                                     } else {

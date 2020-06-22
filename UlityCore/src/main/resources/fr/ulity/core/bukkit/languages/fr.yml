@@ -13,7 +13,6 @@ plugin:
         - lengua
         - sprache
       lang_changed: '&7La langue a été changée en &bFrançais'
-      lang_unknown: '&7La langue demandée &c%lang% &7est inconnue'
       lang_required: |-
         &7Une langue est attendue au format deux lettres.
         &7La langue de votre client est: &bFrançais

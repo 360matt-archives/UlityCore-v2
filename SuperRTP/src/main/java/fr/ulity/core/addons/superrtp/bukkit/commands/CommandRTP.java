@@ -25,9 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class CommandRTP extends CommandManager implements Listener {
-
     private static Inventory preInvMenu = null;
-
 
     public CommandRTP(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "rtp");
@@ -45,7 +43,6 @@ public class CommandRTP extends CommandManager implements Listener {
             return preInvMenu;
         else {
             Inventory teleportInvMenu = Bukkit.createInventory(null, 6 * 9, Lang.get(player, "commands.rtp.expressions.menu_title"));
-
             for (int k = 0; k <= (6 * 9) - 1; k++) {
                 int randomNum = ThreadLocalRandom.current().nextInt(0, 7 + 1);
                 Material randomMaterial = null;
@@ -74,10 +71,8 @@ public class CommandRTP extends CommandManager implements Listener {
                 preInvMenu = teleportInvMenu;
 
             return teleportInvMenu;
-
         }
     }
-
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -111,11 +106,11 @@ public class CommandRTP extends CommandManager implements Listener {
                         .map(object -> Objects.toString(object, null))
                         .collect(Collectors.toList()));
                 
-                Double price = section.getDouble("extra.cost");
+                double price = section.getDouble("extra.cost");
                 if (!staffBypass && price != 0){
                     description.add(" ");
                     description.add(Lang.get(player, "super_RTP.gui.cost_price")
-                            .replaceAll("%price%", price.toString()));
+                            .replaceAll("%price%", Double.toString(price)));
                 }
 
                 String permission = section.getString("extra.permission");
@@ -142,13 +137,10 @@ public class CommandRTP extends CommandManager implements Listener {
                     }
                 }
 
-
                 if (staffBypass) {
                     description.add(" ");
                     description.add(Lang.get("super_RTP.gui.staff_mod"));
                 }
-
-
 
                 ItemStack itemStack = new ItemStack(material, 1);
                 ItemMeta iteamMeta = itemStack.getItemMeta();
@@ -160,16 +152,8 @@ public class CommandRTP extends CommandManager implements Listener {
                 teleportInvMenu.setItem(place, itemStack);
             }
 
-
-
             player.openInventory(teleportInvMenu);
         }
-
-
-
-
-
-
 
         return true;
     }

@@ -2,6 +2,7 @@ package fr.ulity.core.addons.superrtp.bukkit;
 
 import fr.ulity.core.addons.superrtp.bukkit.commands.CommandRTP;
 import fr.ulity.core.addons.superrtp.bukkit.events.InventoryEventRTP;
+import fr.ulity.core.addons.superrtp.bukkit.events.InvincibleRTP;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
@@ -19,6 +20,8 @@ public final class MainBukkitRTP extends JavaPlugin {
     public static MainBukkitRTP plugin;
     public static Config config;
     public static HashMap<String, String> items = new HashMap<>();
+
+    public static HashMap<String, HashMap<String, Object>> invincible = new HashMap<>();
 
     public static final class ObtainEco {
         public Economy eco;
@@ -65,6 +68,7 @@ public final class MainBukkitRTP extends JavaPlugin {
             new CommandRTP(Api.Bukkit.commandMap, this);
 
             getPluginManager().registerEvents(new InventoryEventRTP(), this);
+            getPluginManager().registerEvents(new InvincibleRTP(), this);
         }
 
 

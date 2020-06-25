@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Claims/Claims.iml" filepath="$PROJECT_DIR$/Claims/Claims.iml" />
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PackUtils/PackUtils.iml" filepath="$PROJECT_DIR$/PackUtils/PackUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperJails/SuperJails.iml" filepath="$PROJECT_DIR$/SuperJails/SuperJails.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperRTP/SuperRTP.iml" filepath="$PROJECT_DIR$/SuperRTP/SuperRTP.iml" />
       <module fileurl="file://$PROJECT_DIR$/UlityCore/UlityCore.iml" filepath="$PROJECT_DIR$/UlityCore/UlityCore.iml" />

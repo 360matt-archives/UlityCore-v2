@@ -1,5 +1,5 @@
 name: UlityCore
-version: 2.2
+version: 2.2.1 # déjà incrémenté
 main: fr.ulity.core.bukkit.MainBukkit
 load: STARTUP
 loadbefore: [Moderation]

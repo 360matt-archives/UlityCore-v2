@@ -19,6 +19,8 @@ plugin:
 global:
   enable: "enable"
   disable: "disable"
+  enabled: "enabled"
+  disabled: "disabled"
   invalid_player: "&7[&cX&7] The player &c%player% &7is invalid."
   player_only: "&7[&cX&7] This command must be executed by a player."
 period:

@@ -1,14 +1,7 @@
 package fr.ulity.core.api;
 
-import de.leonhard.storage.Json;
+import fr.ulity.core.api.functions.Storage;
 
-public class Temp extends Json {
-    public Temp() {
-        super("data", Api.prefix + "/" + "temps");
-    }
-
-    public boolean isSet(String key) {
-        return get(key) != null;
-    }
-
+public class Temp extends Storage {
+    public Temp () { super("temp", "temps"); }
 }

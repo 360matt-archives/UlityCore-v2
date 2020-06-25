@@ -19,8 +19,11 @@ plugin:
 global:
   enable: "activer"
   disable: "désactiver"
+  enabled: "activé"
+  disabled: "désactivé"
   invalid_player: "&7[&cX&7] Le joueur &c%player% &7est invalide."
   player_only: "&7[&cX&7] Cette commande doit être éxécutée par un joueur."
+  no_self: "&7[&cX&7] Veuillez indiquer un autre pseudo que le votre !"
 period:
   years: "années"
   year: "année"

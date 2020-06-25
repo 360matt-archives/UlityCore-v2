@@ -261,7 +261,7 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
         if (getPermission() != null) {
             if (!commandSender.hasPermission(getPermission())) {
                 if (getPermissionMessage() == null) {
-                    commandSender.sendMessage(ChatColor.RED + "no permit!");
+                    commandSender.sendMessage(Lang.get("global.no_perm"));
                 } else {
                     commandSender.sendMessage(getPermissionMessage());
                 }

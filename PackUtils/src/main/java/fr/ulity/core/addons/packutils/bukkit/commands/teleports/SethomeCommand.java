@@ -30,15 +30,17 @@ public class SethomeCommand extends CommandManager {
             return true;
         } else {
 
-            if (args.length == 1) {
+            if (args.length <= 1) {
                 Player player = (Player) sender;
 
+                if (args.length == 0)
+                    args = new String[]{"home"};
                 if (!StringUtils.isAlphanumeric(args[0]))
                     sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.alphanumeric_required"));
                 else {
                     int max = MainBukkitPackUtils.config.getInt("homes.max");
 
-                    if (HomeMethods.isHomeExist(player, args[0]) || HomeMethods.getHomeCount(player) > max) {
+                    if (!HomeMethods.isHomeExist(player, args[0]) && HomeMethods.getHomeCount(player) >= max) {
                         if (!(MainBukkitPackUtils.config.getBoolean("homes.staff_bypass") && player.hasPermission("ulity.packutils.home.bypass"))) {
                             sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.limit").replaceAll("%count%", String.valueOf(max)));
                             return true;

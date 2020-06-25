@@ -34,7 +34,7 @@ public class HomeMethods {
     }
 
     public static int getHomeCount (Player player) {
-        return Api.data.keySet("player." + player.getName() + ".home").size();
+        return Api.data.singleLayerKeySet("player." + player.getName() + ".home").size();
     }
 
     public static boolean isHomeExist (Player player, String home) {

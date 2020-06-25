@@ -63,7 +63,7 @@ public class HomeCommand extends CommandManager implements Listener {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
                         if (player.isOnline()) {
                             player.teleport(HomeMethods.getHomeLocation(player, homeName));
-                            player.sendMessage(Lang.get(player, "commands.spawn.expressions.teleported")
+                            player.sendMessage(Lang.get(player, "commands.home.expressions.teleported")
                                     .replaceAll("%home%", homeName));
                         }
                     }, 20*5L);

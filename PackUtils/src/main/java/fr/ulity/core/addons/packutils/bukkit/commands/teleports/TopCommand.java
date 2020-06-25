@@ -5,6 +5,7 @@ import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -26,10 +27,12 @@ public class TopCommand extends CommandManager {
     public static Location getTopLoc (Player player) {
         Location loc = player.getLocation();
 
-        double x = loc.getX();
-        double y = loc.getWorld().getHighestBlockAt((int) loc.getX(), (int) loc.getY()).getY();
-        double z = (int) loc.getZ();
-        return new Location(loc.getWorld(), x, y, z);
+
+        for (int k = 512; k != 0; k--)
+            if (loc.getWorld().getBlockAt((int) loc.getX(), k, (int) loc.getZ()).getType().isSolid())
+                return new Location(loc.getWorld(), loc.getX(), k+1, loc.getZ());
+
+        return null;
     }
 
     @Override

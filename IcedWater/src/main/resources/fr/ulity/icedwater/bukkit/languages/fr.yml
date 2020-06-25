@@ -1,0 +1,9 @@
+icedwater:
+  enchantment_name: "Eau gelée"
+
+commands:
+  icedwater:
+    usage: "&eActiver ou désactiver: &7/icedwater"
+    description: "&eActive ou désactive l'Eau gelée lorsque pour la personne qui fait la commande"
+    expressions:
+      result: "&7L'eau gêlé a été &8%status%"

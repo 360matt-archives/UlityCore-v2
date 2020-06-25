@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IcedWater/IcedWater.iml" filepath="$PROJECT_DIR$/IcedWater/IcedWater.iml" />
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
       <module fileurl="file://$PROJECT_DIR$/PackUtils/PackUtils.iml" filepath="$PROJECT_DIR$/PackUtils/PackUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperJails/SuperJails.iml" filepath="$PROJECT_DIR$/SuperJails/SuperJails.iml" />

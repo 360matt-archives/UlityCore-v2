@@ -33,6 +33,8 @@ public class BalanceCommand extends CommandManager {
 
             sender.sendMessage(Lang.get(sender, "commands.balance.expressions.your_sold")
                     .replaceAll("%money%", String.valueOf(new EconomyMethods().getBalance(sender.getName()))));
+
+            return true;
         } else if (args.length == 1) {
             Player playerHandle = Bukkit.getPlayer(args[0]);
             if (playerHandle == null) {

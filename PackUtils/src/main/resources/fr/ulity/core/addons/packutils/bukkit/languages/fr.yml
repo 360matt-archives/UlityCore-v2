@@ -125,9 +125,9 @@ commands:
       &eRetirer de la balance d'un joueur: &7/eco remove <Joueur>
     description: "Permet de gérer la balance des joueurs"
     expressions:
-      sold_set: "&7Le solde du joueur &b%player% &7a été défini à &6%money%"
-      sold_added: "&6%added% &7ont été ajoutés au compte de &b%player%"
-      sold_taked: "&6%removed% &7ont été retirés du compte de &b%player%"
+      sold_set: "&7Le solde du joueur &b%player% &7a été défini à &6$%money%"
+      sold_added: "&6$%added% &7ont été ajoutés au compte de &b%player%"
+      sold_taked: "&6$%taked% &7ont été retirés du compte de &b%player%"
       all_accounts_cleared: "&7Tous les comptes ont été reinitialisés"
   balance:
     usage: "&eConsulter son solde: &7/balance [Joueur]"
@@ -141,4 +141,4 @@ commands:
     expressions:
       received: "&7Vous avez reçu &6$%money% &7de la part de &b%player%"
       result: "&6$%money% &7ont été envoyé au joueur &b%player%"
-      not_enough_money: "&7Vous ne possédez pas de l'entièreté de la somme de &6$%money"
+      not_enough_money: "&7Vous ne possédez pas de l'entièreté de la somme de &6$%money%"

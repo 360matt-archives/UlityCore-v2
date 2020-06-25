@@ -54,8 +54,8 @@ public class EcoCommand extends CommandManager {
                         .replaceAll("%added%", args[2]));
                 return true;
             } else if (args[0].equalsIgnoreCase("remove") && args.length == 3 && StringUtils.isNumeric(args[2])) {
-                new EconomyMethods().withdrawPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
-                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sold_removed")
+                new EconomyMethods().depositPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
+                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sold_taked")
                         .replaceAll("%player%", playerHandle.getName())
                         .replaceAll("%taked%", args[2]));
                 return true;

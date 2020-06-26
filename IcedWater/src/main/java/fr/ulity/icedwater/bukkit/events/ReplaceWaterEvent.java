@@ -30,6 +30,7 @@ public class ReplaceWaterEvent implements Listener {
             Block blockApres = e.getTo().clone().subtract(0, 1, 0).getBlock();
 
             if (!blockAvant.equals(blockApres)) {
+                player.setFallDistance(0);
 
                 if (blockApres.getType().equals(Material.WATER)) {
                     blockApres.setType(Material.ICE);

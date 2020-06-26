@@ -14,13 +14,15 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override public boolean isEnabled() { return true; }
 
-    @Override public String getName() { return null; }
+    @Override public String getName() { return "PackUtils"; }
 
-    @Override public boolean hasBankSupport() { return false; }
+    @Override public boolean hasBankSupport() { return true; }
 
     @Override public int fractionalDigits() { return 0; }
 
-    @Override public String format(double amount) { return null; }
+    @Override public String format(double amount) {
+        return String.valueOf(amount);
+    }
 
     @Override
     public String currencyNamePlural() {
@@ -86,21 +88,37 @@ public class EconomyMethods extends AbstractEconomy {
         return depositPlayer(playerName, amount);
     }
 
-    @Override public EconomyResponse createBank(String name, String player) { return null; }
+    @Override public EconomyResponse createBank(String name, String player) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse deleteBank(String name) { return null; }
+    @Override public EconomyResponse deleteBank(String name) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse bankBalance(String name) { return null; }
+    @Override public EconomyResponse bankBalance(String name) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse bankHas(String name, double amount) { return null; }
+    @Override public EconomyResponse bankHas(String name, double amount) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse bankWithdraw(String name, double amount) { return null; }
+    @Override public EconomyResponse bankWithdraw(String name, double amount) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse bankDeposit(String name, double amount) { return null; }
+    @Override public EconomyResponse bankDeposit(String name, double amount) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse isBankOwner(String name, String playerName) { return null; }
+    @Override public EconomyResponse isBankOwner(String name, String playerName) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
-    @Override public EconomyResponse isBankMember(String name, String playerName) { return null; }
+    @Override public EconomyResponse isBankMember(String name, String playerName) {
+        return new EconomyResponse(0D, 0D, EconomyResponse.ResponseType.SUCCESS, "ma bite");
+    }
 
     @Override public List<String> getBanks() { return null; }
 

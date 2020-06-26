@@ -11,8 +11,7 @@ import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,61 +21,49 @@ public final class MainBukkitPackUtils extends JavaPlugin {
 
     public static CommandEnabler enabler;
 
-    @SuppressWarnings("deprecation")
-    public static boolean setupEconomy () {
-        if (Bukkit.getPluginManager().getPlugin("Vault") == null)
-            return false;
 
-
-        plugin.getServer().getServicesManager().register(Economy.class, new EconomyMethods(), plugin, ServicePriority.Highest);
-        RegisteredServiceProvider<Economy> rsp = Bukkit.getServicesManager().getRegistration(Economy.class);
-        if (rsp == null)
-            return false;
-
-        return true;
-    }
 
     @Override
     public void onEnable() {
         plugin = this;
 
-        if (setupEconomy()) {
-            Initializer init = new Initializer(this);
-            init.requireVersion("2.2");
-            init.reloadLang();
+        Plugin vault = getServer().getPluginManager().getPlugin("Vault");
+        getServer().getServicesManager().register(Economy.class, new EconomyMethods(), vault, ServicePriority.Highest);
 
-            if (init.ok) {
-                config = new Config("config", "addons/PackUtils");
-                DefaultConfig.applique();
+        Initializer init = new Initializer(this);
+        init.requireVersion("2.2");
+        init.reloadLang();
 
-                enabler = new CommandEnabler();
+        if (init.ok) {
+            config = new Config("config", "addons/PackUtils");
+            DefaultConfig.applique();
 
-                new GamemodeCommand(Api.Bukkit.commandMap, this);
-                new GmcCommand(Api.Bukkit.commandMap, this);
-                new GmsCommand(Api.Bukkit.commandMap, this);
-                new GmaCommand(Api.Bukkit.commandMap, this);
-                new GmpCommand(Api.Bukkit.commandMap, this);
+            enabler = new CommandEnabler();
 
-                new FlyCommand(Api.Bukkit.commandMap, this);
-                new TpCommand(Api.Bukkit.commandMap, this);
-                new TpaCommand(Api.Bukkit.commandMap, this);
-                new TpyesCommand(Api.Bukkit.commandMap, this);
-                new TpnoCommand(Api.Bukkit.commandMap, this);
-                new TopCommand(Api.Bukkit.commandMap, this);
-                new BackCommand(Api.Bukkit.commandMap, this);
-                new SetspawnCommand(Api.Bukkit.commandMap, this);
-                new SpawnCommand(Api.Bukkit.commandMap, this);
-                new SethomeCommand(Api.Bukkit.commandMap, this);
-                new HomeCommand(Api.Bukkit.commandMap, this);
-                new DelhomeCommand(Api.Bukkit.commandMap, this);
+            new GamemodeCommand(Api.Bukkit.commandMap, this);
+            new GmcCommand(Api.Bukkit.commandMap, this);
+            new GmsCommand(Api.Bukkit.commandMap, this);
+            new GmaCommand(Api.Bukkit.commandMap, this);
+            new GmpCommand(Api.Bukkit.commandMap, this);
 
-                new EcoCommand(Api.Bukkit.commandMap, this);
-                new BalanceCommand(Api.Bukkit.commandMap, this);
-                new PayCommand(Api.Bukkit.commandMap, this);
+            new FlyCommand(Api.Bukkit.commandMap, this);
+            new TpCommand(Api.Bukkit.commandMap, this);
+            new TpaCommand(Api.Bukkit.commandMap, this);
+            new TpyesCommand(Api.Bukkit.commandMap, this);
+            new TpnoCommand(Api.Bukkit.commandMap, this);
+            new TopCommand(Api.Bukkit.commandMap, this);
+            new BackCommand(Api.Bukkit.commandMap, this);
+            new SetspawnCommand(Api.Bukkit.commandMap, this);
+            new SpawnCommand(Api.Bukkit.commandMap, this);
+            new SethomeCommand(Api.Bukkit.commandMap, this);
+            new HomeCommand(Api.Bukkit.commandMap, this);
+            new DelhomeCommand(Api.Bukkit.commandMap, this);
 
-            }
-        } else
-            getLogger().severe("Can't hook with Vault !");
+            new EcoCommand(Api.Bukkit.commandMap, this);
+            new BalanceCommand(Api.Bukkit.commandMap, this);
+            new PayCommand(Api.Bukkit.commandMap, this);
+
+        }
 
 
     }

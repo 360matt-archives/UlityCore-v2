@@ -2,9 +2,12 @@ package fr.ulity.icedwater.bukkit.events;
 
 import fr.ulity.icedwater.bukkit.IcedWater;
 import fr.ulity.core.api.Api;
+import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,15 +36,22 @@ public class ReplaceWaterEvent implements Listener {
                 player.setFallDistance(0);
 
                 if (blockApres.getType().equals(Material.WATER)) {
+                    final Block restoreBlock = blockApres;
+                    final BlockData data = restoreBlock.getBlockData();
+
                     blockApres.setType(Material.ICE);
 
                     taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(IcedWater.plugin, new Runnable() {
-                        int id = taskID;
+                        final int id = taskID;
 
                         @Override
                         public void run() {
                             if (!player.getLocation().subtract(0, 1, 0).getBlock().equals(blockApres)) {
-                                blockApres.setType(Material.WATER);
+                                if (blockApres.equals(Material.ICE))
+                                    blockApres.setType(Material.WATER);
+
+                                blockApres.setBlockData(data);
+
                                 Bukkit.getServer().getScheduler().cancelTask(id);
                             }
                         }

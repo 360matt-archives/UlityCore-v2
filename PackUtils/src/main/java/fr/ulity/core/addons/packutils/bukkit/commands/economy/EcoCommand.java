@@ -43,20 +43,26 @@ public class EcoCommand extends CommandManager {
 
             if (args[0].equalsIgnoreCase("set") && args.length == 3 && StringUtils.isNumeric(args[2])) {
                 EconomyMethods.money.set("player." + playerHandle.getName(), Double.parseDouble(args[2]));
-                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sold_set")
+                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sender.sold_set")
                         .replaceAll("%player%", playerHandle.getName())
+                        .replaceAll("%money%", args[2]));
+                playerHandle.sendMessage(Lang.get(playerHandle, "commands.eco.expressions.player.sold_set")
                         .replaceAll("%money%", args[2]));
                 return true;
             } else if (args[0].equalsIgnoreCase("add") && args.length == 3 && StringUtils.isNumeric(args[2])) {
-                new EconomyMethods().withdrawPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
-                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sold_added")
+                new EconomyMethods().depositPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
+                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sender.sold_added")
                         .replaceAll("%player%", playerHandle.getName())
+                        .replaceAll("%added%", args[2]));
+                playerHandle.sendMessage(Lang.get(playerHandle, "commands.eco.expressions.player.sold_added")
                         .replaceAll("%added%", args[2]));
                 return true;
             } else if (args[0].equalsIgnoreCase("remove") && args.length == 3 && StringUtils.isNumeric(args[2])) {
-                new EconomyMethods().depositPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
-                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sold_taked")
+                new EconomyMethods().withdrawPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
+                sender.sendMessage(Lang.get(sender, "commands.eco.expressions.sender.sold_taked")
                         .replaceAll("%player%", playerHandle.getName())
+                        .replaceAll("%taked%", args[2]));
+                playerHandle.sendMessage(Lang.get(playerHandle, "commands.eco.expressions.player.sold_taked")
                         .replaceAll("%taked%", args[2]));
                 return true;
             }

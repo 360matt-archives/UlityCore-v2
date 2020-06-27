@@ -9,7 +9,6 @@
         <module name="UlityCore" />
         <module name="SuperRTP" />
         <module name="PackUtils" />
-        <module name="IcedWater" />
         <module name="Moderation" />
         <module name="SuperJails" />
       </profile>

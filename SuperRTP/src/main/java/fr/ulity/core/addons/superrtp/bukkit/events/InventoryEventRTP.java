@@ -43,7 +43,7 @@ public class InventoryEventRTP implements Listener {
                             boolean staffBypass = MainBukkitRTP.config.getBoolean("global.staff_bypass") && player.hasPermission("ulity.superrtp.bypass");
 
                             String permission = section.getString("extra.permission");
-                            if (permission == null || staffBypass || player.hasPermission(permission)) {
+                            if (permission.equals("") || staffBypass || player.hasPermission(permission)) {
                                 // si le joueur est autorisé à utiliser ce item
 
                                 int cooldown = section.getInt("extra.cooldown");

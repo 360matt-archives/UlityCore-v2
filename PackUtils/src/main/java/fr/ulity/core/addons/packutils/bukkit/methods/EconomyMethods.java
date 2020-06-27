@@ -16,7 +16,7 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override public String getName() { return "PackUtils"; }
 
-    @Override public boolean hasBankSupport() { return true; }
+    @Override public boolean hasBankSupport() { return false; }
 
     @Override public int fractionalDigits() { return 0; }
 
@@ -66,7 +66,7 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        double newBalance = money.getDouble("player." + playerName) + amount;
+        double newBalance = money.getDouble("player." + playerName) - amount;
         money.set("player." + playerName, newBalance);
         return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "ma bite");
     }
@@ -78,7 +78,7 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        double newBalance = money.getDouble("player." + playerName) - amount;
+        double newBalance = money.getDouble("player." + playerName) + amount;
         money.set("player." + playerName, newBalance);
         return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "ma bite");
     }

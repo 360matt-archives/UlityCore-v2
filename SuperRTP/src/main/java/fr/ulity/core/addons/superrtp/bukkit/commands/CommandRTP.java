@@ -114,7 +114,8 @@ public class CommandRTP extends CommandManager implements Listener {
                 }
 
                 String permission = section.getString("extra.permission");
-                if (!staffBypass && permission != null) {
+
+                if (!staffBypass && !permission.equals("")) {
                     description.add(" ");
                     description.add(Lang.get(player, "super_RTP.gui.permission")
                             .replaceAll("%stat%", (player.hasPermission(permission)) ? "&a✔" : "&c❌"));

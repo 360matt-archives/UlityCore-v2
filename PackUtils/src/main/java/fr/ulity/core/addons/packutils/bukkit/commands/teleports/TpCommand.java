@@ -40,8 +40,11 @@ public class TpCommand extends CommandManager {
         Player originPlayer = Bukkit.getPlayer(origin);
         if (originPlayer == null)
             sender.sendMessage(Lang.get(sender, "global.invalid_player").replaceAll("%player%", origin));
-        else
+        else {
+            target.setWorld(originPlayer.getWorld());
             teleporting.tpCoords(originPlayer, target);
+        }
+
 
     }
 
@@ -66,8 +69,8 @@ public class TpCommand extends CommandManager {
                     double y = Double.parseDouble(args[ind + 1]);
                     double z = Double.parseDouble(args[ind + 2]);
 
-                    tpLoc(sender, teleporting, (ind == 0) ? sender.getName() : args[0], new Location(null, x, y, z));
-
+                    String pseudo = (ind == 0) ? sender.getName() : args[0];
+                    tpLoc(sender, teleporting, pseudo, new Location(null, x, y, z));
                 } catch (NumberFormatException nfe) {
                     return false;
                 }

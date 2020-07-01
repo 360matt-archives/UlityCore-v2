@@ -4,19 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.ulity.core.addons</groupId>
-    <artifactId>PackUtils</artifactId>
-    <version>1.0</version>
+    <groupId>net.listenia.survie</groupId>
+    <artifactId>SurvieCore</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PackUtils</name>
+    <name>SurvieCore</name>
 
-    <description>Copier Essentials ? noooooon ... on le refait !</description>
+    <description>Plugin custom du serveur Listenia</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://discord.gg/jBFE4Bu</url>
 
     <build>
         <plugins>
@@ -63,6 +62,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -79,9 +82,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>fr.ulity</groupId>
-            <artifactId>core</artifactId>
-            <version>2.1.1</version>
+            <groupId>fr.mrmicky</groupId>
+            <artifactId>FastParticles</artifactId>
+            <version>1.2.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

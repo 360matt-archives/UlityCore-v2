@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/IcedWater/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/IcedWater/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/resources/fr/ulity/moderation/bukkit/languages/fr.yml" charset="UTF-8" />
@@ -12,9 +10,13 @@
     <file url="file://$PROJECT_DIR$/SuperJails/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SuperRTP/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SuperRTP/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SurvieCustom/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SurvieCustom/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/java/fr/ulity/core/api/Lang.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/resources/fr/ulity/core/bukkit/languages/fr.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WorldSaver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WorldSaver/src/main/resources" charset="UTF-8" />
   </component>
 </project>

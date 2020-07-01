@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SurvieCustom:jar">
+    <output-path>I:/serveurs/Test/plugins</output-path>
+    <root id="archive" name="SurvieCustom.jar">
+      <element id="module-output" name="SurvieCustom" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/fr/mrmicky/FastParticles/1.2.3/FastParticles-1.2.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

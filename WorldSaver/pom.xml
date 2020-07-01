@@ -4,19 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.ulity.core.addons</groupId>
-    <artifactId>PackUtils</artifactId>
-    <version>1.0</version>
+    <groupId>fr.ulity</groupId>
+    <artifactId>WorldSaver</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PackUtils</name>
+    <name>WorldSaver</name>
 
-    <description>Copier Essentials ? noooooon ... on le refait !</description>
+    <description>Archiver tout un monde pour peu d'espace disque</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://discord.gg/jBFE4Bu</url>
 
     <build>
         <plugins>
@@ -71,18 +70,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.JavaFactoryDev</groupId>
-            <artifactId>LightningStorage</artifactId>
-            <version>3.1.4</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>fr.ulity</groupId>
-            <artifactId>core</artifactId>
-            <version>2.1.1</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

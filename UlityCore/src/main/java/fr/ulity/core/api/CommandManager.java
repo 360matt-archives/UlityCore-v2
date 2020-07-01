@@ -260,11 +260,7 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
     public boolean execute(CommandSender commandSender, String command, String[] arg) {
         if (getPermission() != null) {
             if (!commandSender.hasPermission(getPermission())) {
-                if (getPermissionMessage() == null) {
-                    commandSender.sendMessage(Lang.get("global.no_perm"));
-                } else {
-                    commandSender.sendMessage(getPermissionMessage());
-                }
+                commandSender.sendMessage((getPermissionMessage() == null) ? Lang.get("plugin.no_perm") : getPermissionMessage());
                 return false;
             }
         }

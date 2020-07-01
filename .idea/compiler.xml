@@ -9,7 +9,9 @@
         <module name="UlityCore" />
         <module name="SuperRTP" />
         <module name="PackUtils" />
+        <module name="SurvieCustom" />
         <module name="Moderation" />
+        <module name="WorldSaver" />
         <module name="SuperJails" />
       </profile>
     </annotationProcessing>
@@ -23,8 +25,10 @@
       <module name="PackUtils" target="1.8" />
       <module name="SuperJails" target="1.8" />
       <module name="SuperRTP" target="1.8" />
+      <module name="SurvieCustom" target="1.8" />
       <module name="UlityCore" target="1.8" />
       <module name="UlityCore_V2" target="8" />
+      <module name="WorldSaver" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -3,6 +3,8 @@ package fr.ulity.worldsaver.commands;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.worldsaver.api.methods.save.CreateJson;
 import fr.ulity.worldsaver.api.methods.Warner;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -23,9 +25,10 @@ public class GenerateCommand extends CommandManager {
         Warner warner = new Warner(sender, "§eProgression: §6%percent%% §e: " +
                 "§c%finishedVertical% §e/ §c%totalVertical% §e( §6%finishedChunk% §e/ §6%totalChunk% Chunks §e)", 3);
 
+        World world = Bukkit.getWorld("world");
+        CreateJson.generate("test", world, world.getLoadedChunks(), warner);
 
 
-        CreateJson.generate("test", "world", warner);
         sender.sendMessage("§eWola");
         return true;
     }

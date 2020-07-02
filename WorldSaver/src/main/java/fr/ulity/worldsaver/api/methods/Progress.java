@@ -19,7 +19,9 @@ public class Progress {
     public Progress (int chunk, Warner warner) {
         this.totalChunk = chunk;
         this.totalVertical = chunk*256;
-        new Scheduler().create(warner);
+
+        if (warner != null)
+            new Scheduler().create(warner);
     }
 
     public void finishedChunk () {  finishedChunk++; }
@@ -27,11 +29,11 @@ public class Progress {
     public double getProgress () { return ((finishedChunk / totalChunk) * 100); }
 
     private class Scheduler {
-        int id;
+        private int id;
         public void create (Warner warner) {
             if (finishedChunk != totalChunk) {
                 id = Bukkit.getScheduler().scheduleSyncRepeatingTask(WorldSaver.plugin, () -> {
-                    if (finishedVertical != totalVertical && (!(warner.sender instanceof Player)) || ((Player) warner.sender).isOnline()) {
+                    if (finishedChunk != totalChunk && (!(warner.sender instanceof Player)) || ((Player) warner.sender).isOnline()) {
                         warner.sender.sendMessage(warner.msg
                                 .replaceAll("%finishedChunk%", String.valueOf(finishedChunk))
                                 .replaceAll("%totalChunk%", String.valueOf(totalChunk))

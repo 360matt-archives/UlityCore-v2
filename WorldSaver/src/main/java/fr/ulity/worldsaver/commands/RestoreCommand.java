@@ -2,7 +2,6 @@ package fr.ulity.worldsaver.commands;
 
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.worldsaver.api.methods.build.ReadJson;
-import fr.ulity.worldsaver.api.methods.save.CreateJson;
 import fr.ulity.worldsaver.api.methods.Warner;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -22,7 +21,7 @@ public class RestoreCommand extends CommandManager {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         Warner warner = new Warner(sender, "§eProgression: §6%percent%% §e: " +
-                "§c%finishedVertical% §e/ §c%totalVertical% §e( §6%finishedChunk% §e/ §6%totalChunk% Chunks §e)", 3);
+                "§e( §c%finishedChunk% §e/ §c%totalChunk% Chunks §e)", 2);
 
 
 

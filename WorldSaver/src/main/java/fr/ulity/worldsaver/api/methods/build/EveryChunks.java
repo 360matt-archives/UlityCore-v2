@@ -2,7 +2,7 @@ package fr.ulity.worldsaver.api.methods.build;
 
 import fr.ulity.core.api.Data;
 import fr.ulity.worldsaver.api.methods.LimitBlocs;
-import fr.ulity.worldsaver.api.methods.LimitComma;
+import fr.ulity.worldsaver.api.methods.LimitID;
 import fr.ulity.worldsaver.api.methods.Progress;
 import fr.ulity.worldsaver.api.methods.Warner;
 import org.bukkit.Chunk;
@@ -27,8 +27,8 @@ public class EveryChunks {
 
             if (matcher.find()) {
 
-                int chunkX = Integer.parseInt(LimitComma.getDevelopped(matcher.group(1)));
-                int chunkZ = Integer.parseInt(LimitComma.getDevelopped(matcher.group(2)));
+                int chunkX = Integer.parseInt(LimitID.getDevelopped(matcher.group(1)));
+                int chunkZ = Integer.parseInt(LimitID.getDevelopped(matcher.group(2)));
 
 
                 Chunk chunkObj = world.getChunkAt(chunkX, chunkZ);
@@ -39,9 +39,9 @@ public class EveryChunks {
                     Matcher matcherBloc = patternBloc.matcher(bloc);
 
                     if (matcherBloc.find()) {
-                        int blocX = Integer.parseInt(LimitComma.getDevelopped(matcherBloc.group(1)));
-                        int blocY = Integer.parseInt(LimitComma.getDevelopped(matcherBloc.group(2)));
-                        int blocZ = Integer.parseInt(LimitComma.getDevelopped(matcherBloc.group(3)));
+                        int blocX = Integer.parseInt(LimitID.getDevelopped(matcherBloc.group(1)));
+                        int blocY = Integer.parseInt(LimitID.getDevelopped(matcherBloc.group(2)));
+                        int blocZ = Integer.parseInt(LimitID.getDevelopped(matcherBloc.group(3)));
 
                         String[] blocList = data.getList(chunk + "." + bloc).toArray(new String[0]);
 
@@ -56,7 +56,7 @@ public class EveryChunks {
                                     blocY++;
                                 }
                             } else {
-                                chunkObj.getBlock(blocX, blocY, blocZ).setType(Material.valueOf(entry));
+                                chunkObj.getBlock(blocX, blocY, blocZ).setType(Material.valueOf(LimitBlocs.getDeveloped(entry)));
                                 blocY++;
                             }
                         }

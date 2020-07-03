@@ -12,11 +12,18 @@ public class CreateJson {
     public static void generate (String name, World world, Chunk[] chunks, Warner warner) {
         Data store = new Data(name, "addons/WorldSaver");
 
+        DataInMemory inMemory = new DataInMemory();
+
         progress = new Progress(chunks.length, warner);
         Thread newThread = new Thread(() -> {
             for (Chunk chunk : chunks)
-                EveryChunks.addChunk(world, chunk, store, progress);
+                EveryChunks.addChunk(world, chunk, store, progress, inMemory);
+            store.putAll(inMemory.data);
         });
         newThread.start();
+
+
+
+
     }
 }

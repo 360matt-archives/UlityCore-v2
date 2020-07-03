@@ -33,15 +33,17 @@ public class Progress {
         public void create (Warner warner) {
             if (finishedChunk != totalChunk) {
                 id = Bukkit.getScheduler().scheduleSyncRepeatingTask(WorldSaver.plugin, () -> {
-                    if (finishedChunk != totalChunk && (!(warner.sender instanceof Player)) || ((Player) warner.sender).isOnline()) {
+
+                    if (finishedChunk == totalChunk || (warner.sender instanceof Player && !((Player) warner.sender).isOnline()))
+                        Bukkit.getScheduler().cancelTask(id);
+                    else {
                         warner.sender.sendMessage(warner.msg
                                 .replaceAll("%finishedChunk%", String.valueOf(finishedChunk))
                                 .replaceAll("%totalChunk%", String.valueOf(totalChunk))
                                 .replaceAll("%finishedVertical%", String.valueOf(finishedVertical))
                                 .replaceAll("%totalVertical%", String.valueOf(totalVertical))
                                 .replaceAll("%percent%", String.valueOf( Math.round(finishedVertical*100) / totalVertical )));
-                    } else
-                        Bukkit.getScheduler().cancelTask(id);
+                    }
                 }, 0L, 20L*warner.delay);
 
             }

@@ -34,10 +34,13 @@ public class Progress {
             if (finishedChunk != totalChunk) {
                 id = Bukkit.getScheduler().scheduleSyncRepeatingTask(WorldSaver.plugin, () -> {
 
-                    if (finishedChunk == totalChunk || (warner.sender instanceof Player && !((Player) warner.sender).isOnline()))
+                    if (finishedChunk == totalChunk || (warner.sender instanceof Player && !((Player) warner.sender).isOnline())) {
                         Bukkit.getScheduler().cancelTask(id);
+                        if (!(warner.sender instanceof Player) || ((Player) warner.sender).isOnline())
+                            warner.sender.sendMessage(warner.msgFinished);
+                    }
                     else {
-                        warner.sender.sendMessage(warner.msg
+                        warner.sender.sendMessage(warner.msgProgress
                                 .replaceAll("%finishedChunk%", String.valueOf(finishedChunk))
                                 .replaceAll("%totalChunk%", String.valueOf(totalChunk))
                                 .replaceAll("%finishedVertical%", String.valueOf(finishedVertical))

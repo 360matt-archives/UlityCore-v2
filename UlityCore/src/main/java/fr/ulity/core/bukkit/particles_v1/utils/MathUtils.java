@@ -8,8 +8,7 @@ public final class MathUtils {
     }
 
     public static int randomRange(int min, int max) {
-        Random rand = new Random();
-        return rand.nextInt(max - min + 1) + min;
+        return new Random().nextInt(max - min + 1) + min;
     }
 
     public static double randomRange(double min, double max) {

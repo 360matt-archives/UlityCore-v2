@@ -29,18 +29,14 @@ public class ListingResources {
         if (dirURL != null && dirURL.getProtocol().equals("file")) {
             /* A file path: easy enough */
             return new File(dirURL.toURI()).list();
-        }
-
-        if (dirURL == null) {
+        } else if (dirURL == null) {
             /*
              * In case of a jar file, we can't actually find a directory.
              * Have to assume the same jar as clazz.
              */
             String me = clazz.getName().replace(".", "/")+".class";
             dirURL = clazz.getClassLoader().getResource(me);
-        }
-
-        if (dirURL.getProtocol().equals("jar")) {
+        } else if (dirURL.getProtocol().equals("jar")) {
             /* A JAR path */
             String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); //strip out only the JAR file
             JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
@@ -58,7 +54,8 @@ public class ListingResources {
                     result.add(entry);
                 }
             }
-            return result.toArray(new String[result.size()]);
+            jar.close();
+            return result.toArray(new String[0]);
         }
 
         throw new UnsupportedOperationException("Cannot list files for URL "+dirURL);

@@ -26,25 +26,24 @@ public class LimitID {
     }
 
     public static String getDevelopped (String str) {
+        return str
+            .replaceAll("a", "-0")
+            .replaceAll("b", "-1")
+            .replaceAll("c", "-2")
+            .replaceAll("d", "-3")
+            .replaceAll("e", "-4")
+            .replaceAll("f", "-5")
+            .replaceAll("g", "-6")
+            .replaceAll("h", "-7")
+            .replaceAll("i", "-8")
+            .replaceAll("j", "-9")
 
-        if (str.startsWith("a")) return str.replace("a", "-0");
-        if (str.startsWith("b")) return str.replace("b", "-1");
-        if (str.startsWith("c")) return str.replace("c", "-2");
-        if (str.startsWith("d")) return str.replace("d", "-3");
-        if (str.startsWith("e")) return str.replace("e", "-4");
-        if (str.startsWith("f")) return str.replace("f", "-5");
-        if (str.startsWith("g")) return str.replace("g", "-6");
-        if (str.startsWith("h")) return str.replace("h", "-7");
-        if (str.startsWith("i")) return str.replace("i", "-8");
-        if (str.startsWith("j")) return str.replace("j", "-9");
+            .replaceAll("z", "15")
+            .replaceAll("y", "14")
+            .replaceAll("x", "13")
+            .replaceAll("w", "12")
+            .replaceAll("v", "11")
+            .replaceAll("u", "10");
 
-        if (str.equals("z")) return "15";
-        if (str.equals("y")) return "14";
-        if (str.equals("x")) return "13";
-        if (str.equals("w")) return "12";
-        if (str.equals("v")) return "11";
-        if (str.equals("u")) return "10";
-
-        return str;
     }
 }

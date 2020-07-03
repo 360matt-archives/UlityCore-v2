@@ -14,8 +14,7 @@ public class EveryChunks {
 
     public static void addChunk (World world, Chunk chunk, Data data, Progress progress, DataInMemory inMemory) {
         String prefix = LimitID.getReduced(chunk.getX()) + "-" + LimitID.getReduced(chunk.getZ());
-
-        // value: List<String>
+        HashMap<String, Object> chunkStore = new HashMap<>();
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
@@ -55,11 +54,11 @@ public class EveryChunks {
                         String ySave = LimitBlocs.getReduced(String.valueOf(initialY));
                         String zSave = LimitBlocs.getReduced(String.valueOf(z));
 
-                        inMemory.data.put(prefix + "." + xSave + "-" + ySave + "-" + zSave, blocs);
+                        chunkStore.put(xSave + "-" + ySave + "-" + zSave, blocs);
                     }
 
-
                 }
+                inMemory.data.put(prefix, chunkStore);
                 progress.finishedVertical();
             }
         }

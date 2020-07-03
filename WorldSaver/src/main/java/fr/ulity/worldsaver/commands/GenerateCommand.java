@@ -22,8 +22,7 @@ public class GenerateCommand extends CommandManager {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        Warner warner = new Warner(sender, "§eProgression: §6%percent%% §e: " +
-                "§c%finishedVertical% §e/ §c%totalVertical% §e( §6%finishedChunk% §e/ §6%totalChunk% Chunks §e)", 3);
+        Warner warner = new Warner(sender, Warner.Type.SAVE);
 
         World world = Bukkit.getWorld("world");
         CreateJson.generate("test", world, world.getLoadedChunks(), warner);

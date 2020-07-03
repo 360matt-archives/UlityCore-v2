@@ -15,7 +15,7 @@ public class MuteEvent implements Listener {
 
         Mute playerMute = new Mute(p.getName());
         if (playerMute.isMute()){
-            if (p.hasPermission("ulity.mod.mute") || p.hasPermission("ulity.mod.mute"))
+            if (p.hasPermission("ulity.mod.mute"))
                 return;
 
             e.setCancelled(true);

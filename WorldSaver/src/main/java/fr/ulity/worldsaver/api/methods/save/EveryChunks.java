@@ -58,7 +58,9 @@ public class EveryChunks {
                     }
 
                 }
-                inMemory.data.put(prefix, chunkStore);
+
+                if (chunkStore.size() > 1)
+                    inMemory.data.put(prefix, chunkStore);
                 progress.finishedVertical();
             }
         }

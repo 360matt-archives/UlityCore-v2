@@ -31,7 +31,7 @@ public final class MainBukkitPackUtils extends JavaPlugin {
         getServer().getServicesManager().register(Economy.class, new EconomyMethods(), vault, ServicePriority.Highest);
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.2");
+        init.requireVersion("2.3");
         init.reloadLang();
 
         if (init.ok) {

@@ -46,19 +46,17 @@ public final class MainBukkitRTP extends JavaPlugin {
         return new ObtainEco();
     }
 
-
     @Override
     public void onEnable() {
         plugin = this;
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.2");
+        init.requireVersion("2.3");
         init.checkUpdates(80372);
         init.reloadLang();
 
         Metrics metrics = new Metrics(this, 7891);
         metrics.addCustomChart(new Metrics.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
-
 
         if (init.ok) {
             config = new Config("config", "addons/superRTP");
@@ -70,14 +68,8 @@ public final class MainBukkitRTP extends JavaPlugin {
             getPluginManager().registerEvents(new InventoryEventRTP(), this);
             getPluginManager().registerEvents(new InvincibleRTP(), this);
         }
-
-
     }
-
 
     @Override
-    public void onDisable() {
-
-    }
-
+    public void onDisable() { }
 }

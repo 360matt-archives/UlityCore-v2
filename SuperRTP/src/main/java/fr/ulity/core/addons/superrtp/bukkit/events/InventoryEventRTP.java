@@ -94,76 +94,66 @@ public class InventoryEventRTP implements Listener {
 
                                                     } else {
                                                         // si le monde n'existe pas, n'est pas chargé
-                                                        player.sendMessage(Lang.get(player, "super_RTP.fails.world_missing")
-                                                                .replaceAll("%title%", title)
-                                                                .replaceAll("%world%", worldName));
-
-                                                        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                            onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.unknown_world")
-                                                                    .replaceAll("%title%", title)
-                                                                    .replaceAll("%world%", worldName));
-                                                        }
+                                                        Lang.prepare("super_RTP.fails.world_missing")
+                                                                .variable("title", title)
+                                                                .variable("world", worldName)
+                                                                .sendPlayer(player);
+                                                        Lang.Prepared prepared = Lang.prepare("super_RTP.staff_error.unknown_world")
+                                                                .variable("title", title)
+                                                                .variable("world", worldName);
+                                                        for (Player onlinePlayer : Bukkit.getOnlinePlayers())
+                                                            prepared.sendPlayer(onlinePlayer);
                                                     }
-
-
                                                 } else {
                                                     // si la propriété "randomWorld" est mal configurée
-                                                    player.sendMessage(Lang.get(player, "super_RTP.fails.location_no_set")
-                                                            .replaceAll("%title%", title));
-
-                                                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                        onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.location_no_set")
-                                                                .replaceAll("%title%", title));
-                                                    }
+                                                    Lang.prepare("super_RTP.fails.location_no_set")
+                                                            .variable("title", title)
+                                                            .sendPlayer(player);
+                                                    Lang.Prepared prepared = Lang.prepare("super_RTP.staff_error.location_no_set")
+                                                            .variable("title", title);
+                                                    for (Player onlinePlayer : Bukkit.getOnlinePlayers())
+                                                        prepared.sendPlayer(onlinePlayer);
                                                 }
-
-
                                             } else {
                                                 // si la propriété "randomWorld" n'existe pas
-                                                player.sendMessage(Lang.get(player, "super_RTP.fails.location_no_set")
-                                                        .replaceAll("%title%", title));
-
-                                                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                                    onlinePlayer.sendMessage(Lang.get(onlinePlayer, "super_RTP.staff_error.location_no_set")
-                                                            .replaceAll("%title%", title));
-                                                }
+                                                Lang.prepare("super_RTP.fails.location_no_set")
+                                                        .variable("title", title)
+                                                        .sendPlayer(player);
+                                                Lang.Prepared prepared = Lang.prepare("super_RTP.staff_error.location_no_set")
+                                                        .variable("title", title);
+                                                for (Player onlinePlayer : Bukkit.getOnlinePlayers())
+                                                    prepared.sendPlayer(onlinePlayer);
                                             }
-
-
                                         } else { // si le joueur n'a pas assez de money
-                                            player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_money")
-                                                    .replaceAll("%left%", String.valueOf(cost - obtain.eco.getBalance(player)))
-                                                    .replaceAll("%title%", title));
+                                            Lang.prepare("super_RTP.err_messages.no_money")
+                                                    .variable("left", String.valueOf(cost - obtain.eco.getBalance(player)))
+                                                    .variable("title", title)
+                                                    .sendPlayer(player);
                                         }
                                     } else { // si l'économie n'est pas disponible
-                                        player.sendMessage(Lang.get(player, "super_RTP.fails.economy_missing")
-                                                .replaceAll("%title%", title));
-
-                                        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                            onlinePlayer.sendMessage(Lang.get(player, "super_RTP.staff_error.economy_not_supported")
-                                                    .replaceAll("%title%", title));
-                                        }
+                                        Lang.prepare("super_RTP.fails.economy_missing")
+                                                .variable("title", title)
+                                                .sendPlayer(player);
+                                        Lang.Prepared prepared = Lang.prepare("super_RTP.staff_error.economy_not_supported")
+                                                .variable("title", title);
+                                        for (Player onlinePlayer : Bukkit.getOnlinePlayers())
+                                            prepared.sendPlayer(onlinePlayer);
                                     }
-
-
                                 } else { // si un cooldown est en cours pour le joueur
-                                    player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_finished_cooldown")
-                                            .replaceAll("%left%", cooldownObj.getTimeLeft().text));
+                                    Lang.prepare("super_RTP.err_messages.no_finished_cooldown")
+                                            .variable("left", cooldownObj.getTimeLeft().text)
+                                            .sendPlayer(player);
                                 }
-
                             } else { // si le joueur n'a pas la permission
-                                player.sendMessage(Lang.get(player, "super_RTP.err_messages.no_permission")
-                                        .replaceAll("%title%", title));
+                                Lang.prepare("super_RTP.err_messages.no_permission")
+                                        .variable("title", title)
+                                        .sendPlayer(player);
                             }
                         }
                     }
                 }
-
             }
 
         }
-
     }
-
-
 }

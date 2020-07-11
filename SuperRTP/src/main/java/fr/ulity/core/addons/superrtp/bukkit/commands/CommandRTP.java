@@ -24,15 +24,12 @@ import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-public class CommandRTP extends CommandManager implements Listener {
+public class CommandRTP extends CommandManager.Assisted implements Listener {
     private static Inventory preInvMenu = null;
 
     public CommandRTP(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "rtp");
-        addDescription(Lang.get("commands.rtp.description"));
-        addUsage(Lang.get("commands.rtp.usage"));
         addPermission("ulity.SuperRTP.commands.rtp");
-
         registerCommand(commandMap);
     }
 
@@ -46,7 +43,6 @@ public class CommandRTP extends CommandManager implements Listener {
             for (int k = 0; k <= (6 * 9) - 1; k++) {
                 int randomNum = ThreadLocalRandom.current().nextInt(0, 7 + 1);
                 Material randomMaterial = null;
-
                 if (randomNum == 0)
                     randomMaterial = Material.RED_STAINED_GLASS_PANE;
                 else if (randomNum == 1)
@@ -75,18 +71,14 @@ public class CommandRTP extends CommandManager implements Listener {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (!(sender instanceof Player))
-            sender.sendMessage(Lang.get("global.player_only"));
-        else {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()){
             Player player = (Player) sender;
             Inventory teleportInvMenu = randomiseAndCaching(player);
 
             for (String x : MainBukkitRTP.config.singleLayerKeySet("gui")) {
                 FlatFileSection section = MainBukkitRTP.config.getSection("gui." + x);
                 String title = Text.withColours(Text.convertEncodage(section.getString("title")));
-
                 MainBukkitRTP.items.put(title, x);
 
                 boolean staffBypass = MainBukkitRTP.config.getBoolean("global.staff_bypass") && player.hasPermission("ulity.superrtp.bypass");
@@ -155,7 +147,5 @@ public class CommandRTP extends CommandManager implements Listener {
 
             player.openInventory(teleportInvMenu);
         }
-
-        return true;
     }
 }

@@ -12,65 +12,48 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SpawnCommand extends CommandManager {
+public class SpawnCommand extends CommandManager.Assisted {
     public SpawnCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "spawn");
-        addDescription(Lang.get("commands.spawn.description"));
-        addUsage(Lang.get("commands.spawn.usage"));
         addPermission("ulity.packutils.spawn");
-
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        } else {
-            Location spawnLoc = SpawnMethods.getSpawnLocation();
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        Location spawnLoc = SpawnMethods.getSpawnLocation();
 
-            if (spawnLoc == null)
-                sender.sendMessage(Lang.get(sender, "commands.spawn.expressions.not_defined"));
-            //else if (spawnLoc.getWorld() == null)
-                //sender.sendMessage(Lang.get(sender, "commands.spawn.expressions.unknown_world"));
-            else if (args.length <= 1) {
-                Player origin;
+        if (spawnLoc == null)
+            Lang.prepare("commands.spawn.expressions.not_defined").sendPlayer(sender);
+        else if (arg.inRange(0, 1)) {
+            Player origin = null;
 
+            if (!arg.is(0) && requirePlayer())
+                origin = (Player) sender;
+            else if (requirePermission("ulity.packutils.spawn.others"))
+                if (arg.requirePlayer(0))
+                    origin = arg.getPlayer(0);
 
-                if (args.length == 0) {
-                    origin = (Player) sender;
-                } else {
-                    origin = Bukkit.getPlayer(args[0]);
-                    if (origin == null) {
-                        sender.sendMessage(Lang.get(sender, "global.invalid_player")
-                                .replaceAll("%player%", args[0]));
-                        return true;
-                    } else if (!sender.hasPermission("ulity.packutils.spawn.others")) {
-                        sender.sendMessage(Lang.get(sender, "global.no_perm"));
-                        return true;
-                    }
-                }
+            if (status.equals(Status.SUCCESS)) {
+                assert origin != null;
+                Lang.prepare("commands.spawn.expressions.prevent_teleport").sendPlayer(origin);
 
-                origin.sendMessage(Lang.get(sender, "commands.spawn.expressions.prevent_teleport"));
-                if (!origin.getName().equals(sender.getName())) {
-                    sender.sendMessage(Lang.get(sender, "commands.spawn.expressions.others_result")
-                            .replaceAll("%player%", origin.getName()));
-                }
+                if (!origin.getName().equals(sender.getName()))
+                    Lang.prepare("commands.spawn.expressions.others_result")
+                            .variable("player", origin.getName())
+                            .sendPlayer(sender);
 
                 Player finalOrigin = origin;
                 Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
                     if (finalOrigin.isOnline()) {
                         finalOrigin.teleport(spawnLoc);
-                        finalOrigin.sendMessage(Lang.get(finalOrigin, "commands.spawn.expressions.teleported"));
+                        Lang.prepare("commands.spawn.expressions.teleported").sendPlayer(finalOrigin);
                     }
                 }, 20*5L);
-
-                return true;
-            } else
-                return false;
-        }
-        return true;
+            }
+        } else
+            setStatus(Status.SYNTAX);
     }
+
 }

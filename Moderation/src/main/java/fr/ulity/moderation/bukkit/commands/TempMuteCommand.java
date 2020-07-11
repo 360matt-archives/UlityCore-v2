@@ -14,62 +14,61 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Date;
 
-public class TempMuteCommand extends CommandManager {
+public class TempMuteCommand extends CommandManager.Assisted {
 
     public TempMuteCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "tempmute");
-        addDescription(Lang.get("commands.tempmute.description"));
-        addUsage(Lang.get("commands.tempmute.usage"));
         addPermission("ulity.mod.tempmute");
-
-        addOneTabbComplete(-1, "ulity.mod.tempmute", "tempmute");
         addListTabbComplete(2, null, null, Lang.getStringArray("commands.tempmute.reasons_predefined"));
-
         registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 2) {
-            @SuppressWarnings("deprecation")
-            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            if (player.hasPlayedBefore()){
-                if (Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
-                    sender.sendMessage(Lang.get(sender, "commands.tempban.expressions.cant_ban_staff")
-                            .replaceAll("%player%", args[0]));
-                    return true;
+            if (arg.isPlayer(0) && arg.getPlayer(0).hasPermission("ulity.mod")) {
+                Lang.prepare("commands.tempmute.expressions.cant_ban_staff")
+                        .variable("player", arg.get(0))
+                        .sendPlayer(sender);
+                setStatus(Status.STOP);
+            }
+
+            if (status.equals(Status.SUCCESS)) {
+                String reason = (args.length >= 3) ? Text.fullColor(args, 2) : Lang.get("commands.mute.expressions.unknown_reason");
+                Time time = new Time(args[1]);
+
+                Mute playerMute = new Mute(arg.get(0));
+                playerMute.reason = reason;
+                playerMute.expire = new Date().getTime() + time.milliseconds;
+                playerMute.responsable = sender.getName();
+                playerMute.mute();
+
+                if (Lang.getBoolean("commands.tempmute.broadcast.enabled")) {
+                    String keyName = (args.length >= 3) ? "message" : "message_without_reason";
+                    Bukkit.broadcastMessage(
+                        Lang.prepare("commands.tempmute.broadcast." + keyName)
+                                .variable("player", arg.get(0))
+                                .variable("staff", sender.getName())
+                                .variable("reason", reason)
+                                .variable("time", time.text)
+                                .getOutput()
+                    );
+                } else {
+                    @SuppressWarnings("deprecation")
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(arg.get(0));
+                    if (player.isOnline())
+                        Lang.prepare("commands.tempmute.expressions.you_are_muted")
+                                .variable("staff", sender.getName())
+                                .variable("reason", reason)
+                                .variable("time", time.text)
+                                .sendPlayer(arg.getPlayer(0));
+
+                    Lang.prepare("commands.tempmute.expressions.result")
+                            .variable("player", player.getName())
+                            .sendPlayer(sender);
                 }
             }
-
-            String reason = (args.length >= 3) ? Text.fullColor(args, 2) : Lang.get("commands.mute.expressions.unknown_reason");
-            Time time = new Time(args[1]);
-
-            Mute playerMute = new Mute(player.getName());
-            playerMute.reason = reason;
-            playerMute.expire = new Date().getTime() + time.milliseconds;
-            playerMute.responsable = sender.getName();
-            playerMute.mute();
-
-            if (Lang.getBoolean("commands.tempmute.broadcast.enabled")) {
-                String keyName = (args.length >= 3) ? "message" : "message_without_reason";
-                Bukkit.broadcastMessage(Lang.get("commands.tempmute.broadcast." + keyName)
-                        .replaceAll("%player%", player.getName())
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason)
-                        .replaceAll("%time%", time.text));
-            } else {
-                if (player.isOnline())
-                    Bukkit.getPlayer(args[0]).sendMessage(Lang.get(player, "commands.tempmute.expressions.you_are_muted")
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason)
-                        .replaceAll("%time%", time.text));
-
-                sender.sendMessage(Lang.get(sender, "commands.tempmute.expressions.result")
-                        .replaceAll("%player%", player.getName()));
-            }
-
-            return true;
-        }
-        return false;
+        } else
+            setStatus(Status.SYNTAX);
     }
 }

@@ -14,68 +14,64 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Date;
-import java.util.Objects;
 
-public class TempBanCommand extends CommandManager {
+public class TempBanCommand extends CommandManager.Assisted {
 
     public TempBanCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "tempban");
-        addDescription(Lang.get("commands.tempban.description"));
-        addUsage(Lang.get("commands.tempban.usage"));
         addPermission("ulity.mod.tempban");
-
-        addOneTabbComplete(-1, "ulity.mod.tempban", "tempban");
         addListTabbComplete(2, null, null, Lang.getStringArray("commands.tempban.reasons_predefined"));
-
         registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 2) {
-            @SuppressWarnings("deprecation")
-            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-            if (player.hasPlayedBefore()){
-                if (Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
-                    sender.sendMessage(Lang.get(sender, "commands.tempban.expressions.cant_ban_staff")
-                            .replaceAll("%player%", args[0]));
-                    return true;
+            if (arg.isPlayer(0) && arg.getPlayer(0).hasPermission("ulity.mod")) {
+                Lang.prepare("commands.tempban.expressions.cant_ban_staff")
+                        .variable("player", arg.get(0))
+                        .sendPlayer(sender);
+                setStatus(Assisted.Status.STOP);
+            }
+
+            if (status.equals(Status.SUCCESS)) {
+                String reason = (args.length >= 3) ? Text.fullColor(args, 2) : Lang.get("commands.tempban.expressions.unknown_reason");
+                Time time = new Time(args[1]);
+
+                Ban playerBan = new Ban(arg.get(0));
+                playerBan.timestamp = new Date().getTime();
+                playerBan.reason = reason;
+                playerBan.expire = new Date().getTime() + time.milliseconds;
+                playerBan.responsable = sender.getName();
+                playerBan.ban();
+
+                if (Lang.getBoolean("commands.tempban.broadcast.enabled")) {
+                    String keyName = (args.length >= 3) ? "message" : "message_without_reason";
+                    Bukkit.broadcastMessage(
+                            Lang.prepare("commands.tempban.broadcast." + keyName)
+                                    .variable("player", arg.get(0))
+                                    .variable("staff", sender.getName())
+                                    .variable("reason", reason)
+                                    .variable("time", time.text)
+                                    .getOutput()
+                    );
+                }
+                else {
+                    @SuppressWarnings("deprecation")
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(arg.get(0));
+                    if (player.isOnline())
+                        Lang.prepare("commands.tempban.expressions.you_are_muted")
+                                .variable("staff", sender.getName())
+                                .variable("reason", reason)
+                                .variable("timeLeft", time.text)
+                                .sendPlayer(arg.getPlayer(0));
+
+                    Lang.prepare("commands.tempban.expressions.result")
+                            .variable("player", player.getName())
+                            .sendPlayer(sender);
                 }
             }
-
-            String reason = (args.length >= 3) ? Text.fullColor(args, 2) : Lang.get("commands.tempban.expressions.unknown_reason");
-            Time time = new Time(args[1]);
-
-            Ban playerBan = new Ban(player.getName());
-            playerBan.timestamp = new Date().getTime();
-            playerBan.reason = reason;
-            playerBan.expire = new Date().getTime() + time.milliseconds;
-            playerBan.responsable = sender.getName();
-            playerBan.ban();
-
-            if (Lang.getBoolean("commands.tempban.broadcast.enabled")) {
-                String keyName = (args.length >= 3) ? "message" : "message_without_reason";
-                Bukkit.broadcastMessage(Lang.get("commands.tempban.broadcast." + keyName)
-                        .replaceAll("%player%", Objects.requireNonNull(player.getName()))
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason)
-                        .replaceAll("%time%", time.text));
-            }
-            else
-                sender.sendMessage(Lang.get(sender, "commands.tempban.expressions.result")
-                        .replaceAll("%player%", player.getName()));
-
-            if (player.isOnline()) {
-                Bukkit.getPlayer(args[0]).kickPlayer(Lang.get(player, "commands.tempban.expressions.you_are_banned")
-                        .replaceAll("%staff%", sender.getName())
-                        .replaceAll("%reason%", reason)
-                        .replaceAll("%timeLeft%", time.text));
-            }
-
-            return true;
-        }
-        return false;
+        } else
+            setStatus(Status.SYNTAX);
     }
-
-
 }

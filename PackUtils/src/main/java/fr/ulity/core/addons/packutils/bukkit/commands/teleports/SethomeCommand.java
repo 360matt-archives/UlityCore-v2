@@ -11,52 +11,42 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SethomeCommand extends CommandManager {
-
+public class SethomeCommand extends CommandManager.Assisted {
     public SethomeCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "sethome");
-        addDescription(Lang.get("commands.sethome.description"));
-        addUsage(Lang.get("commands.sethome.usage"));
         addPermission("ulity.packutils.sethome");
-
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        } else {
-
-            if (args.length <= 1) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
+            if (arg.inRange(0, 1)) {
                 Player player = (Player) sender;
 
-                if (args.length == 0)
+                if (!arg.is(0))
                     args = new String[]{"home"};
                 if (!StringUtils.isAlphanumeric(args[0]))
-                    sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.alphanumeric_required"));
+                    Lang.prepare("commands.sethome.expressions.alphanumeric_required").sendPlayer(sender);
                 else {
                     int max = MainBukkitPackUtils.config.getInt("homes.max");
 
                     if (!HomeMethods.isHomeExist(player, args[0]) && HomeMethods.getHomeCount(player) >= max) {
                         if (!(MainBukkitPackUtils.config.getBoolean("homes.staff_bypass") && player.hasPermission("ulity.packutils.home.bypass"))) {
-                            sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.limit").replaceAll("%count%", String.valueOf(max)));
-                            return true;
+                            Lang.prepare("commands.sethome.expressions.limit")
+                                    .variable("count", String.valueOf(max))
+                                    .sendPlayer(sender);
+                            return;
                         }
                     }
 
                     HomeMethods.setHomeLocation(player, args[0]);
                     sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.created")
                             .replaceAll("%home%", args[0]));
-
                 }
-                return true;
-            }
+            } else
+                setStatus(Status.SYNTAX);
         }
-
-        return false;
     }
-
 }

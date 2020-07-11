@@ -18,16 +18,12 @@ import java.util.Arrays;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
-public class HomeCommand extends CommandManager implements Listener {
+public class HomeCommand extends CommandManager.Assisted implements Listener {
 
     public HomeCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "home");
-        addDescription(Lang.get("commands.home.description"));
-        addUsage(Lang.get("commands.home.usage"));
         addPermission("ulity.packutils.home");
-
-        addArrayTabbComplete(0, "ulity.packutils.delhome", new String[]{},  new String[]{"§Homes"});
-
+        addArrayTabbComplete(0, "ulity.packutils.home", new String[]{},  new String[]{"§Homes"});
         if (MainBukkitPackUtils.enabler.canEnable(getName())) {
             getPluginManager().registerEvents(this, getPlugin());
             registerCommand(commandMap);
@@ -46,42 +42,39 @@ public class HomeCommand extends CommandManager implements Listener {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        } else {
-            if (args.length <= 1) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
+            if (arg.inRange(0, 1)) {
                 Player player = (Player) sender;
-
                 String homeName = (args.length == 1) ? args[0] : "home";
 
                 if (HomeMethods.isHomeExist(player, homeName)) {
-                    player.sendMessage(Lang.get(player, "commands.home.expressions.prevent_teleport")
-                            .replaceAll("%home%", homeName));
+                    Lang.prepare("commands.home.expressions.prevent_teleport")
+                            .variable("home", homeName)
+                            .sendPlayer(player);
 
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
                         if (player.isOnline()) {
                             player.teleport(HomeMethods.getHomeLocation(player, homeName));
-                            player.sendMessage(Lang.get(player, "commands.home.expressions.teleported")
-                                    .replaceAll("%home%", homeName));
+                            Lang.prepare("commands.home.expressions.teleported")
+                                    .variable("home", homeName)
+                                    .sendPlayer(player);
                         }
                     }, 20*5L);
                 } else if (homeName.equals("home")){
                     String[] list = HomeMethods.getHomeListName(player);
                     String toText = (list.length == 0) ? Lang.get(player, "commands.home.expressions.nothing_list") : Arrays.toString(list);
 
-                    player.sendMessage(Lang.get(player, "commands.home.expressions.home_list")
-                            .replaceAll("%list%", toText.replaceAll("[\\[|\\]]", "")));
-                } else {
-                    player.sendMessage(Lang.get(player, "commands.home.expressions.unknown_home")
-                            .replaceAll("%home%", homeName));
-                }
+                    Lang.prepare("commands.home.expressions.home_list")
+                            .variable("list", toText.replaceAll("[\\[|\\]]", ""))
+                            .sendPlayer(player);
 
-                return true;
-            }
+                } else
+                    Lang.prepare("commands.home.expressions.unknown_home")
+                            .variable("home", homeName)
+                            .sendPlayer(player);
+            } else
+                setStatus(Status.SYNTAX);
         }
-        return false;
     }
-
 }

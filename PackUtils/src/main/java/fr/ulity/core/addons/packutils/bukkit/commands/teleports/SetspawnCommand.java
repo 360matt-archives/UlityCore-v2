@@ -10,31 +10,23 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SetspawnCommand extends CommandManager {
+public class SetspawnCommand extends CommandManager.Assisted {
     public SetspawnCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "setspawn");
-        addDescription(Lang.get("commands.setspawn.description"));
-        addUsage(Lang.get("commands.setspawn.usage"));
         addPermission("ulity.packutils.setspawn");
-
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        } else {
-            if (args.length == 0) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
+            if (arg.inRange(0, 0)) {
                 Player player = (Player) sender;
                 SpawnMethods.setSpawnLocation(player);
-
                 player.sendMessage(Lang.get(player, "commands.setspawn.expressions.result"));
-                return true;
-            }
+            } else
+                setStatus(Status.SYNTAX);
         }
-        return false;
     }
 }

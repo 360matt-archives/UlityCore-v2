@@ -8,20 +8,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatDisabledEvent implements Listener {
-
     @EventHandler
     private static void blockChat (AsyncPlayerChatEvent e) {
-        Player p = e.getPlayer().getPlayer();
-        assert p != null;
-
         if (!Api.temp.getBoolean("moderation.chat")) {
+            Player p = e.getPlayer();
             if (!p.hasPermission("ulity.mod.chat") && !p.hasPermission("ulity.mod.bypass")) {
                 e.setCancelled(true);
-                p.sendMessage(Lang.get(p, "commands.chat.expressions.error_chat_is_disabled"));
+                Lang.prepare("commands.chat.expressions.error_chat_is_disabled").sendPlayer(p);
             }
         }
 
     }
-
-
 }

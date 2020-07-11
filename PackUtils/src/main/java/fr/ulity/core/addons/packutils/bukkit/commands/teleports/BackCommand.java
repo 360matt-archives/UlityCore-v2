@@ -11,12 +11,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BackCommand extends CommandManager {
+public class BackCommand extends CommandManager.Assisted {
 
     public BackCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "back");
-        addDescription(Lang.get("commands.back.description"));
-        addUsage(Lang.get("commands.back.usage"));
         addPermission("ulity.packutils.back");
 
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
@@ -24,30 +22,23 @@ public class BackCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        } else
-            if (args.length == 0) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
+            if (arg.inRange(0, 0)) {
                 Player player = (Player) sender;
 
                 Location lastLoc = BackMethods.getLastLocation(player);
-                if (lastLoc == null)
-                    player.sendMessage(Lang.get(player, "commands.back.expressions.nothing"));
-                else {
+                if (lastLoc != null) {
                     if (lastLoc.getWorld() == null)
-                        player.sendMessage(Lang.get(player, "commands.back.expressions.unknown_world"));
+                        Lang.prepare("commands.back.expressions.unknown_world").sendPlayer(player);
                     else {
                         player.teleport(lastLoc);
-                        player.sendMessage(Lang.get(player, "commands.back.expressions.teleported"));
+                        Lang.prepare("commands.back.expressions.teleported").sendPlayer(player);
                         BackMethods.setLastLocation(player);
                     }
-                }
-                return true;
+                } else
+                    Lang.prepare("commands.back.expressions.nothing").sendPlayer(player);
             }
-
-        return false;
+        }
     }
-
 }

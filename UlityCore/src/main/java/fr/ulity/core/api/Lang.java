@@ -3,6 +3,7 @@ package fr.ulity.core.api;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
 import fr.ulity.core.utils.Text;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -17,7 +18,6 @@ import java.util.regex.Pattern;
 public class Lang {
     public static HashMap<String, HashMap<String, Config>> langConfigs = new HashMap<>();
     public static String defaultLang = Api.config.getString("global.lang");
-
 
     private enum ReloadExpressions {
         FR("§aLes fichiers de langue ont été rechargés"),
@@ -135,11 +135,42 @@ public class Lang {
         return optimalConfig;
     }
 
+    public static class Prepared {
+        private final String exp;
+        private final HashMap<String, String> vars = new HashMap<>();
+        private String prefix = "";
+        private String suffix = "";
+
+        public Prepared (String exp) { this.exp = exp; }
+
+        public Prepared prefix (String prefix) { this.prefix = prefix; return this; }
+        public Prepared suffix (String suffix) { this.suffix = suffix; return this; }
+
+        public Prepared variable (String name, String replacement) {
+            vars.put(name, replacement);
+            return this;
+        }
+
+        public void sendPlayer (org.bukkit.entity.Player player) { player.sendMessage(getOutput(player)); }
+        public void sendPlayer (org.bukkit.command.CommandSender player) { player.sendMessage(getOutput(player)); }
+
+        public String getOutput (Object lang) {
+            String output = Lang.get(lang, exp);
+            for (String x : vars.keySet())
+                output = output.replaceAll("%" + x + "%", vars.get(x));
+            return prefix + output + suffix;
+        }
+
+        public String getOutput () { return getOutput(defaultLang); }
+    }
+
 
 
 
 
     /* API use */
+
+    public static Prepared prepare (String exp) { return new Prepared(exp); }
 
     public static String get (Object lang, String exp){
         Config langFile = getOptimalLang(lang, exp);

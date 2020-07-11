@@ -120,9 +120,10 @@ commands:
       deleted: "&7Le home &6%home% &7est bien supprimé !"
   eco:
     usage: |-
-      &eDefinir la balance d'un joueur: &7/eco set <Joueur>
-      &eAjouter à la balance d'un joueur: &7/eco add <Joueur>
-      &eRetirer de la balance d'un joueur: &7/eco remove <Joueur>
+      &eClear tout le monde: &7/eco clear
+      &eDefinir la balance d'un joueur: &7/eco set <Joueur> <montant>
+      &eAjouter à la balance d'un joueur: &7/eco add <Joueur> <montant>
+      &eRetirer de la balance d'un joueur: &7/eco remove <Joueur> <montant>
     description: "Permet de gérer la balance des joueurs"
     expressions:
       sender:

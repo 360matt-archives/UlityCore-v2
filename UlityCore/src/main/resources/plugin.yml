@@ -1,11 +1,10 @@
 name: UlityCore
-version: 2.2.1 # déjà incrémenté
+version: 2.3
 main: fr.ulity.core.bukkit.MainBukkit
 load: STARTUP
-loadbefore: [Moderation]
 api-version: "1.15"
 prefix: "UlityCore v2"
 softdepend: [Vault]
-authors: [360matt, Ulity, for_WixMC_server]
+authors: [360matt, Ulity, Listenia]
 description: "Plugin principal servant d'API et contenant des librairies. Extensible pour ajouter de multitudes de commandes selon les besoins sur les serveurs"
 website: "https://discord.gg/jBFE4Bu"

@@ -9,7 +9,6 @@ public class GamemodeMethods {
 
     public static void define (Player player, GameMode gameMode, CommandSender sender) {
         String mode;
-
         if (gameMode.equals(GameMode.CREATIVE))
             mode = Lang.get("packutils.gamemode.type.creative");
         else if (gameMode.equals(GameMode.SURVIVAL))
@@ -21,13 +20,15 @@ public class GamemodeMethods {
 
 
         player.setGameMode(gameMode);
-        player.sendMessage(Lang.get("packutils.gamemode.gamemode_changed")
-                .replaceAll("%gamemode%", mode));
+        Lang.prepare("packutils.gamemode.gamemode_changed")
+                .variable("gamemode", mode)
+                .sendPlayer(player);
 
-        if (sender != null && !sender.getName().equals(player.getName())) {
-            sender.sendMessage(Lang.get("packutils.gamemode.result")
-                    .replaceAll("%player%", player.getName())
-                    .replaceAll("%gamemode%", mode));
+        if (!sender.getName().equals(player.getName())) {
+            Lang.prepare("packutils.gamemode.result")
+                    .variable("player", player.getName())
+                    .variable("gamemode", mode)
+                    .sendPlayer(sender);
         }
     }
 

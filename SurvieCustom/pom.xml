@@ -72,20 +72,26 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.JavaFactoryDev</groupId>
             <artifactId>LightningStorage</artifactId>
-            <version>3.1.4</version>
-            <scope>compile</scope>
+            <version>3.1.5</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.mrmicky</groupId>
             <artifactId>FastParticles</artifactId>
             <version>1.2.3</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.ulity</groupId>
+            <artifactId>core</artifactId>
+            <version>2.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

@@ -11,8 +11,6 @@
         <module name="PackUtils" />
         <module name="SurvieCustom" />
         <module name="Moderation" />
-        <module name="WorldSaver" />
-        <module name="SuperJails" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

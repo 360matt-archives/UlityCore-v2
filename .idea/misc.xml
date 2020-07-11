@@ -11,7 +11,6 @@
       <list>
         <option value="$PROJECT_DIR$/moderation/pom.xml" />
         <option value="$PROJECT_DIR$/FixJoin/pom.xml" />
-        <option value="$PROJECT_DIR$/SuperJails/pom.xml" />
         <option value="$PROJECT_DIR$/Moderation/pom.xml" />
         <option value="$PROJECT_DIR$/Moderation-2/pom.xml" />
         <option value="$PROJECT_DIR$/Mooooo/pom.xml" />
@@ -19,11 +18,10 @@
         <option value="$PROJECT_DIR$/SuperRTP/pom.xml" />
         <option value="$PROJECT_DIR$/PackUtils/pom.xml" />
         <option value="$PROJECT_DIR$/SurvieCustom/pom.xml" />
-        <option value="$PROJECT_DIR$/WorldSaver/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

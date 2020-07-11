@@ -4,11 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
       <module fileurl="file://$PROJECT_DIR$/PackUtils/PackUtils.iml" filepath="$PROJECT_DIR$/PackUtils/PackUtils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SuperJails/SuperJails.iml" filepath="$PROJECT_DIR$/SuperJails/SuperJails.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperRTP/SuperRTP.iml" filepath="$PROJECT_DIR$/SuperRTP/SuperRTP.iml" />
       <module fileurl="file://$PROJECT_DIR$/SurvieCustom/SurvieCustom.iml" filepath="$PROJECT_DIR$/SurvieCustom/SurvieCustom.iml" />
       <module fileurl="file://$PROJECT_DIR$/UlityCore/UlityCore.iml" filepath="$PROJECT_DIR$/UlityCore/UlityCore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WorldSaver/WorldSaver.iml" filepath="$PROJECT_DIR$/WorldSaver/WorldSaver.iml" />
     </modules>
   </component>
 </project>

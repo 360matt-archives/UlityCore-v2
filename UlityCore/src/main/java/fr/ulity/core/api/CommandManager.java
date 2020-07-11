@@ -1,7 +1,10 @@
 package fr.ulity.core.api;
 
+import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,11 +30,140 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
     private final HashMap<Integer, ArrayList<TabCommand>> tabComplete;
 
 
+
+    public abstract static class Assisted extends CommandManager{
+        public CommandSender sender;
+        public Command cmd;
+        public String[] args;
+
+        public Arg arg;
+        public Status status;
+
+        public Assisted (JavaPlugin plugin, String name) { super(plugin,  name); }
+
+        public abstract void exec (CommandSender sender, Command command, String label, String[] args);
+
+        @Override public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+            this.sender = sender;
+            this.cmd = command;
+            this.args = args;
+            this.status = Status.SUCCESS;
+
+            this.arg = new Arg(sender, command, args);
+
+            exec(sender, command, label, args);
+            operateStatus();
+            return true;
+        }
+
+        public void setStatus (Status status) { this.status = status; }
+        public enum Status {
+            SUCCESS,
+            PLAYER_ONLY,
+            SYNTAX,
+            NOPERM,
+            FAILED,
+            STOP
+        }
+        private void operateStatus () {
+            if (status.equals(Status.PLAYER_ONLY))
+                sender.sendMessage(Lang.get(sender, "global.player_only"));
+            else if (status.equals(Status.SYNTAX))
+                sender.sendMessage(ChatColor.RED + getUsage());
+            else if (status.equals(Status.NOPERM))
+                sender.sendMessage(Lang.get(sender, "global.no_perm"));
+        }
+
+        public static class Arg {
+            private final CommandSender sender;
+            private final Command cmd;
+            private final String[] args;
+
+            public Arg (CommandSender sender, Command command, String[] args) {
+                this.sender = sender;
+                this.cmd = command;
+                this.args = args;
+            }
+
+            public boolean is (int ind) { return args.length >= ind+1; }
+            public boolean isNumber (int ind) {
+                try {
+                    if (is(ind)) {
+                        Double.parseDouble(args[ind]);
+                        return true;
+                    }
+                } catch (Exception ignored) { }
+                return false;
+            }
+            public boolean isPlayer (int ind) { return is(ind) && Bukkit.getPlayer(args[ind]) != null; }
+            public boolean isAlphaNumeric (int ind) { return is(ind) && StringUtils.isAlphanumeric(args[ind]); }
+
+            public String get (int ind) { return (is(ind)) ? args[ind] : ""; }
+            public long getLong (int ind) { return (is(ind)) ? Long.parseLong(args[ind]) : 0; }
+            public Player getPlayer (int ind) { return (is(ind)) ? Bukkit.getPlayer(args[ind]) : null; }
+
+            public boolean require (int ind) {
+                if (is(ind)) return true;
+                else sender.sendMessage(Lang.get(sender, "arg_needed.default"));
+                return false;
+            }
+            public boolean requirePlayer (int ind) {
+                if (isPlayer(ind)) return true;
+                else if (is(ind)) sender.sendMessage(Lang.get(sender, "global.invalid_player")
+                        .replaceAll("%player%", get(ind)));
+                else sender.sendMessage(Lang.get(sender, "arg_needed.player"));
+                return false;
+            }
+            public boolean requirePlayerNoSelf (int ind) {
+                if (requirePlayer(ind)) {
+                    if (!getPlayer(ind).getName().equals(sender.getName()))
+                        return true;
+                    else
+                        sender.sendMessage(Lang.get(sender, "global.no_self"));
+                }
+                return false;
+            }
+            public boolean requireNumber (int ind) {
+                if (isNumber(ind)) return true;
+                else sender.sendMessage(Lang.get(sender, "arg_needed.number"));
+                return false;
+            }
+            public boolean inRange (int minimal, int maximal) {
+                return args.length <= maximal && args.length >= minimal;
+            }
+            public boolean compare (String source, String... target) {
+                return Arrays.stream(target).anyMatch(source::equalsIgnoreCase);
+            }
+            public boolean compare (int ind, String... target) {
+                return Arrays.stream(target).anyMatch(get(ind)::equalsIgnoreCase);
+            }
+
+        }
+
+        public boolean requirePlayer () {
+            if (sender instanceof Player)
+                return true;
+            status = Status.PLAYER_ONLY;
+            return false;
+        }
+        public boolean requirePermission (String permission) {
+            if (sender.hasPermission(permission))
+                return true;
+            status = Status.NOPERM;
+            return false;
+        }
+
+
+    }
+
+
+
+
     /**
      * @param plugin plugin responsable de cette commande.
      * @param name le nom de cette commande.
      */
-    protected CommandManager(T plugin, String name) {
+    public CommandManager(T plugin, String name) {
         super(name);
 
         assert plugin != null;
@@ -227,6 +359,9 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
      * @return vrai si la commande a bien été enregistrée
      */
     protected boolean registerCommand(CommandMap commandMap) {
+        if (getUsage().equals("/" + getName())) setUsage(Lang.get("commands." + getName() + ".usage"));
+        if (getDescription().equals("")) setDescription(Lang.get("commands." + getName() + ".description"));
+
         return !register && commandMap.register("", this);
     }
 
@@ -257,18 +392,12 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
      * @return vrai si okay, autrement le résultat serait false
      */
     @Override
-    public boolean execute(CommandSender commandSender, String command, String[] arg) {
-        if (getPermission() != null) {
-            if (!commandSender.hasPermission(getPermission())) {
-                commandSender.sendMessage((getPermissionMessage() == null) ? Lang.get("plugin.no_perm") : getPermissionMessage());
-                return false;
-            }
-        }
-        if (onCommand(commandSender, this, command, arg))
-            return true;
-        commandSender.sendMessage(ChatColor.RED + getUsage());
-        return false;
-
+    public boolean execute(@NotNull CommandSender commandSender, @NotNull String command, String[] arg) {
+        if (getPermission() != null && !commandSender.hasPermission(getPermission()))
+            commandSender.sendMessage((getPermissionMessage() == null) ? Lang.get("plugin.no_perm") : getPermissionMessage());
+        else
+            onCommand(commandSender, this, command, arg);
+        return true;
     }
 
     /**
@@ -279,7 +408,7 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
      * @return une liste des valeurs possibles
      */
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String alias, String[] args) {
 
         int indice = args.length - 1;
 
@@ -298,12 +427,12 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
     //</editor-fold>
 
     //<editor-fold desc="class TabCommand">
-    private class TabCommand {
+    private static class TabCommand {
 
-        private int indice;
-        private String text;
-        private String permission;
-        private ArrayList<String> textAvant;
+        private final int indice;
+        private final String text;
+        private final String permission;
+        private final ArrayList<String> textAvant;
 
         private TabCommand(int indice, String text, String permission, String... textAvant) {
             this.indice = indice;

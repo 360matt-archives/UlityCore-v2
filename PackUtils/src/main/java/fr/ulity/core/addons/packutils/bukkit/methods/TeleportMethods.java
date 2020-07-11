@@ -12,23 +12,24 @@ public class TeleportMethods {
         this.executor = executor;
     }
 
-
     public void tpPlayer (Player origin, Player target) {
         origin.teleport(target);
 
         if (executor.getName().equals(target.getName()) && !executor.getName().equals(target.getName()))
-            origin.sendMessage(Lang.get(origin, "packutils.teleport.teleported_by_you.player_to_you")
-                    .replaceAll("%player%", origin.getName()));
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_you")
+                    .variable("player", origin.getName())
+                    .sendPlayer(origin);
         else if (!executor.getName().equals(target.getName()))
-            executor.sendMessage(Lang.get(executor, "packutils.teleport.teleported_by_you.player_to_player")
-                    .replaceAll("%player1%", origin.getName())
-                    .replaceAll("%player2%", target.getName()));
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_player")
+                    .variable("player1", origin.getName())
+                    .variable("player2", target.getName())
+                    .sendPlayer(executor);
 
-        origin.sendMessage(Lang.get(origin, "packutils.teleport.notification.teleported_to_player")
-                .replaceAll("%player%", target.getName()));
+        Lang.prepare("packutils.teleport.notification.teleported_to_player")
+                .variable("player", target.getName())
+                .sendPlayer(origin);
 
         BackMethods.setLastLocation(origin);
-
     }
 
     public void tpCoords (Player origin, Location locTarget) {
@@ -37,16 +38,17 @@ public class TeleportMethods {
         String locText = locTarget.getBlockX() + " " + locTarget.getBlockY() + " " + locTarget.getBlockZ();
 
         if (!executor.getName().equals(origin.getName())) {
-            origin.sendMessage(Lang.get(origin, "packutils.teleport.teleported_by_you.player_to_coords")
-                    .replaceAll("%player%", origin.getName())
-                    .replaceAll("%coords%", locText));
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_coords")
+                    .variable("player", origin.getName())
+                    .variable("coords", locText)
+                    .sendPlayer(executor);
         }
 
-        origin.sendMessage(Lang.get(origin, "packutils.teleport.notification.teleported_to_coords")
-                .replaceAll("%coords%", locText));
+        Lang.prepare("packutils.teleport.notification.teleported_to_coords")
+                .variable("coords", locText)
+                .sendPlayer(origin);
 
         BackMethods.setLastLocation(origin);
 
     }
-
 }

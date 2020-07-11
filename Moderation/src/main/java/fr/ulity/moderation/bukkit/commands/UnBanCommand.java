@@ -1,6 +1,5 @@
 package fr.ulity.moderation.bukkit.commands;
 
-
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
 import fr.ulity.moderation.bukkit.api.Ban;
@@ -11,25 +10,19 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class UnBanCommand extends CommandManager {
-
+public class UnBanCommand extends CommandManager.Assisted {
     public UnBanCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "unban");
-        addDescription(Lang.get("commands.unban.description"));
-        addUsage(Lang.get("commands.unban.usage"));
         addPermission("ulity.mod.unban");
-
-        addOneTabbComplete(-1, "ulity.mod.unban", "unban");
         addListTabbComplete(1, null, null, Lang.getStringArray("commands.unban.reasons_predefined"));
-
         registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
             @SuppressWarnings("deprecation")
-            OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
+            OfflinePlayer player = Bukkit.getOfflinePlayer(arg.get(0));
 
             Ban playerBan = new Ban(player.getName());
             String result;
@@ -39,13 +32,10 @@ public class UnBanCommand extends CommandManager {
             } else
                 result = "is_not_banned";
 
-            sender.sendMessage(Lang.get(sender, "commands.unban.expressions." + result)
-                    .replaceAll("%player%", player.getName()));
-
-            return true;
-        }
-        return false;
+            Lang.prepare("commands.unban.expressions." + result)
+                    .variable("player", player.getName())
+                    .sendPlayer(sender);
+        } else
+            setStatus(Status.SYNTAX);
     }
-
-
 }

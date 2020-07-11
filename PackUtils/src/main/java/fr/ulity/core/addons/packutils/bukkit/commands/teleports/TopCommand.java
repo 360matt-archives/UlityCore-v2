@@ -3,72 +3,48 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TopCommand extends CommandManager {
-
+public class TopCommand extends CommandManager.Assisted {
     public TopCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "top");
-        addDescription(Lang.get("commands.top.description"));
-        addUsage(Lang.get("commands.top.usage"));
         addPermission("ulity.packutils.top");
-
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
     }
 
     public static Location getTopLoc (Player player) {
         Location loc = player.getLocation();
-
-
-        for (int k = 512; k != 0; k--)
-            if (loc.getWorld().getBlockAt((int) loc.getX(), k, (int) loc.getZ()).getType().isSolid())
-                return new Location(loc.getWorld(), loc.getX(), k+1, loc.getZ());
-
-        return null;
+        int y = player.getLocation().getWorld().getHighestBlockYAt(loc) + 1;
+        return new Location(loc.getWorld(), loc.getX(), y, loc.getZ());
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (arg.inRange(0, 1)) {
+            if (!arg.is(0) && requirePlayer()) {
+                Player player = (Player) sender;
+                player.teleport(getTopLoc(player));
+                player.sendMessage(Lang.get(player, "commands.top.expressions.notification"));
+            } else if (requirePermission("ulity.packutils.top.others")) {
+                if (arg.requirePlayer(0)) {
+                    Player target = arg.getPlayer(0);
 
-        if (args.length < 2) {
-            if (!(sender instanceof Player))
-                sender.sendMessage(Lang.get(sender, "global.player_only"));
-            else {
+                    target.teleport(getTopLoc(target));
+                    Lang.prepare("commands.top.expressions.notification").sendPlayer(target);
 
-                if (args.length == 0) {
-                    Player player = (Player) sender;
-                    player.teleport(getTopLoc(player));
-                    player.sendMessage(Lang.get(player, "commands.top.expressions.notification"));
-                } else {
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if (target == null) {
-                        sender.sendMessage(Lang.get(sender, "global.invalid_player")
-                                .replaceAll("%player%", args[0]));
-                    } else {
-                        if (sender.hasPermission("ulity.packutils.top.others")) {
-                            target.teleport(getTopLoc(target));
-                            target.sendMessage(Lang.get(target, "commands.top.expressions.notification"));
-                            sender.sendMessage(Lang.get(sender, "commands.top.expressions.result_other")
-                                    .replaceAll("%player%", target.getName()));
-                        } else
-                            sender.sendMessage(Lang.get(sender, "global.no_perm"));
-                    }
+                    if (!sender.getName().equals(target.getName()))
+                        Lang.prepare("commands.top.expressions.result_other")
+                                .variable("player", target.getName())
+                                .sendPlayer(sender);
                 }
             }
-
-            return true;
-        }
-
-
-        return false;
+        } else
+            setStatus(Status.SYNTAX);
     }
-
 }

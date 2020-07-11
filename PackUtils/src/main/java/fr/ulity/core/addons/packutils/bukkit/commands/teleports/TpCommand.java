@@ -12,28 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TpCommand extends CommandManager {
+public class TpCommand extends CommandManager.Assisted {
 
     public TpCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "tp");
-        addDescription(Lang.get("commands.tp.description"));
-        addUsage(Lang.get("commands.tp.usage"));
         addPermission("ulity.packutils.tp");
 
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
-    }
-
-    public static void tpPlayers (CommandSender sender, TeleportMethods teleporting, String origin, String target) {
-        Player originPlayer = Bukkit.getPlayer(origin);
-        Player targetPlayer = Bukkit.getPlayer(target);
-
-        if (originPlayer == null)
-            sender.sendMessage(Lang.get(sender, "global.invalid_player").replaceAll("%player%", origin));
-        else if (targetPlayer == null)
-            sender.sendMessage(Lang.get(sender, "global.invalid_player").replaceAll("%player%", target));
-        else
-            teleporting.tpPlayer(originPlayer, targetPlayer);
     }
 
     public static void tpLoc (CommandSender sender, TeleportMethods teleporting, String origin, Location target) {
@@ -49,18 +35,18 @@ public class TpCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-       if (args.length >= 1 && args.length <= 4) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+       if (arg.inRange(1, 4)) {
             TeleportMethods teleporting = new TeleportMethods(sender);
 
-            if (args.length == 1 ) {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage(Lang.get(sender, "global.player_only"));
-                    return true;
-                } else
-                    tpPlayers(sender, teleporting, sender.getName(), args[0]);
+            if (args.length == 1 && requirePlayer()) {
+                if (arg.requirePlayerNoSelf(0)) {
+                    teleporting.tpPlayer((Player) sender, arg.getPlayer(1));
+                }
             } else if (args.length == 2) {
-                tpPlayers(sender, teleporting, args[0], args[1]);
+                if (arg.requirePlayer(0) && arg.requirePlayer(1)) {
+                    teleporting.tpPlayer(arg.getPlayer(0), arg.getPlayer(1));
+                }
             } else {
                 int ind = -3 + args.length;
 
@@ -69,17 +55,24 @@ public class TpCommand extends CommandManager {
                     double y = Double.parseDouble(args[ind + 1]);
                     double z = Double.parseDouble(args[ind + 2]);
 
-                    String pseudo = (ind == 0) ? sender.getName() : args[0];
-                    tpLoc(sender, teleporting, pseudo, new Location(null, x, y, z));
-                } catch (NumberFormatException nfe) {
-                    return false;
+                    Player player = null;
+                    if (ind == 0 && requirePlayer())
+                        player = (Player) sender;
+                    else if (arg.requirePlayer(0))
+                        player = arg.getPlayer(0);
+                    else
+                        setStatus(Status.STOP);
+
+                    if (status.equals(Status.SUCCESS))
+                        teleporting.tpCoords(player, new Location(player.getWorld(), x, y, z));
+
+                } catch (NumberFormatException ignored) {
+                    setStatus(Status.SYNTAX);
                 }
-
             }
+        } else
+            setStatus(Status.SYNTAX);
 
-            return true;
-        }
-        return false;
     }
 
 

@@ -4,7 +4,6 @@ import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.GamemodeMethods;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -12,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class GmpCommand extends CommandManager {
+public class GmpCommand extends CommandManager.Assisted {
 
     public GmpCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "gmp");
@@ -26,32 +25,19 @@ public class GmpCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length <= 1) {
-            Player target;
-            if (args.length == 1) {
-                target = Bukkit.getPlayer(args[0]);
-                if (!sender.hasPermission("ulity.packutils.gamemode.others")) {
-                    sender.sendMessage(Lang.get("global.no_perm"));
-                    return true;
-                } else if (target == null) {
-                    sender.sendMessage(Lang.get("global.invalid_player")
-                            .replaceAll("%player%", args[0]));
-                    return true;
-                }
-            } else {
-                if (sender instanceof Player)
-                    target = (Player) sender;
-                else {
-                    sender.sendMessage(Lang.get("global.player_only"));
-                    return true;
-                }
-            }
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (arg.inRange(0, 1)) {
+            Player target = null;
+            if (arg.is(0)) {
+                if (requirePermission("ulity.packutils.gamemode.others"))
+                    if (arg.requirePlayer(0))
+                        target = arg.getPlayer(0);
+            } else if (requirePlayer())
+                target = (Player) sender;
 
-            GamemodeMethods.define(target, GameMode.SPECTATOR, sender);
-            return true;
-        }
-
-        return false;
+            if (status.equals(Assisted.Status.SUCCESS))
+                GamemodeMethods.define(target, GameMode.SPECTATOR, sender);
+        } else
+            setStatus(Assisted.Status.SYNTAX);
     }
 }

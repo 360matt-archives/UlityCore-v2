@@ -27,7 +27,4 @@ public class Cache {
             cacheContent.clear();
     }
 
-
-
-
 }

@@ -9,15 +9,20 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerEvent;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class AntiInsultEvent implements Listener {
 
     @EventHandler
     private static void withMessage (AsyncPlayerChatEvent e) {
-        String word = hasBlacklistedWord(e.getMessage(), e.getPlayer());
-        if (word != null)
-            whenDetected(e, word, "chat");
-    }
+        String wordMessage = hasBlacklistedWord(e.getMessage(), e.getPlayer());
+        if (wordMessage != null)
+            whenDetected(e, wordMessage, "chat");
 
+    }
 
     @EventHandler
     private static void withCommand (PlayerCommandPreprocessEvent e) {
@@ -26,36 +31,28 @@ public class AntiInsultEvent implements Listener {
             whenDetected(e, word, "commands");
     }
 
-
     /* not event Handle */
     private static String hasBlacklistedWord (String msg, Player p) {
-        for (String x : Lang.getStringArray(p, "module.anti_insult.words"))
-            if (msg.toLowerCase().contains(x.toLowerCase()))
-                return x;
-        for (String x : Lang.getStringArray("module.anti_insult.words"))
-            if (msg.toLowerCase().contains(x.toLowerCase()))
-                return x;
+        List<String> bl = Stream.concat(
+                Arrays.stream(Lang.getStringArray(p, "module.anti_insult.words")),
+                Arrays.stream(Lang.getStringArray("module.anti_insult.words"))
+        )
+        .collect(Collectors.toList());
 
-        return null;
+        return bl.stream().filter(x -> msg.toLowerCase().contains(x.toLowerCase())).findFirst().orElse(null);
     }
 
 
     /* not event Handle */
     private static void whenDetected (Object e, String word, String type) {
-
-        e = (e instanceof AsyncPlayerChatEvent) ? (AsyncPlayerChatEvent) e : (PlayerCommandPreprocessEvent) e;
-
-
         Player p = ((PlayerEvent) e).getPlayer();
         if (p.hasPermission("ulity.mod") && Lang.getBoolean("module.anti_insult." + type + ".staff_bypass"))
             return;
 
         ((Cancellable) e).setCancelled(true);
-        p.sendMessage((p.hasPermission("ulity.mod")
-            ? Lang.get("module.anti_insult." + type + ".error_message_staff")
-            : Lang.get("module.anti_insult." + type + ".error_message"))
-                .replaceAll("%word%", word));
-
+        Lang.prepare("module.anti_insult." + type + ".error_message" + ((p.hasPermission("ulity.mod") ? "_staff" : "" )))
+                .variable("word", word)
+                .sendPlayer(p);
     }
 
 }

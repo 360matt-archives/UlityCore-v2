@@ -60,11 +60,13 @@ public class TempBanCommand extends CommandManager.Assisted {
                     @SuppressWarnings("deprecation")
                     OfflinePlayer player = Bukkit.getOfflinePlayer(arg.get(0));
                     if (player.isOnline())
-                        Lang.prepare("commands.tempban.expressions.you_are_muted")
-                                .variable("staff", sender.getName())
-                                .variable("reason", reason)
-                                .variable("timeLeft", time.text)
-                                .sendPlayer(arg.getPlayer(0));
+                        arg.getPlayer(0).kickPlayer(
+                                Lang.prepare("commands.tempban.expressions.you_are_banned")
+                                        .variable("staff", sender.getName())
+                                        .variable("reason", reason)
+                                        .variable("timeLeft", time.text)
+                                        .getOutput(arg.getPlayer(0))
+                        );
 
                     Lang.prepare("commands.tempban.expressions.result")
                             .variable("player", player.getName())

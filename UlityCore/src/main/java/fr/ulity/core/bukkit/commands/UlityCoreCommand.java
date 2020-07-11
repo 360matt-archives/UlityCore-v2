@@ -25,16 +25,19 @@ import java.nio.file.Paths;
  *
  */
 
-public class UlityCoreCommand extends CommandManager {
+public class UlityCoreCommand extends CommandManager.Assisted {
 
     public UlityCoreCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "ulitycore");
-        addDescription(Lang.defaultLang.equals("fr") ? "Affiche les informations du plugin" : "Show the plugin's informations");
+        addDescription(
+                Lang.defaultLang.equals("fr")
+                ? "Affiche les informations du plugin"
+                : "Show the plugin's informations"
+        );
         addAliases("uc");
         addUsage("/ulitycore");
         addPermission(null);
 
-        addOneTabbComplete(-1, "ulitycore");
         addOneTabbComplete(0, null, "lang");
         addOneTabbComplete(0, "ulitycore.admin", "reload");
         addListTabbComplete(1, "ulitycore.admin", new String[]{"lang"}, "fr", "en");
@@ -46,10 +49,10 @@ public class UlityCoreCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1) {
             if (args[0].equals("reload") || args[0].equals("rl")){
-                if (sender.hasPermission("ulitycore.admin")){
+                if (requirePermission("ulitycore.admin")){
                     MainBukkit.plugin.getPluginLoader().disablePlugin(MainBukkit.plugin);
                     MainBukkit.plugin.getPluginLoader().enablePlugin(MainBukkit.plugin);
 
@@ -64,19 +67,16 @@ public class UlityCoreCommand extends CommandManager {
                     }
                     // je suis obligé de reverse loop, sinon cela me cause une erreur
 
-                    sender.sendMessage(Lang.get(sender, "plugin.reloaded"));
-                    sender.sendMessage(Lang.get(sender, "plugin.addons_reloaded")
-                        .replaceAll("%count%", count + ""));
+                    Lang.prepare("plugin.reloaded").sendPlayer(sender);
+                    Lang.prepare("plugin.addons_reloaded")
+                            .variable("count", String.valueOf(count))
+                            .sendPlayer(sender);
 
-                    return true;
-                }
-                else{
-                    sender.sendMessage(Lang.get(sender, "plugin.no_perm"));
-                    return true;
+                    return;
                 }
             }
             if (args[0].equals("lang") || args[0].equals("langue")){
-                if (sender.hasPermission("ulitycore.admin")){
+                if (requirePermission("ulitycore.admin")){
                     if (args.length == 1)
                         sender.sendMessage(Lang.get("plugin.lang.actual"));
                     else{
@@ -84,35 +84,33 @@ public class UlityCoreCommand extends CommandManager {
                             Api.config.set("global.lang", args[1]);
                             try {
                                 Lang.reload();
-                                sender.sendMessage(Lang.get(sender, "plugin.lang.reloaded"));
+                                Lang.prepare("plugin.lang.reloaded").sendPlayer(sender);
                             } catch (IOException | URISyntaxException e) {
-                                sender.sendMessage(Lang.get(sender, "plugin.lang.fail_reload"));
+                                Lang.prepare("plugin.lang.fail_reload").sendPlayer(sender);
                                 e.printStackTrace();
                             }
                         }
                         else
-                            sender.sendMessage(Lang.get(sender, "plugin.commands.lang.lang_unknown")
-                                    .replaceAll("%lang%", args[1]));
+                            Lang.prepare("plugin.commands.lang.lang_unknown")
+                                    .variable("lang", args[1])
+                                    .sendPlayer(sender);
                     }
-                    return true;
-                }
-                else{
-                    sender.sendMessage(Lang.get(sender, "plugin.no_perm"));
-                    return true;
+                    return;
                 }
             }
         }
 
-        if (Lang.defaultLang.equals("fr")) {
-            sender.sendMessage("§bUlityCore §7est créé par §c360matt");
-            sender.sendMessage("§7Version: §av" + MainBukkit.plugin.getDescription().getVersion());
-            sender.sendMessage("§7Ce plugin est une librairie de fonctionnalités et extensible de commandes en tout genre grâce aux Add-Ons.");
-        } else {
-            sender.sendMessage("§bUlityCore §7is created by §c360matt");
-            sender.sendMessage("§7Version: §av" + MainBukkit.plugin.getDescription().getVersion());
-            sender.sendMessage("§7This plugin is a fonctionnality's library with extensible commands thanks to Add-Ons.");
-        }
 
-        return true;
+        if (status.equals(Status.SUCCESS)) {
+            if (Lang.defaultLang.equals("fr")) {
+                sender.sendMessage("§bUlityCore §7est créé par §c360matt");
+                sender.sendMessage("§7Version: §av" + MainBukkit.plugin.getDescription().getVersion());
+                sender.sendMessage("§7Ce plugin est une librairie de fonctionnalités et extensible de commandes en tout genre grâce aux Add-Ons.");
+            } else {
+                sender.sendMessage("§bUlityCore §7is created by §c360matt");
+                sender.sendMessage("§7Version: §av" + MainBukkit.plugin.getDescription().getVersion());
+                sender.sendMessage("§7This plugin is a fonctionnality's library with extensible commands thanks to Add-Ons.");
+            }
+        }
     }
 }

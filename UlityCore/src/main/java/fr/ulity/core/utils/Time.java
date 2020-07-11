@@ -1,10 +1,9 @@
 package fr.ulity.core.utils;
 
 import fr.ulity.core.api.Lang;
-import org.joda.time.Period;
-import org.joda.time.Seconds;
-import org.joda.time.format.PeriodFormatterBuilder;
 
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,30 +63,20 @@ public class Time {
     }
 
     private void TextFromSeconds (int seconds) {
-        Seconds sec = Seconds.seconds(seconds);
-        Period period = new Period(sec);
+        HashMap<String, Integer> degre = new HashMap<>();
+        degre.put("year", (int) Math.floor(seconds / (60*60*24*365))); seconds -= degre.get("year")*(60*60*24*365);
+        degre.put("month", (int) Math.floor(seconds / (60*60*24*30))); seconds -= degre.get("month")*(60*60*24*30);
+        degre.put("day", (int) Math.floor(seconds / (60*60*24))); seconds -= degre.get("day")*(60*60*24);
+        degre.put("hour",  (int) Math.floor(seconds / (3600))); seconds -= degre.get("hour")*(3600);
+        degre.put("minute", (int) Math.floor(seconds / 60)); seconds -= degre.get("minute")*(60);
+        degre.put("second", seconds);
 
-        this.text = new PeriodFormatterBuilder()
-                .appendYears()
-                .appendSuffix(exp(("year")), exp(("years")))
-                .appendSeparator(exp("separator"))
-                .appendMonths()
-                .appendSuffix(exp(("month")), exp(("months")))
-                .appendSeparator(exp("separator"))
-                .appendDays()
-                .appendSuffix(exp(("day")), exp(("days")))
-                .appendSeparator(exp("separator"))
-                .appendHours()
-                .appendSuffix(exp(("hour")),  exp(("hours")))
-                .appendSeparator(exp("separator"))
-                .appendMinutes()
-                .appendSuffix(exp(("minute")),  exp(("minutes")))
-                .appendSeparator(exp("separator"))
-                .appendSeconds()
-                .appendSuffix(exp(("second")), exp(("seconds")))
-                .toFormatter()
-                .print(period.normalizedStandard());
+        AtomicBoolean comma = new AtomicBoolean(false);
+        degre.forEach((key, value) -> {
+            if (value != 0) {
+                this.text += ((comma.get()) ? ", " : "") + value + ((value > 1) ? exp(key + "s") : exp(key));
+                comma.set(true);
+            }
+        });
     }
-
-
 }

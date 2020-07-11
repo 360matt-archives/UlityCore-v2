@@ -8,28 +8,25 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class MuteEvent implements Listener {
-
     @EventHandler
     private static void onChat (AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
 
         Mute playerMute = new Mute(p.getName());
         if (playerMute.isMute()){
-            if (p.hasPermission("ulity.mod.mute"))
-                return;
+            if (!p.hasPermission("ulity.mod.mute")) {
+                e.setCancelled(true);
 
-            e.setCancelled(true);
+                String isTempmute = (playerMute.expire_text != null ? "temp" : "");
+                Lang.Prepared prepared = Lang.prepare("commands." + isTempmute + "mute.expressions.when_chat_blocked")
+                        .variable("staff", playerMute.responsable)
+                        .variable("reason", playerMute.reason);
 
-            String errMsg = Lang.get(p, "commands." +  (playerMute.expire_text != null ? "temp" : "") + "mute.expressions.when_chat_blocked")
-                    .replaceAll("%staff%", playerMute.responsable)
-                    .replaceAll("%reason%", playerMute.reason);
+                if (playerMute.expire_text != null)
+                    prepared.variable("timeLeft", playerMute.expire_text);
 
-            if (playerMute.expire_text != null)
-                errMsg = errMsg.replaceAll("%timeLeft%", playerMute.expire_text);
-
-            p.sendMessage(errMsg);
-
+                prepared.sendPlayer(p);
+            }
         }
     }
-
 }

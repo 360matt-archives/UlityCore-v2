@@ -30,7 +30,9 @@ public class DeathEvent implements Listener {
                 Api.temp.set("player." + player.getName() + ".death_lastPosition", player.getLocation());
 
                 lastKilled.put(player.getName(), new Date().getTime() + 10000);
-                Death.run(player, e.getCause(), e.getDamage());
+
+                Death makeDeath = new Death();
+                makeDeath.run(player, e.getCause(), e.getDamage());
             }
 
 

@@ -19,7 +19,6 @@ public class Death {
             FlatFileSection locData = Api.data.getSection("spawn");
 
             World world = Bukkit.getWorld(locData.getString("world"));
-            System.out.println(world.getName());
 
             double x = locData.getDouble("x");
             double y = locData.getDouble("y");
@@ -30,9 +29,7 @@ public class Death {
         return null;
     }
 
-    public static void run(Player player, EntityDamageEvent.DamageCause cause, double damage){
-        GameMode oldGameMode = player.getGameMode();
-
+    public void run(Player player, EntityDamageEvent.DamageCause cause, double damage){
         for (double k = 0.0; k<=2; k=k+0.5)
             FastParticle.spawnParticle(player.getWorld(), ParticleType.REDSTONE, player.getLocation().clone().add(0, k, 0), 100, Color.RED);
 
@@ -40,12 +37,11 @@ public class Death {
 
         player.sendTitle("§cTu est mort !", "R.I.P.", 1, 20*3, 1);
 
+        GameMode oldGameMode = player.getGameMode();
         player.setGameMode(GameMode.SPECTATOR);
         player.setHealth(20);
 
-        Location oldLocation = player.getLocation();
-        oldLocation.setY(oldLocation.getY() + 1);
-        player.teleport(oldLocation);
+        player.teleport(player.getLocation().add(0, 1,0));
         // forcer le vecteur en bougeant d'un bloc vers le haut
 
         count = 30;
@@ -56,10 +52,10 @@ public class Death {
                 Bukkit.getScheduler().cancelTask(task);
 
             else if (count == 0) {
-                EntityDamageEvent ede = new EntityDamageEvent(player, cause, damage);
-                Bukkit.getPluginManager().callEvent(ede);
-                if (!ede.isCancelled()) {
-                    ede.getEntity().setLastDamageCause(ede);
+                EntityDamageEvent simulate = new EntityDamageEvent(player, cause, damage);
+                Bukkit.getPluginManager().callEvent(simulate);
+                if (!simulate.isCancelled()) {
+                    simulate.getEntity().setLastDamageCause(simulate);
                     player.setHealth(0);
                 }
 
@@ -68,7 +64,6 @@ public class Death {
                     player.teleport(spawnLoc);
 
                 player.setGameMode(oldGameMode);
-
                 Bukkit.getScheduler().cancelTask(task);
             }
             else {

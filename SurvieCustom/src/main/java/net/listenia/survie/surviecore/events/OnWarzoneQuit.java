@@ -36,7 +36,7 @@ public class OnWarzoneQuit implements Listener {
 
                     Vector vec = new Vector(deltaX, deltaY, deltaZ);//Create new vector
                     vec.normalize();//Normalize it so we don't shoot the player into oblivion
-                    e.getPlayer().setVelocity(vec.multiply(0.5 / (Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaZ, 2.0)))));
+                    e.getPlayer().setVelocity(vec.multiply(0.3 / (Math.sqrt(Math.pow(deltaX, 2.0) + Math.pow(deltaZ, 2.0)))));
 
                     e.getPlayer().sendMessage("§7[§cX§7] Tu ne peux pas retourner au spawn");
                 }

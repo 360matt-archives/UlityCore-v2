@@ -4,6 +4,7 @@ import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Lang;
+
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -12,49 +13,38 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PayCommand extends CommandManager {
+public class PayCommand extends CommandManager.Assisted {
     public PayCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "pay");
-        addDescription(Lang.get("commands.pay.description"));
-        addUsage(Lang.get("commands.pay.usage"));
         addPermission("ulity.packutils.pay");
-
         if (MainBukkitPackUtils.enabler.canEnable(getName()))
             registerCommand(commandMap);
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(Lang.get(sender, "global.player_only"));
-            return true;
-        }
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
+            if (arg.requirePlayerNoSelf(0)) {
+                if (arg.requireNumber(1)) {
+                    Player playerHandle = arg.getPlayer(0);
+                    if (new EconomyMethods().has(sender.getName(), Double.parseDouble(args[1]))) {
+                        Lang.prepare("commands.pay.expressions.received")
+                                .variable("money", args[1])
+                                .variable("player", sender.getName())
+                                .sendPlayer(playerHandle);
 
-        if (args.length == 2 && StringUtils.isNumeric(args[1])) {
-            Player playerHandle = Bukkit.getPlayer(args[0]);
-            if (playerHandle == null) {
-                sender.sendMessage(Lang.get(sender, "global.invalid_player")
-                        .replaceAll("%player%", args[0]));
-            } else {
-                if (new EconomyMethods().has(sender.getName(), Double.parseDouble(args[1]))) {
-
-                    playerHandle.sendMessage(Lang.get(playerHandle, "commands.pay.expressions.received")
-                            .replaceAll("%money%", (args[1]))
-                            .replaceAll("%player%", (sender.getName())));
-
-                    sender.sendMessage(Lang.get(sender, "commands.pay.expressions.result")
-                            .replaceAll("%money%", (args[1]))
-                            .replaceAll("%player%", (playerHandle.getName())));
-
-
-                } else {
-                    sender.sendMessage(Lang.get(sender, "commands.pay.expressions.not_enough_money")
-                            .replaceAll("%money%", (args[1])));
+                        Lang.prepare("commands.pay.expressions.result")
+                                .variable("money", args[1])
+                                .variable("player", playerHandle.getName())
+                                .sendPlayer(sender);
+                    } else {
+                        Lang.prepare("commands.pay.expressions.not_enough_money")
+                                .variable("money", args[1])
+                                .sendPlayer(sender);
+                    }
                 }
             }
-            return true;
         }
-        return false;
     }
 
 }

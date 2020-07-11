@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class RetournerCommand extends CommandManager {
+public class RetournerCommand extends CommandManager.Assisted {
     public RetournerCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "retourner");
         addDescription("§ePermet de connaitre la position de sa précédente mort");
@@ -20,8 +20,8 @@ public class RetournerCommand extends CommandManager {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
+    public void exec(CommandSender sender, Command command, String label, String[] args) {
+        if (requirePlayer()) {
             Player p = (Player) sender;
 
             if (Api.temp.contains("player." + sender.getName() + ".death_lastPosition")) {
@@ -41,8 +41,6 @@ public class RetournerCommand extends CommandManager {
                 }
             } else
                 sender.sendMessage("§7Mais t'es pas encore mort ... Mdr !");
-        } else
-            sender.sendMessage(Lang.get("global.player_only"));
-        return true;
+        }
     }
 }

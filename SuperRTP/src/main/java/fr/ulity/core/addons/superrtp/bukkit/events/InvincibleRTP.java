@@ -26,7 +26,6 @@ public class InvincibleRTP implements Listener {
 
             if ((long) MainBukkitRTP.invincible.get(player.getName()).get("time") >= new Date().getTime()) {
                 Set<EntityDamageEvent.DamageCause> typesToCancel = new HashSet<EntityDamageEvent.DamageCause>();
-                // typesToCancel.add(EntityDamageEvent.DamageCause.FALL);
                 typesToCancel.add(EntityDamageEvent.DamageCause.SUFFOCATION);
                 typesToCancel.add(EntityDamageEvent.DamageCause.VOID);
                 typesToCancel.add(EntityDamageEvent.DamageCause.LAVA);
@@ -51,18 +50,9 @@ public class InvincibleRTP implements Listener {
                             bossBar.removePlayer(player);
                         }
                     }, 20*15L); //20 Tick (1 Second) delay before run() is called
-
                 }
-
-            } else {
+            } else
                 MainBukkitRTP.invincible.remove(player.getName());
-            }
-
-
-
-            
         }
-
     }
-
 }

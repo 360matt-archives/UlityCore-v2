@@ -1,0 +1,147 @@
+packutils:
+  gamemode:
+    gamemode_changed: "&7Your game mode has been changed to &6%gamemode%"
+    result: "&7The &b%player%&7's game mode have been changed to &6%gamemode%"
+    type:
+      creative: "creative"
+      survival: "survival"
+      adventure: "adventure"
+      spectator: "spectator"
+  teleport:
+    teleported_by_you:
+      you_to_player: "&7You have been teleported to &b%player%"
+      player_to_you: "&7You have teleported &b%player% &7to you"
+      player_to_player: "&7You have teleported &b%player1% &7to &b%player2%"
+      player_to_coords: "&7You have teleported &b%player% &7to &6%coords%"
+    notification:
+      teleported_to_player: "&7You have been teleported to &b%player%"
+      teleported_to_coords: "&7You have been teleported to &6%coords%"
+commands:
+  gamemode:
+    usage: "&eChange the gamemode: &7/gamemode <mod> [player]"
+    description: "&eAllows you to change the play mode of yourself or a player"
+  gmX:
+    usage: "&eChange the gamemode: &7/gm* [player]"
+    description: "&eAllows you to define this game mode"
+  fly:
+    usage: "&eChange the fly state: &7/fly [player]"
+    description: "&eAllows you to allow or not the fly to yourself or to another player"
+    expressions:
+      fly_changed: "&7Your possibility to fly is %status%"
+      result: "&7The possibility of fly of &b%player% &7is %status%"
+  tp:
+    usage: |-
+      &e/tp &7player
+      &e/tp &7player1 &8player2
+      &e/tp &7x y z
+      &e/tp &7player x y z
+    description: "&eAllows you to teleport yourself or another player to a player or coordinate"
+  tpa:
+    usage: "&eSend a teleportation request: /tpa &7<Player>"
+    description: "&eSend a teleportation request to a player"
+    expressions:
+      you_are_bloqued: "&7[&cX&7] Player &b%player% &7has blocked you!"
+      cooldown: "&7[&cX&7] Please wait &e%left% &7before you can resend a request to &b%player%"
+      request_sent: "&7Your request has been sent to &b%player%"
+      request_body: |-
+        &b%player% &7wants to teleport to you
+        &7[ &a/tpyes &7%player% | &c/tpno &7player% ]
+  tpyes:
+    usage: "&eAccept a request: &7/tpyes [Player]"
+    description: "&eAccept a player's teleportation request"
+    expressions:
+      no_requested: "&7[&cX&7] The request may have expired!"
+      request_accepted: |-
+        &7The player &b%player% &7has &aaccepted &7your teleportation request
+        &7Teleportation in &e5 seconds &7...
+      accept_result: "&7You have accepted the teleportation request of &b%player%"
+      disconnected: "&7Player &b%player% &7disconnected during teleportation"
+  tpno:
+    usage: "&eDecline a request: &7/tpno [Player]"
+    description: "&eDeny a player's teleportation request"
+    expressions:
+      no_requested: "&7[&cX&7] The request may have expired!"
+      request_accepted: "&7The player &b%player% &7has &crefused &7your teleportation request"
+      accept_result: "&7You have accepted &b%player%'&7s request to teleport"
+      disconnected: "&7Player &b%player% &7has disconnected during teleportation"
+  top:
+    usage: "&eTeleport to the top: &7/top"
+    description: "&eAllows you to teleport to the highest block"
+    expressions:
+      notification: "&7You have been teleported to the surface!"
+      result_other: "&7You have teleported &b%player% &7on the surface!"
+  back:
+    usage: "&eTeleport to your last location: &7/back"
+    description: "&eAllows you to teleport to the last known location before teleporting"
+    expressions:
+      teleported: "&7You have been teleported to your last location"
+      nothing: "&7You have not previously visited a place"
+      unknown_world: "&7[&cX&7] The world you once was no longer exists!"
+  setspawn:
+    usage: "&eDefine the spawn: &7/setspawn"
+    description: "&eDefine the position of the spawn"
+    expressions:
+      result: "&7Spawn position has been changed"
+  spawn:
+    usage: |-
+      &eTeleport to the spawn: &7/spawn
+      &eTeleport a player to the spawn: &7/spawn <Player>
+    description: "&eTeleport to spawn yourself or a player"
+    expressions:
+      unknown_world: "&7[&cX&7] The world of spawn no longer exists!"
+      not_defined: "&7[&cX&7] The spawn is not defined!"
+      prevent_teleport: "&7You will be teleported to the spawn in &e5 seconds &7!"
+      teleported: "&7You have been teleported to the spawn!"
+      others_result: "Teleport from &b%player% &7to the spawn ..."
+  home:
+    usage: "&eTeleport to your homes: &7/home [name]"
+    description: "&eAllows to teleport to its residences"
+    expressions:
+      home_list: "&6List of your homes: &7%list%"
+      nothing_list: "no home"
+      unknown_home: "&7[&cX&7] The &8%home% &7residence does not exist!"
+      prevent_teleport: "&7You will be teleported to home &6%home% &7in &e5 seconds &7!"
+      teleported: "&7You have been teleported home &6%home%"
+  sethome:
+    usage: "&eDefine a home: &7/sethome [home]"
+    description: "&eAllows you to define the location of a home"
+    expressions:
+      alphanumeric_required: "&7[&cX&7] The name of the home must be alphanumeric!"
+      limit: "&7[&cX&7] The limit is &6%count% &7homes"
+      created: "&7The home &6%home% &7has been created!"
+  delhome:
+    usage: "&eDelete a home: &7/delhome <home>"
+    description: "&eAllows you to delete a home"
+    expressions:
+      unknown_home: "&7[&cX&7] The &8%home% &7residence does not exist!"
+      deleted: "&7The home &6%home% &7 is deleted!"
+  eco:
+    usage: |-
+      &eClear everyone: &7/eco clear
+      &eSet a player's balance: &7/eco set <Player> <amount>
+      &eAdd to a player's balance: &7/eco add <Player> <amount>
+      &eRemove from a player's balance: &7/eco remove <Player> <amount>
+    description: "&eAllows you to manage the player balance"
+    expressions:
+      sender:
+        sold_set: "&7Player &b%player% &7's balance has been set to &6 $%money%"
+        sold_added: "&6$%added% &7have been added to the &b%player% account"
+        sold_taked: "&6$%taked% &7 have been removed from &b%player% account"
+        all_accounts_cleared: "&7All accounts have been reset"
+      player:
+        sold_set: "&7Your balance has been set at &6$%money%"
+        sold_added: "&6$%added% &7have been added to your account\n"
+        sold_taked: "&6$%taked% &7have been removed from your account"
+  balance:
+    usage: "&eCheck your balance: &7/balance [Player]"
+    description: "&eAllows you to check your balance"
+    expressions:
+      your_sold: "&7You have &6$%money% &7in your account!"
+      sold_of_x: "&7The player &b%player% &7have &6 $%money% &7on his account!"
+  pay:
+    usage: "&eSend money to a player: &7/pay <Player> <Amount>"
+    description: "&eAllows to transfer virtual money to a player"
+    expressions:
+      received: "&7You received &6 $%money% &7 from &b%player%"
+      result: "&6$%money% &7has been sent to player &b%player%"
+      not_enough_money: "&7You do not own the entire sum of &6$%money%"

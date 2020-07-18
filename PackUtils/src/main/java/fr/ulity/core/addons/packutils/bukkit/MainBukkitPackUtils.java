@@ -10,18 +10,19 @@ import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
+import fr.ulity.core.api.Metrics;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
 
 public final class MainBukkitPackUtils extends JavaPlugin {
     public static MainBukkitPackUtils plugin;
     public static Config config;
 
     public static CommandEnabler enabler;
-
-
 
     @Override
     public void onEnable() {
@@ -31,10 +32,14 @@ public final class MainBukkitPackUtils extends JavaPlugin {
         getServer().getServicesManager().register(Economy.class, new EconomyMethods(), vault, ServicePriority.Highest);
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.3");
+        init.requireVersion("2.3.1");
+        init.checkUpdates(81641);
         init.reloadLang();
 
         if (init.ok) {
+            Metrics metrics = new Metrics(this, 8230);
+            metrics.addCustomChart(new Metrics.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
+
             config = new Config("config", "addons/PackUtils");
             DefaultConfig.applique();
 

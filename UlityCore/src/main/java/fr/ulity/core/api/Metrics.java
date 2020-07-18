@@ -30,49 +30,15 @@ import java.util.zip.GZIPOutputStream;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public final class Metrics {
-
-    static {
-        // You can use the property to disable the check in your test environment
-        if (System.getProperty("bstats.relocatecheck") == null || !System.getProperty("bstats.relocatecheck").equals("false")) {
-            // Maven's Relocate is clever and changes strings, too. So we have to use this little "trick" ... :D
-            final String defaultPackage = new String(
-                    new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's', '.', 'b', 'u', 'k', 'k', 'i', 't'});
-            final String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
-            // We want to make sure nobody just copy & pastes the example and use the wrong package names
-            if (Metrics.class.getPackage().getName().equals(defaultPackage) || Metrics.class.getPackage().getName().equals(examplePackage)) {
-                throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
-            }
-        }
-    }
-
-    // The version of this bStats class
     public static final int B_STATS_VERSION = 1;
-
-    // The url to which the data is sent
     private static final String URL = "https://bStats.org/submitData/bukkit";
-
-    // Is bStats enabled on this server?
     private boolean enabled;
-
-    // Should failed requests be logged?
     private static boolean logFailedRequests;
-
-    // Should the sent data be logged?
     private static boolean logSentData;
-
-    // Should the response text be logged?
     private static boolean logResponseStatusText;
-
-    // The uuid of the server
     private static String serverUUID;
-
-    // The plugin
     private final Plugin plugin;
-
-    // The plugin id
     private final int pluginId;
-
-    // A list with all custom charts
     private final List<CustomChart> charts = new ArrayList<>();
 
     /**
@@ -83,9 +49,8 @@ public final class Metrics {
      *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
     public Metrics(Plugin plugin, int pluginId) {
-        if (plugin == null) {
+        if (plugin == null)
             throw new IllegalArgumentException("Plugin cannot be null!");
-        }
         this.plugin = plugin;
         this.pluginId = pluginId;
 
@@ -99,13 +64,9 @@ public final class Metrics {
 
             // Add default values
             config.addDefault("enabled", true);
-            // Every server gets it's unique random id.
             config.addDefault("serverUuid", UUID.randomUUID().toString());
-            // Should failed request be logged?
             config.addDefault("logFailedRequests", false);
-            // Should the sent data be logged?
             config.addDefault("logSentData", false);
-            // Should the response text be logged?
             config.addDefault("logResponseStatusText", false);
 
             // Inform the server owners about bStats

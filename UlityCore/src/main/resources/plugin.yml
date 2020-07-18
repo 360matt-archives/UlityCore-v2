@@ -1,5 +1,5 @@
 name: UlityCore
-version: 2.3
+version: 2.3.1
 main: fr.ulity.core.bukkit.MainBukkit
 load: STARTUP
 api-version: "1.15"

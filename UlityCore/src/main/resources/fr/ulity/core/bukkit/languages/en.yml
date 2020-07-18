@@ -23,6 +23,7 @@ global:
   disabled: "disabled"
   invalid_player: "&7[&cX&7] The player &c%player% &7is invalid."
   player_only: "&7[&cX&7] This command must be executed by a player."
+  no_self: "&7[&cX&7] Please specify another nickname than yours!"
 period:
   years: "years"
   year: "year"
@@ -37,3 +38,7 @@ period:
   seconds: "seconds"
   second: "second"
   separator: ", "
+arg_needed:
+  player: "An argument &cplayer &7is expected!"
+  number: "&7[&cX&7] An argument &cnumber &7is expected!"
+  default: "&7[&cX&7] An argument is expected!"

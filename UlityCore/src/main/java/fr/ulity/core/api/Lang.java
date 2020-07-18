@@ -3,7 +3,7 @@ package fr.ulity.core.api;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
 import fr.ulity.core.utils.Text;
-import net.md_5.bungee.api.chat.TextComponent;
+// import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,24 +110,24 @@ public class Lang {
         Config optimalConfig = null;
 
         boolean noChange = false;
-        for (String x : langConfigs.keySet()) {
-            for (String y : langConfigs.get(x).keySet()) {
+        for (Map.Entry<String,HashMap<String, Config>> x : langConfigs.entrySet()) {
+            for (String y : x.getValue().keySet()) {
                 if (y.equals(langIso)) {
-                    if (langConfigs.get(x).get(y).isSet(exp))
-                        return langConfigs.get(x).get(y);
+                    if (x.getValue().get(y).isSet(exp))
+                        return x.getValue().get(y);
                 } else if (y.equals(defaultLang)) {
-                    if (langConfigs.get(x).get(y).isSet(exp)) {
-                        optimalConfig = langConfigs.get(x).get(y);
+                    if (x.getValue().get(y).isSet(exp)) {
+                        optimalConfig = x.getValue().get(y);
                         noChange = true;
                     }
                 } else if (!noChange && y.equals("en")) {
-                    if (langConfigs.get(x).get(y).isSet(exp)) {
-                        optimalConfig = langConfigs.get(x).get(y);
+                    if (x.getValue().get(y).isSet(exp)) {
+                        optimalConfig = x.getValue().get(y);
                         noChange = true;
                     }
                 } else if (!noChange) {
-                    if (langConfigs.get(x).get(y).isSet(exp)) {
-                        optimalConfig = langConfigs.get(x).get(y);
+                    if (x.getValue().get(y).isSet(exp)) {
+                        optimalConfig = x.getValue().get(y);
                     }
                 }
             }
@@ -156,8 +157,8 @@ public class Lang {
 
         public String getOutput (Object lang) {
             String output = Lang.get(lang, exp);
-            for (String x : vars.keySet())
-                output = output.replaceAll("%" + x + "%", vars.get(x));
+            for (Map.Entry<String,String> x : vars.entrySet())
+                output = output.replaceAll("%" + x + "%", x.getValue());
             return prefix + output + suffix;
         }
 

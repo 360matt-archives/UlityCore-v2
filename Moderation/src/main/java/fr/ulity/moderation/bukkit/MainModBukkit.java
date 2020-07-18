@@ -26,7 +26,7 @@ public final class MainModBukkit extends JavaPlugin {
         server = getServer();
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.3");
+        init.requireVersion("2.3.1");
         init.reloadLang();
         init.checkUpdates(78787);
 

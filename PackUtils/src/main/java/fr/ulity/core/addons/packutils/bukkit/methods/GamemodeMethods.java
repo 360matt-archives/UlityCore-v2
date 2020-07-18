@@ -24,7 +24,7 @@ public class GamemodeMethods {
                 .variable("gamemode", mode)
                 .sendPlayer(player);
 
-        if (!sender.getName().equals(player.getName())) {
+        if (sender != null && !sender.getName().equals(player.getName())) {
             Lang.prepare("packutils.gamemode.result")
                     .variable("player", player.getName())
                     .variable("gamemode", mode)

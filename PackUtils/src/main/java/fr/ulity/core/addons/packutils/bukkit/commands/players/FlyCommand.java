@@ -44,6 +44,7 @@ public class FlyCommand extends CommandManager.Assisted {
                 if (!sender.getName().equals(target.getName())) {
                     Lang.prepare("commands.fly.expressions.result")
                             .variable("status", status.getOutput(sender))
+                            .variable("player", target.getName())
                             .sendPlayer(sender);
                 }
             }

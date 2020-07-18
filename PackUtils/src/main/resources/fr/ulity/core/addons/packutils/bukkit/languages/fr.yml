@@ -44,7 +44,7 @@ commands:
     description: "Permet d'envoyer une demande de téléportation à un joueur"
     expressions:
       you_are_bloqued: "&7[&cX&7] Le joueur &b%player% &7vous a bloqué !"
-      cooldown: "&7[&cX&7] Veuillez attendre &e%lef% &7avant de pouvoir renvoyer une demande à &b%player%"
+      cooldown: "&7[&cX&7] Veuillez attendre &e%left% &7avant de pouvoir renvoyer une demande à &b%player%"
       request_sent: "&7Votre demande a bien été envoyé à &b%player%"
       request_body: |-
         &b%player% &7souhaite se téléporter vers vous

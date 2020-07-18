@@ -22,31 +22,17 @@ public class TpCommand extends CommandManager.Assisted {
             registerCommand(commandMap);
     }
 
-    public static void tpLoc (CommandSender sender, TeleportMethods teleporting, String origin, Location target) {
-        Player originPlayer = Bukkit.getPlayer(origin);
-        if (originPlayer == null)
-            sender.sendMessage(Lang.get(sender, "global.invalid_player").replaceAll("%player%", origin));
-        else {
-            target.setWorld(originPlayer.getWorld());
-            teleporting.tpCoords(originPlayer, target);
-        }
-
-
-    }
-
     @Override
     public void exec(CommandSender sender, Command command, String label, String[] args) {
        if (arg.inRange(1, 4)) {
             TeleportMethods teleporting = new TeleportMethods(sender);
 
             if (args.length == 1 && requirePlayer()) {
-                if (arg.requirePlayerNoSelf(0)) {
-                    teleporting.tpPlayer((Player) sender, arg.getPlayer(1));
-                }
+                if (arg.requirePlayerNoSelf(0))
+                    teleporting.tpPlayer((Player) sender, arg.getPlayer(0));
             } else if (args.length == 2) {
-                if (arg.requirePlayer(0) && arg.requirePlayer(1)) {
+                if (arg.requirePlayer(0) && arg.requirePlayer(1))
                     teleporting.tpPlayer(arg.getPlayer(0), arg.getPlayer(1));
-                }
             } else {
                 int ind = -3 + args.length;
 

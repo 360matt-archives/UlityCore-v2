@@ -40,3 +40,7 @@ permissions:
       ulity.packutils.top: true
       ulity.packutils.teleport: true
       ulity.packutils.sun: true
+      ulity.packutils.rain: true
+      ulity.packutils.thunder: true
+      ulity.packutils.day: true
+      ulity.packutils.night: true

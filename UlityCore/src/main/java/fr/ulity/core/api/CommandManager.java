@@ -3,6 +3,7 @@ package fr.ulity.core.api;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -96,36 +97,49 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
                 return false;
             }
             public boolean isPlayer (int ind) { return is(ind) && Bukkit.getPlayer(args[ind]) != null; }
+            public boolean isWorld (int ind) { return is(ind) && Bukkit.getWorld(args[ind]) != null; }
             public boolean isAlphaNumeric (int ind) { return is(ind) && StringUtils.isAlphanumeric(args[ind]); }
 
             public String get (int ind) { return (is(ind)) ? args[ind] : ""; }
             public long getLong (int ind) { return (is(ind)) ? Long.parseLong(args[ind]) : 0; }
             public Player getPlayer (int ind) { return (is(ind)) ? Bukkit.getPlayer(args[ind]) : null; }
+            public World getWorld (int ind) { return (is(ind)) ? Bukkit.getWorld(args[ind]) : null; }
 
             public boolean require (int ind) {
                 if (is(ind)) return true;
-                else sender.sendMessage(Lang.get(sender, "arg_needed.default"));
+                else Lang.prepare("arg_needed.default").sendPlayer(sender);
                 return false;
             }
             public boolean requirePlayer (int ind) {
                 if (isPlayer(ind)) return true;
-                else if (is(ind)) sender.sendMessage(Lang.get(sender, "global.invalid_player")
-                        .replaceAll("%player%", get(ind)));
-                else sender.sendMessage(Lang.get(sender, "arg_needed.player"));
+                else if (is(ind))
+                    Lang.prepare("global.invalid_player")
+                            .variable("player", get(ind))
+                            .sendPlayer(sender);
+                else
+                    Lang.prepare("arg_needed.player").sendPlayer(sender);
+                return false;
+            }
+            public boolean requireWorld (int ind) {
+                if (isWorld(ind)) return true;
+                else if (is(ind))
+                    Lang.prepare("global.invalid_world")
+                            .variable("world", get(ind))
+                            .sendPlayer(sender);
+                else
+                    Lang.prepare("arg_needed.world").sendPlayer(sender);
                 return false;
             }
             public boolean requirePlayerNoSelf (int ind) {
                 if (requirePlayer(ind)) {
-                    if (!getPlayer(ind).getName().equals(sender.getName()))
-                        return true;
-                    else
-                        sender.sendMessage(Lang.get(sender, "global.no_self"));
+                    if (!getPlayer(ind).getName().equals(sender.getName())) return true;
+                    else Lang.prepare("global.no_self").sendPlayer(sender);
                 }
                 return false;
             }
             public boolean requireNumber (int ind) {
                 if (isNumber(ind)) return true;
-                else sender.sendMessage(Lang.get(sender, "arg_needed.number"));
+                else Lang.prepare("arg_needed.number").sendPlayer(sender);
                 return false;
             }
             public boolean inRange (int minimal, int maximal) {
@@ -140,14 +154,18 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
 
         }
 
+        public boolean isPlayer () { return sender instanceof Player; }
+        public Player getPlayer() { return (Player) sender; }
         public boolean requirePlayer () {
-            if (sender instanceof Player)
+            if (isPlayer())
                 return true;
             status = Status.PLAYER_ONLY;
             return false;
         }
+
+        public boolean hasPermission (String permission) { return sender.hasPermission(permission); }
         public boolean requirePermission (String permission) {
-            if (sender.hasPermission(permission))
+            if (hasPermission(permission))
                 return true;
             status = Status.NOPERM;
             return false;

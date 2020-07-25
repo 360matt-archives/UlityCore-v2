@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CustomCommands/CustomCommands.iml" filepath="$PROJECT_DIR$/CustomCommands/CustomCommands.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DeluxeGUI/DeluxeGUI.iml" filepath="$PROJECT_DIR$/DeluxeGUI/DeluxeGUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
       <module fileurl="file://$PROJECT_DIR$/PackUtils/PackUtils.iml" filepath="$PROJECT_DIR$/PackUtils/PackUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperRTP/SuperRTP.iml" filepath="$PROJECT_DIR$/SuperRTP/SuperRTP.iml" />

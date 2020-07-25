@@ -11,10 +11,12 @@
         <module name="PackUtils" />
         <module name="SurvieCustom" />
         <module name="Moderation" />
+        <module name="DeluxeGUI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Claims" target="1.8" />
+      <module name="DeluxeGUI" target="1.8" />
       <module name="FixJoin" target="1.8" />
       <module name="IcedWater" target="1.8" />
       <module name="main" target="8" />

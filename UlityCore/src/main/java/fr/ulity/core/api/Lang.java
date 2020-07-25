@@ -126,9 +126,8 @@ public class Lang {
                         noChange = true;
                     }
                 } else if (!noChange) {
-                    if (x.getValue().get(y).isSet(exp)) {
+                    if (x.getValue().get(y).isSet(exp))
                         optimalConfig = x.getValue().get(y);
-                    }
                 }
             }
         }
@@ -158,7 +157,7 @@ public class Lang {
         public String getOutput (Object lang) {
             String output = Lang.get(lang, exp);
             for (Map.Entry<String,String> x : vars.entrySet())
-                output = output.replaceAll("%" + x + "%", x.getValue());
+                output = output.replaceAll("%" + x.getKey() + "%", x.getValue());
             return prefix + output + suffix;
         }
 

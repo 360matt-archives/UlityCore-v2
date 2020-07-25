@@ -1,0 +1,9 @@
+name: DeluxeGUI
+version: 1.0.0
+main: fr.ulity.deluxegui.DeluxeGUI
+api-version: 1.16
+prefix: DeluxeGUI
+depend: [UlityCore]
+authors: [360matt]
+description: Create as many GUIs as you want, connect them, make them do actions like execute commands, sudo, send message
+website: https://discord.gg/jBFE4Bu

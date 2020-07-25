@@ -1,0 +1,6 @@
+deluxegui:
+  loaded1: "&2Plugin activé - &aMerci pour l'avoir utilisé"
+  loaded2: "&aDeveloppé avec &2<3 &apar &6360matt"
+  shutdown1: "&4Plugin désactivé - &cMerci pour l'avoir utilisé"
+  shutdown2: "&cDeveloppé avec &4<3 &cpar &6360matt"
+  demo: "&6Première utilisation, création d'un GUI &eexample"

@@ -1,0 +1,31 @@
+permission: gui.menu
+open:
+  item:
+    01:
+      material: COMPASS
+      title: "§c§lMenu"
+    02:
+      material: COMPASS
+      title: "§c§lMenu"
+  cmd:
+    - menu
+    - gui open menu
+content:
+  01:
+    line: 1
+    column: 3
+    item:
+      material: DIAMOND_SWORD
+      title: "§cSay I'm beatiful"
+      lore: "§aBecause it's cool"
+    extra:
+      permission: gui.menu.beatiful
+    actions:
+      cmd: "say %player% is beatiful !"
+      sudo: "give %player% diamond 1"
+      gui:
+        name: twotest
+        variables:
+          action: beatiful
+  02: []
+  03: []

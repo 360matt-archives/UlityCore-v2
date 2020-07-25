@@ -1,0 +1,6 @@
+deluxegui:
+  loaded1: "&2Plugin enabled - &aThanks for using it"
+  loaded2: "&aDevelopped with &2<3 &aby &6360matt"
+  shutdown1: "&4Plugin disabled - &cThanks for using it"
+  shutdown2: "&cDevelopped with &4<3 &cby &6360matt"
+  demo: "&6First use, creation of a GUI &eexample"

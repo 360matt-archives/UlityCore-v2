@@ -1,3 +1,4 @@
+---
 packutils:
   gamemode:
     gamemode_changed: "&7Your game mode has been changed to &6%gamemode%"
@@ -145,3 +146,33 @@ commands:
       received: "&7You received &6 $%money% &7 from &b%player%"
       result: "&6$%money% &7has been sent to player &b%player%"
       not_enough_money: "&7You do not own the entire sum of &6$%money%"
+  sun:
+    usage: "&eSet the right time: &7/sun"
+    description: "&eAllows you to remove rain and storm"
+    expressions:
+      changed_current: "&7You have defined the &6good time &7in this word !"
+      changed_world: "&7You have defined the &6good weather &7in the world &6%world% &7!"
+  rain:
+    usage: "&eSet rainy weather: &7/rain"
+    description: "&eLets add rain"
+    expressions:
+      changed_current: "&7You have defined the &6rain &7in this world!"
+      changed_world: "&7You have defined &6rain &7in the world &6%world% &7!"
+  thunder:
+    usage: "&eSet stormy weather: &7/thunder"
+    description: "&eAdd the storm"
+    expressions:
+      changed_current: "&7You have defined the &6storm &7in this world!"
+      changed_world: "&7You have defined &6storm &7in the world &6%world% &7!"
+  day:
+    usage: "&eSet the day: &7/day"
+    description: "&eAllows you to set the day"
+    expressions:
+      changed_current: "&7You have defined the &6day &7in this world!"
+      changed_world: "&7You have defined the &6day &7in the world &6%world% &7!"
+  night:
+    usage: "&eSet night: &7/night"
+    description: "&eAllows you to set the night"
+    expressions:
+      changed_current: "&7You have defined &6night &7in this world!"
+      changed_world: "&7You have defined &6night &7in the world &6%world% &7!"

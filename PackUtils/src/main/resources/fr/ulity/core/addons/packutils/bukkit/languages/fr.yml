@@ -148,3 +148,33 @@ commands:
       received: "&7Vous avez reçu &6$%money% &7de la part de &b%player%"
       result: "&6$%money% &7ont été envoyé au joueur &b%player%"
       not_enough_money: "&7Vous ne possédez pas de l'entièreté de la somme de &6$%money%"
+  sun:
+    usage: "&eDéfinir le bon temps: &7/sun"
+    description: "&ePermet d'enlever la pluie et l'orage"
+    expressions:
+      changed_current: "&7Vous avez définis le &6bon temps &7dans ce monde !"
+      changed_world: "&7Vous avez définis le &6bon temps &7dans le monde &6%world% &7!"
+  rain:
+    usage: "&eDéfinir un temps pluvieux: &7/rain"
+    description: "&ePermet d'ajouter la pluie"
+    expressions:
+      changed_current: "&7Vous avez définis la &6pluie &7dans ce monde !"
+      changed_world: "&7Vous avez définis la &6pluie &7dans le monde &6%world% &7!"
+  thunder:
+    usage: "&eDéfinir un temps orageux: &7/thunder"
+    description: "&ePermet d'ajouter l'orage"
+    expressions:
+      changed_current: "&7Vous avez définis l'&6orage &7dans ce monde !"
+      changed_world: "&7Vous avez définis l'&6orage &7dans le monde &6%world% &7!"
+  day:
+    usage: "&eDéfinir le jour: &7/day"
+    description: "&ePermet de régler le jour"
+    expressions:
+      changed_current: "&7Vous avez définis le &6jour &7dans ce monde !"
+      changed_world: "&7Vous avez définis le &6jour &7dans le monde &6%world% &7!"
+  night:
+    usage: "&eDéfinir la nuit: &7/night"
+    description: "&ePermet de régler la nuit"
+    expressions:
+      changed_current: "&7Vous avez définis la &6nuit &7dans ce monde !"
+      changed_world: "&7Vous avez définis la &6nuit &7dans le monde &6%world% &7!"

@@ -1,0 +1,42 @@
+name: PackUtils
+version: 1.1
+main: fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils
+api-version: 1.15
+prefix: PackUtils
+depend: [UlityCore, Vault]
+authors: [360matt]
+description: Copier Essentials ? noooooon ... on le refait ! 
+website: https://discord.gg/jBFE4Bu
+
+
+permissions:
+  ulity.packutils.players:
+    default: true
+    children:
+      ulity.packutils.balance: true
+      ulity.packutils.pay: true
+      ulity.packutils.back: true
+      ulity.packutils.delhome: true
+      ulity.packutils.home: true
+      ulity.packutils.sethome: true
+      ulity.packutils.spawn: true
+      ulity.packutils.tpa: true
+      ulity.packutils.tpyes: true
+      ulity.packutils.tpno: true
+  ulity.packutils.mods:
+    default: op
+    children:
+      ulity.packutils.spawn.others: true
+      ulity.packutils.eco: true
+      ulity.packutils.gamemode: true
+      ulity.packutils.gamemode.others: true
+      ulity.packutils.gmc: true
+      ulity.packutils.gma: true
+      ulity.packutils.gms: true
+      ulity.packutils.gmp: true
+      ulity.packutils.fly: true
+      ulity.packutils.fly.others: true
+      ulity.packutils.setspawn: true
+      ulity.packutils.top: true
+      ulity.packutils.teleport: true
+      ulity.packutils.sun: true

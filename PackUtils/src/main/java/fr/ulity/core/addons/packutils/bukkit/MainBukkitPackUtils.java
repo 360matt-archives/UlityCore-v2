@@ -1,16 +1,18 @@
 package fr.ulity.core.addons.packutils.bukkit;
 
-import fr.ulity.core.addons.packutils.bukkit.commands.economy.BalanceCommand;
-import fr.ulity.core.addons.packutils.bukkit.commands.economy.EcoCommand;
-import fr.ulity.core.addons.packutils.bukkit.commands.economy.PayCommand;
+import fr.ulity.core.addons.packutils.bukkit.commands.economy.*;
 import fr.ulity.core.addons.packutils.bukkit.commands.gamemode.*;
-import fr.ulity.core.addons.packutils.bukkit.commands.players.FlyCommand;
+import fr.ulity.core.addons.packutils.bukkit.commands.players.*;
 import fr.ulity.core.addons.packutils.bukkit.commands.teleports.*;
+import fr.ulity.core.addons.packutils.bukkit.commands.time.DayCommand;
+import fr.ulity.core.addons.packutils.bukkit.commands.time.NightCommand;
+import fr.ulity.core.addons.packutils.bukkit.commands.weather.*;
 import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
 import fr.ulity.core.api.Initializer;
 import fr.ulity.core.api.Metrics;
+
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
@@ -32,7 +34,7 @@ public final class MainBukkitPackUtils extends JavaPlugin {
         getServer().getServicesManager().register(Economy.class, new EconomyMethods(), vault, ServicePriority.Highest);
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.3.1");
+        init.requireVersion("2.4");
         init.checkUpdates(81641);
         init.reloadLang();
 
@@ -67,6 +69,13 @@ public final class MainBukkitPackUtils extends JavaPlugin {
             new EcoCommand(Api.Bukkit.commandMap, this);
             new BalanceCommand(Api.Bukkit.commandMap, this);
             new PayCommand(Api.Bukkit.commandMap, this);
+
+            new SunCommand(Api.Bukkit.commandMap, this);
+            new RainCommand(Api.Bukkit.commandMap, this);
+            new ThunderCommand(Api.Bukkit.commandMap, this);
+
+            new DayCommand(Api.Bukkit.commandMap, this);
+            new NightCommand(Api.Bukkit.commandMap, this);
 
         }
 

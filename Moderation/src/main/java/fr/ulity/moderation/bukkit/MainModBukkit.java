@@ -10,8 +10,6 @@ import fr.ulity.moderation.bukkit.events.MuteEvent;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
@@ -26,7 +24,7 @@ public final class MainModBukkit extends JavaPlugin {
         server = getServer();
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.3.1");
+        init.requireVersion("2.4");
         init.reloadLang();
         init.checkUpdates(78787);
 

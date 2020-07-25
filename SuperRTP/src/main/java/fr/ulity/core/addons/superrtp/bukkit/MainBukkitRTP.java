@@ -51,7 +51,7 @@ public final class MainBukkitRTP extends JavaPlugin {
         plugin = this;
 
         Initializer init = new Initializer(this);
-        init.requireVersion("2.3.1");
+        init.requireVersion("2.4");
         init.checkUpdates(80372);
         init.reloadLang();
 

@@ -115,7 +115,7 @@ Pour les envoies multiples à plusieurs joueurs, possiblement de différentes la
 
 
 
-# Configurer, traiter & Stocker
+# Storage - Configurer, traiter & Stocker
 #### Sah quel plaisir
 
 ### Préambule:
@@ -156,7 +156,7 @@ UlityCore utilise la librairie [LightningStorage](https://github.com/JavaFactory
 Je vous invite donc à vous référer à leur documentation, déjà existante.
 
 
-# Définir, modeler et savourer !
+# Commandes - Définir, modeler et savourer !
 #### Sah quel plaisir
 
 #### depuis UlityCore v2.3

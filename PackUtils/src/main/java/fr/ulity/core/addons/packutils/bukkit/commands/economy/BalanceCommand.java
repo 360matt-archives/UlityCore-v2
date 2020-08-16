@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.economy;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -23,14 +23,14 @@ public class BalanceCommand extends CommandManager.Assisted {
     public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
             if (requirePlayer()) {
-                Lang.prepare("commands.balance.expressions.your_sold")
+                LangBukkit.prepare("commands.balance.expressions.your_sold")
                         .variable("money", String.valueOf(new EconomyMethods().getBalance(sender.getName())))
                         .sendPlayer(sender);
             }
         } else if (args.length == 1) {
             if (arg.requirePlayer(0)) {
                 Player playerHandle = arg.getPlayer(0);
-                Lang.prepare("commands.balance.expressions.sold_of_x")
+                LangBukkit.prepare("commands.balance.expressions.sold_of_x")
                         .variable("player", playerHandle.getName())
                         .variable("money", String.valueOf(new EconomyMethods().getBalance(playerHandle.getName())))
                         .sendPlayer(sender);

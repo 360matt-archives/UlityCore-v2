@@ -2,7 +2,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -30,16 +30,16 @@ public class TopCommand extends CommandManager.Assisted {
             if (!arg.is(0) && requirePlayer()) {
                 Player player = (Player) sender;
                 player.teleport(getTopLoc(player));
-                player.sendMessage(Lang.get(player, "commands.top.expressions.notification"));
+                player.sendMessage(LangBukkit.get(player, "commands.top.expressions.notification"));
             } else if (requirePermission("ulity.packutils.top.others")) {
                 if (arg.requirePlayer(0)) {
                     Player target = arg.getPlayer(0);
 
                     target.teleport(getTopLoc(target));
-                    Lang.prepare("commands.top.expressions.notification").sendPlayer(target);
+                    LangBukkit.prepare("commands.top.expressions.notification").sendPlayer(target);
 
                     if (!sender.getName().equals(target.getName()))
-                        Lang.prepare("commands.top.expressions.result_other")
+                        LangBukkit.prepare("commands.top.expressions.result_other")
                                 .variable("player", target.getName())
                                 .sendPlayer(sender);
                 }

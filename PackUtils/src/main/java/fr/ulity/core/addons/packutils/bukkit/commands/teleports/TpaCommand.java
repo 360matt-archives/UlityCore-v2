@@ -4,8 +4,7 @@ import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Cooldown;
-import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -35,7 +34,7 @@ public class TpaCommand extends CommandManager.Assisted {
                 if (Api.data.contains(ignore_path)) {
                     if (Api.data.getList(ignore_path).contains(sender.getName())) {
                         // le joueur est bloqué par l'autre joueur
-                        Lang.prepare("commands.tpa.expressions.you_are_bloqued")
+                        LangBukkit.prepare("commands.tpa.expressions.you_are_bloqued")
                                 .variable("player", target.getName())
                                 .sendPlayer(sender);
                         setStatus(Status.STOP);
@@ -48,15 +47,15 @@ public class TpaCommand extends CommandManager.Assisted {
                     cooldownObj.setPlayer(player);
 
                     if (!cooldownObj.isInitialized() && !cooldownObj.isEnded()) {
-                        Lang.prepare("commands.tpa.expressions.cooldown")
+                        LangBukkit.prepare("commands.tpa.expressions.cooldown")
                                 .variable("left", cooldownObj.getTimeLeft().text)
                                 .sendPlayer(sender);
                     } else {
-                        Lang.prepare("commands.tpa.expressions.request_sent")
+                        LangBukkit.prepare("commands.tpa.expressions.request_sent")
                                 .variable("player", target.getName())
                                 .sendPlayer(sender);
 
-                        Lang.prepare("commands.tpa.expressions.request_body")
+                        LangBukkit.prepare("commands.tpa.expressions.request_body")
                                 .variable("player", sender.getName())
                                 .sendPlayer(target);
 

@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.HomeMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -28,13 +28,13 @@ public class SethomeCommand extends CommandManager.Assisted {
                 if (!arg.is(0))
                     args = new String[]{"home"};
                 if (!StringUtils.isAlphanumeric(args[0]))
-                    Lang.prepare("commands.sethome.expressions.alphanumeric_required").sendPlayer(sender);
+                    LangBukkit.prepare("commands.sethome.expressions.alphanumeric_required").sendPlayer(sender);
                 else {
                     int max = MainBukkitPackUtils.config.getInt("homes.max");
 
                     if (!HomeMethods.isHomeExist(player, args[0]) && HomeMethods.getHomeCount(player) >= max) {
                         if (!(MainBukkitPackUtils.config.getBoolean("homes.staff_bypass") && player.hasPermission("ulity.packutils.home.bypass"))) {
-                            Lang.prepare("commands.sethome.expressions.limit")
+                            LangBukkit.prepare("commands.sethome.expressions.limit")
                                     .variable("count", String.valueOf(max))
                                     .sendPlayer(sender);
                             return;
@@ -42,7 +42,7 @@ public class SethomeCommand extends CommandManager.Assisted {
                     }
 
                     HomeMethods.setHomeLocation(player, args[0]);
-                    sender.sendMessage(Lang.get(sender, "commands.sethome.expressions.created")
+                    sender.sendMessage(LangBukkit.get(sender, "commands.sethome.expressions.created")
                             .replaceAll("%home%", args[0]));
                 }
             } else

@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -28,17 +28,17 @@ public class UnMuteCommand extends CommandManager.Assisted {
 
             if (playerMute.isMute()){
                 playerMute.unmute();
-                Lang.prepare("commands.unmute.expressions.unmuted")
+                LangBukkit.prepare("commands.unmute.expressions.unmuted")
                         .variable("player", player.getName())
                         .sendPlayer(sender);
 
                 if (player.isOnline())
-                    Lang.prepare("commands.unmute.expressions.you_are_unmuted")
+                    LangBukkit.prepare("commands.unmute.expressions.you_are_unmuted")
                             .variable("staff", sender.getName())
                             .sendPlayer(arg.getPlayer(0));
 
             } else
-                Lang.prepare("commands.unmute.expressions.is_not_muted")
+                LangBukkit.prepare("commands.unmute.expressions.is_not_muted")
                         .variable("player", player.getName())
                         .sendPlayer(sender);
         } else

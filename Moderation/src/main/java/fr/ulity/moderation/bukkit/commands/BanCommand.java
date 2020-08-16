@@ -1,8 +1,8 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import fr.ulity.moderation.bukkit.api.Ban;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -18,7 +18,7 @@ public class BanCommand extends CommandManager.Assisted {
     public BanCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "ban");
         addPermission("ulity.mod.ban");
-        addListTabbComplete(1, null, null, Lang.getStringArray("commands.ban.reasons_predefined"));
+        addListTabbComplete(1, null, null, LangBukkit.getStringArray("commands.ban.reasons_predefined"));
         registerCommand(commandMap);
     }
 
@@ -29,11 +29,13 @@ public class BanCommand extends CommandManager.Assisted {
             OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
 
             if (player.hasPlayedBefore() && Bukkit.getPlayer(args[0]).hasPermission("ulity.mod")){
-                Lang.prepare("commands.ban.expressions.cant_ban_staff")
+                LangBukkit.prepare("commands.ban.expressions.cant_ban_staff")
                         .variable("player", args[0])
                         .sendPlayer(sender);
             } else {
-                String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.ban.expressions.unknown_reason");
+                String reason = (args.length >= 2)
+                        ? new TextV2(args).setColored().setBeginging(1).outputString()
+                        : LangBukkit.get("commands.ban.expressions.unknown_reason");
 
                 Ban playerBan = new Ban(player.getName());
                 playerBan.timestamp = new Date().getTime();
@@ -42,10 +44,10 @@ public class BanCommand extends CommandManager.Assisted {
                 playerBan.responsable = sender.getName();
                 playerBan.ban();
 
-                if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
+                if (LangBukkit.getBoolean("commands.ban.broadcast.enabled")) {
                     String keyName = (args.length >= 2) ? "message" : "message_without_reason";
                     Bukkit.broadcastMessage(
-                            Lang.prepare("commands.ban.broadcast." + keyName)
+                            LangBukkit.prepare("commands.ban.broadcast." + keyName)
                             .variable("player", player.getName())
                             .variable("staff", sender.getName())
                             .variable("reason", reason)
@@ -53,13 +55,13 @@ public class BanCommand extends CommandManager.Assisted {
                     );
                 }
                 else
-                    Lang.prepare("commands.ban.expressions.result")
+                    LangBukkit.prepare("commands.ban.expressions.result")
                             .variable("player", player.getName())
                             .sendPlayer(sender);
 
                 if (player.isOnline())
                     arg.getPlayer(0).kickPlayer(
-                            Lang.prepare("commands.ban.expressions.you_are_banned")
+                            LangBukkit.prepare("commands.ban.expressions.you_are_banned")
                                     .variable("staff", sender.getName())
                                     .variable("reason", reason)
                                     .getOutput(arg.getPlayer(0))

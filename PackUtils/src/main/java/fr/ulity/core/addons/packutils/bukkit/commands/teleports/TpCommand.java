@@ -3,8 +3,6 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.TeleportMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;

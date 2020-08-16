@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Ban;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -28,7 +28,7 @@ public class UnBanIpCommand extends CommandManager.Assisted {
             } else
                 result = "is_not_banned";
 
-            Lang.prepare("commands.unbanip.expressions." + result)
+            LangBukkit.prepare("commands.unbanip.expressions." + result)
                     .variable("ip", arg.get(0))
                     .sendPlayer(sender);
         } else

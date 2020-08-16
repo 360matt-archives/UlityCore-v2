@@ -2,7 +2,7 @@ package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import fr.ulity.moderation.bukkit.events.ChatDisabledEvent;
 import org.bukkit.Bukkit;
@@ -21,21 +21,21 @@ public class ChatCommand extends CommandManager.Assisted  {
     public ChatCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "chat");
         addPermission("ulity.mod.chat");
-        addArrayTabbComplete(0, "ulity.mod.chat", new String[]{}, new String[] {Lang.get("global.enable"), Lang.get("global.disable")});
+        addArrayTabbComplete(0, "ulity.mod.chat", new String[]{}, new String[] {LangBukkit.get("global.enable"), LangBukkit.get("global.disable")});
         registerCommand(commandMap);
     }
 
     @Override
     public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1){
-            if (arg.compare(0, "on", "enable", Lang.get("global.enable"), Lang.get(sender,"global.enable"))) {
+            if (arg.compare(0, "on", "enable", LangBukkit.get("global.enable"), LangBukkit.get(sender,"global.enable"))) {
                 Api.temp.set("moderation.chat", true);
-                MainModBukkit.server.broadcastMessage(Lang.get("commands.chat.expressions.broadcast_chat_enabled"));
+                MainModBukkit.server.broadcastMessage(LangBukkit.get("commands.chat.expressions.broadcast_chat_enabled"));
                 HandlerList.unregisterAll(new ChatDisabledEvent());
                 warning(false);
-            } else if (arg.compare(0, "off", "disable", Lang.get("global.disable"), Lang.get(sender,"global.disable"))){
+            } else if (arg.compare(0, "off", "disable", LangBukkit.get("global.disable"), LangBukkit.get(sender,"global.disable"))){
                 Api.temp.set("moderation.chat", false);
-                MainModBukkit.server.broadcastMessage(Lang.get("commands.chat.expressions.broadcast_chat_disabled"));
+                MainModBukkit.server.broadcastMessage(LangBukkit.get("commands.chat.expressions.broadcast_chat_disabled"));
 
                 getPluginManager().registerEvents(new ChatDisabledEvent(), MainModBukkit.plugin);
                 warning(true);
@@ -46,12 +46,12 @@ public class ChatCommand extends CommandManager.Assisted  {
 
     private static void warning (boolean stat) {
         if (stat){
-            long delay = Lang.getInt("commands.chat.warning_admin.delay_minute")*60*20L;
+            long delay = LangBukkit.getInt("commands.chat.warning_admin.delay_minute")*60*20L;
 
             warner = Bukkit.getScheduler().scheduleSyncRepeatingTask(MainModBukkit.plugin, () -> {
                 for (Player p : Bukkit.getOnlinePlayers())
                     if (p.hasPermission("ulity.mod.chat"))
-                        Lang.prepare("commands.chat.warning_admin.message").sendPlayer(p);
+                        LangBukkit.prepare("commands.chat.warning_admin.message").sendPlayer(p);
             }, delay, delay); // every x minutes
         } else if (warner != 0)
             Bukkit.getScheduler().cancelTask(warner);

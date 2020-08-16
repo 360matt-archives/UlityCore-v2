@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Ban;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -14,7 +14,7 @@ public class UnBanCommand extends CommandManager.Assisted {
     public UnBanCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "unban");
         addPermission("ulity.mod.unban");
-        addListTabbComplete(1, null, null, Lang.getStringArray("commands.unban.reasons_predefined"));
+        addListTabbComplete(1, null, null, LangBukkit.getStringArray("commands.unban.reasons_predefined"));
         registerCommand(commandMap);
     }
 
@@ -32,7 +32,7 @@ public class UnBanCommand extends CommandManager.Assisted {
             } else
                 result = "is_not_banned";
 
-            Lang.prepare("commands.unban.expressions." + result)
+            LangBukkit.prepare("commands.unban.expressions." + result)
                     .variable("player", player.getName())
                     .sendPlayer(sender);
         } else

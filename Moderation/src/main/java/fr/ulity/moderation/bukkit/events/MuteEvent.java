@@ -1,6 +1,6 @@
 package fr.ulity.moderation.bukkit.events;
 
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +18,7 @@ public class MuteEvent implements Listener {
                 e.setCancelled(true);
 
                 String isTempmute = (playerMute.expire_text != null ? "temp" : "");
-                Lang.Prepared prepared = Lang.prepare("commands." + isTempmute + "mute.expressions.when_chat_blocked")
+                LangBukkit.Prepared prepared = LangBukkit.prepare("commands." + isTempmute + "mute.expressions.when_chat_blocked")
                         .variable("staff", playerMute.responsable)
                         .variable("reason", playerMute.reason);
 

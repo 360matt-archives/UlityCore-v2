@@ -2,7 +2,7 @@ package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -36,16 +36,16 @@ public class VanishCommand extends CommandManager.Assisted {
             setStatus(Status.SYNTAX);
 
         if (status.equals(Status.SUCCESS)) {
-            if (!Api.temp.isSet(target.getName() + ".vanish")){
+            if (!Api.temp.contains(target.getName() + ".vanish")){
                 Api.temp.set(target.getName() + ".vanish", true);
 
                 for (Player onePlayer : Bukkit.getOnlinePlayers())
                     if (!onePlayer.hasPermission("ulity.mod.vanish"))
                         onePlayer.hidePlayer(MainModBukkit.plugin, target);
 
-                Lang.prepare("commands.vanish.expressions.vanished_notification").sendPlayer(target);
+                LangBukkit.prepare("commands.vanish.expressions.vanished_notification").sendPlayer(target);
                 if (!target.getName().equals(sender.getName()))
-                    Lang.prepare("commands.vanish.expressions.vanished_other")
+                    LangBukkit.prepare("commands.vanish.expressions.vanished_other")
                             .variable("player", target.getName())
                             .sendPlayer(sender);
             } else{
@@ -54,9 +54,9 @@ public class VanishCommand extends CommandManager.Assisted {
                 for (Player onePlayer : Bukkit.getOnlinePlayers())
                     onePlayer.showPlayer(MainModBukkit.plugin, target);
 
-                Lang.prepare("commands.vanish.expressions.unvanished_notification").sendPlayer(target);
+                LangBukkit.prepare("commands.vanish.expressions.unvanished_notification").sendPlayer(target);
                 if (!target.getName().equals(sender.getName()))
-                    Lang.prepare("commands.vanish.expressions.unvanished_other")
+                    LangBukkit.prepare("commands.vanish.expressions.unvanished_other")
                             .variable("player", target.getName())
                             .sendPlayer(sender);
             }

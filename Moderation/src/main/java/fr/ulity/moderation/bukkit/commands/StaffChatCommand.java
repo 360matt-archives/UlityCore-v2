@@ -2,8 +2,8 @@ package fr.ulity.moderation.bukkit.commands;
 
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -23,9 +23,9 @@ public class StaffChatCommand extends CommandManager.Assisted {
     public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 1)
             Bukkit.broadcast(
-                    Lang.prepare("commands.staffchat.output")
+                    LangBukkit.prepare("commands.staffchat.output")
                     .variable("player", sender.getName())
-                    .variable("mesagge", Text.fullColor(args))
+                    .variable("mesagge", new TextV2(args).setColored().outputString())
                     .getOutput(),
                     "ulity.mod"
             );

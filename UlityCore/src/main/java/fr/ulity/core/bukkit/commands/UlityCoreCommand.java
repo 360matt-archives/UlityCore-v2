@@ -2,8 +2,8 @@ package fr.ulity.core.bukkit.commands;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Initializer;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.InitializerBukkit;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.core.bukkit.MainBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -30,7 +30,7 @@ public class UlityCoreCommand extends CommandManager.Assisted {
     public UlityCoreCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "ulitycore");
         addDescription(
-                Lang.defaultLang.equals("fr")
+                LangBukkit.defaultLang.equals("fr")
                 ? "Affiche les informations du plugin"
                 : "Show the plugin's informations"
         );
@@ -57,8 +57,8 @@ public class UlityCoreCommand extends CommandManager.Assisted {
                     MainBukkit.plugin.getPluginLoader().enablePlugin(MainBukkit.plugin);
 
                     int count = 0;
-                    for (int i = Initializer.lesPlugins.size() - 1; i >= 0; i--) {
-                        JavaPlugin x = Initializer.lesPlugins.get(i);
+                    for (int i = InitializerBukkit.lesPlugins.size() - 1; i >= 0; i--) {
+                        JavaPlugin x = InitializerBukkit.lesPlugins.get(i);
                         MainBukkit.plugin.getPluginLoader().disablePlugin(x);
                         HandlerList.unregisterAll(x);
 
@@ -67,8 +67,8 @@ public class UlityCoreCommand extends CommandManager.Assisted {
                     }
                     // je suis obligé de reverse loop, sinon cela me cause une erreur
 
-                    Lang.prepare("plugin.reloaded").sendPlayer(sender);
-                    Lang.prepare("plugin.addons_reloaded")
+                    LangBukkit.prepare("plugin.reloaded").sendPlayer(sender);
+                    LangBukkit.prepare("plugin.addons_reloaded")
                             .variable("count", String.valueOf(count))
                             .sendPlayer(sender);
 
@@ -78,20 +78,20 @@ public class UlityCoreCommand extends CommandManager.Assisted {
             if (args[0].equals("lang") || args[0].equals("langue")){
                 if (requirePermission("ulitycore.admin")){
                     if (args.length == 1)
-                        sender.sendMessage(Lang.get("plugin.lang.actual"));
+                        sender.sendMessage(LangBukkit.get("plugin.lang.actual"));
                     else{
-                        if (Files.exists(Paths.get(Api.full_prefix + "/languages/" + args[1] + ".yml"))){
+                        if (Files.exists(Paths.get(Api.corePath + "/languages/" + args[1] + ".yml"))){
                             Api.config.set("global.lang", args[1]);
                             try {
-                                Lang.reload();
-                                Lang.prepare("plugin.lang.reloaded").sendPlayer(sender);
+                                LangBukkit.reload();
+                                LangBukkit.prepare("plugin.lang.reloaded").sendPlayer(sender);
                             } catch (IOException | URISyntaxException e) {
-                                Lang.prepare("plugin.lang.fail_reload").sendPlayer(sender);
+                                LangBukkit.prepare("plugin.lang.fail_reload").sendPlayer(sender);
                                 e.printStackTrace();
                             }
                         }
                         else
-                            Lang.prepare("plugin.commands.lang.lang_unknown")
+                            LangBukkit.prepare("plugin.commands.lang.lang_unknown")
                                     .variable("lang", args[1])
                                     .sendPlayer(sender);
                     }
@@ -102,7 +102,7 @@ public class UlityCoreCommand extends CommandManager.Assisted {
 
 
         if (status.equals(Status.SUCCESS)) {
-            if (Lang.defaultLang.equals("fr")) {
+            if (LangBukkit.defaultLang.equals("fr")) {
                 sender.sendMessage("§bUlityCore §7est créé par §c360matt");
                 sender.sendMessage("§7Version: §av" + MainBukkit.plugin.getDescription().getVersion());
                 sender.sendMessage("§7Ce plugin est une librairie de fonctionnalités et extensible de commandes en tout genre grâce aux Add-Ons.");

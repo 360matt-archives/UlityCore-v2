@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Freeze;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -23,15 +23,15 @@ public class UnFreezeCommand extends CommandManager.Assisted {
                 if (playerFreeze.isFreeze()){
                     playerFreeze.unfreeze();
 
-                    Lang.prepare("commands.unfreeze.expressions.player_unfreezed")
+                    LangBukkit.prepare("commands.unfreeze.expressions.player_unfreezed")
                             .variable("player", args[0])
                             .sendPlayer(sender);
 
                     if (arg.isPlayer(0)) // if is online
-                        Lang.prepare("commands.unfreeze.expressions.notification").sendPlayer(arg.getPlayer(0));
+                        LangBukkit.prepare("commands.unfreeze.expressions.notification").sendPlayer(arg.getPlayer(0));
                 }
                 else
-                    Lang.prepare("commands.unfreeze.expressions.is_not_freezed")
+                    LangBukkit.prepare("commands.unfreeze.expressions.is_not_freezed")
                             .variable("player", args[0])
                             .sendPlayer(sender);
             } else

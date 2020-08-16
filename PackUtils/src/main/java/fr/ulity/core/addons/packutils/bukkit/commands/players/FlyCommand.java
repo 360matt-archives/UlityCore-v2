@@ -2,7 +2,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.players;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -33,16 +33,16 @@ public class FlyCommand extends CommandManager.Assisted {
                 assert target != null;
                 target.setAllowFlight(!target.getAllowFlight());
 
-                Lang.Prepared preparedEnabled = Lang.prepare("global.enabled").prefix("§a");
-                Lang.Prepared preparedDisabled = Lang.prepare("global.disabled").prefix("§c");
-                Lang.Prepared status = (target.getAllowFlight()) ? preparedEnabled : preparedDisabled;
+                LangBukkit.Prepared preparedEnabled = LangBukkit.prepare("global.enabled").prefix("§a");
+                LangBukkit.Prepared preparedDisabled = LangBukkit.prepare("global.disabled").prefix("§c");
+                LangBukkit.Prepared status = (target.getAllowFlight()) ? preparedEnabled : preparedDisabled;
 
-                Lang.prepare("commands.fly.expressions.fly_changed")
+                LangBukkit.prepare("commands.fly.expressions.fly_changed")
                         .variable("status", status.getOutput(target))
                         .sendPlayer(target);
 
                 if (!sender.getName().equals(target.getName())) {
-                    Lang.prepare("commands.fly.expressions.result")
+                    LangBukkit.prepare("commands.fly.expressions.result")
                             .variable("status", status.getOutput(sender))
                             .variable("player", target.getName())
                             .sendPlayer(sender);

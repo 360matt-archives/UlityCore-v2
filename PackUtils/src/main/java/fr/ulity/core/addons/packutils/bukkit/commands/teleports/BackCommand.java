@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.BackMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -30,14 +30,14 @@ public class BackCommand extends CommandManager.Assisted {
                 Location lastLoc = BackMethods.getLastLocation(player);
                 if (lastLoc != null) {
                     if (lastLoc.getWorld() == null)
-                        Lang.prepare("commands.back.expressions.unknown_world").sendPlayer(player);
+                        LangBukkit.prepare("commands.back.expressions.unknown_world").sendPlayer(player);
                     else {
                         player.teleport(lastLoc);
-                        Lang.prepare("commands.back.expressions.teleported").sendPlayer(player);
+                        LangBukkit.prepare("commands.back.expressions.teleported").sendPlayer(player);
                         BackMethods.setLastLocation(player);
                     }
                 } else
-                    Lang.prepare("commands.back.expressions.nothing").sendPlayer(player);
+                    LangBukkit.prepare("commands.back.expressions.nothing").sendPlayer(player);
             }
         }
     }

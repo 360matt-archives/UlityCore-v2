@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.gamemode;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.GamemodeMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -15,8 +15,8 @@ public class GmaCommand extends CommandManager.Assisted {
 
     public GmaCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "gma");
-        addDescription(Lang.get("commands.gmX.description"));
-        addUsage(Lang.get("commands.gmX.usage"));
+        addDescription(LangBukkit.get("commands.gmX.description"));
+        addUsage(LangBukkit.get("commands.gmX.usage"));
         addPermission("ulity.packutils.gamemode");
         addPermission("ulity.packutils.gma");
 

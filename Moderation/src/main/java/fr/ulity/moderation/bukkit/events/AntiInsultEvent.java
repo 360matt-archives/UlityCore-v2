@@ -1,6 +1,6 @@
 package fr.ulity.moderation.bukkit.events;
 
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -34,8 +34,8 @@ public class AntiInsultEvent implements Listener {
     /* not event Handle */
     private static String hasBlacklistedWord (String msg, Player p) {
         List<String> bl = Stream.concat(
-                Arrays.stream(Lang.getStringArray(p, "module.anti_insult.words")),
-                Arrays.stream(Lang.getStringArray("module.anti_insult.words"))
+                Arrays.stream(LangBukkit.getStringArray(p, "module.anti_insult.words")),
+                Arrays.stream(LangBukkit.getStringArray("module.anti_insult.words"))
         )
         .collect(Collectors.toList());
 
@@ -46,11 +46,11 @@ public class AntiInsultEvent implements Listener {
     /* not event Handle */
     private static void whenDetected (Object e, String word, String type) {
         Player p = ((PlayerEvent) e).getPlayer();
-        if (p.hasPermission("ulity.mod") && Lang.getBoolean("module.anti_insult." + type + ".staff_bypass"))
+        if (p.hasPermission("ulity.mod") && LangBukkit.getBoolean("module.anti_insult." + type + ".staff_bypass"))
             return;
 
         ((Cancellable) e).setCancelled(true);
-        Lang.prepare("module.anti_insult." + type + ".error_message" + ((p.hasPermission("ulity.mod") ? "_staff" : "" )))
+        LangBukkit.prepare("module.anti_insult." + type + ".error_message" + ((p.hasPermission("ulity.mod") ? "_staff" : "" )))
                 .variable("word", word)
                 .sendPlayer(p);
     }

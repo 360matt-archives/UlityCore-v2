@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.HomeMethods;
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -49,28 +49,28 @@ public class HomeCommand extends CommandManager.Assisted implements Listener {
                 String homeName = (args.length == 1) ? args[0] : "home";
 
                 if (HomeMethods.isHomeExist(player, homeName)) {
-                    Lang.prepare("commands.home.expressions.prevent_teleport")
+                    LangBukkit.prepare("commands.home.expressions.prevent_teleport")
                             .variable("home", homeName)
                             .sendPlayer(player);
 
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
                         if (player.isOnline()) {
                             player.teleport(HomeMethods.getHomeLocation(player, homeName));
-                            Lang.prepare("commands.home.expressions.teleported")
+                            LangBukkit.prepare("commands.home.expressions.teleported")
                                     .variable("home", homeName)
                                     .sendPlayer(player);
                         }
                     }, 20*5L);
                 } else if (homeName.equals("home")){
                     String[] list = HomeMethods.getHomeListName(player);
-                    String toText = (list.length == 0) ? Lang.get(player, "commands.home.expressions.nothing_list") : Arrays.toString(list);
+                    String toText = (list.length == 0) ? LangBukkit.get(player, "commands.home.expressions.nothing_list") : Arrays.toString(list);
 
-                    Lang.prepare("commands.home.expressions.home_list")
+                    LangBukkit.prepare("commands.home.expressions.home_list")
                             .variable("list", toText.replaceAll("[\\[|\\]]", ""))
                             .sendPlayer(player);
 
                 } else
-                    Lang.prepare("commands.home.expressions.unknown_home")
+                    LangBukkit.prepare("commands.home.expressions.unknown_home")
                             .variable("home", homeName)
                             .sendPlayer(player);
             } else

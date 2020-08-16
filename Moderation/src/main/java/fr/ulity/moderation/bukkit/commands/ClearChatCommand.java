@@ -1,8 +1,8 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -19,7 +19,7 @@ public class ClearChatCommand extends CommandManager.Assisted {
         setAliases(Arrays.asList("clc", "cc"));
         addPermission("ulity.mod.chat.clear");
         addPermission("ulity.mod.chat");
-        addArrayTabbComplete(0, "ulity.mod.clearchat", new String[]{}, Lang.getStringArray("commands.clearChat.reasons_predefined"));
+        addArrayTabbComplete(0, "ulity.mod.clearchat", new String[]{}, LangBukkit.getStringArray("commands.clearChat.reasons_predefined"));
         registerCommand(commandMap);
     }
 
@@ -30,10 +30,14 @@ public class ClearChatCommand extends CommandManager.Assisted {
             looped.append(" \n");
         MainModBukkit.server.broadcastMessage(looped.toString());
 
-        String reason = ( args.length == 0) ? Lang.get("commands.clearChat.expressions.unknown_reason") : Text.fullColor(args);
+        String reason = ( args.length == 0) ? LangBukkit.get("commands.clearChat.expressions.unknown_reason")
+                : new TextV2(args)
+                    .setColored()
+                    .setNewLine()
+                    .outputString();
         Bukkit.broadcastMessage(
-                Lang.prepare("commands.clearChat.expressions.notification")
-                        .variable("sender", sender.getName().replace("Console", Lang.get("commands.ClearChat.expressions.console")))
+                LangBukkit.prepare("commands.clearChat.expressions.notification")
+                        .variable("sender", sender.getName().replace("Console", LangBukkit.get("commands.ClearChat.expressions.console")))
                         .variable("reason", reason)
                         .getOutput()
         );

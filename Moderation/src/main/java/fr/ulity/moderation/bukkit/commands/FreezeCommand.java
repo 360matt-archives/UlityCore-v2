@@ -1,8 +1,8 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import fr.ulity.moderation.bukkit.api.Freeze;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -16,7 +16,7 @@ public class FreezeCommand extends CommandManager.Assisted {
     public FreezeCommand(CommandMap commandMap, JavaPlugin plugin) {
         super(plugin, "freeze");
         addPermission("ulity.mod.freeze");
-        addListTabbComplete(1, null, null, Lang.getStringArray("commands.ban.reasons_predefined"));
+        addListTabbComplete(1, null, null, LangBukkit.getStringArray("commands.ban.reasons_predefined"));
         registerCommand(commandMap);
     }
 
@@ -26,11 +26,13 @@ public class FreezeCommand extends CommandManager.Assisted {
             if (arg.requirePlayer(0)) {
                 Player target = arg.getPlayer(0);
                 if (target.hasPermission("ulity.mod")){
-                    Lang.prepare("commands.freeze.expressions.cant_freeze_staff")
+                    LangBukkit.prepare("commands.freeze.expressions.cant_freeze_staff")
                             .variable("player", target.getName())
                             .sendPlayer(sender);
                 } else {
-                    String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.freeze.expressions.unknown_reason");
+                    String reason = (args.length >= 2)
+                            ? new TextV2(args).setColored().setBeginging(1).outputString()
+                            : LangBukkit.get("commands.freeze.expressions.unknown_reason");
 
                     Freeze playerFreeze = new Freeze(args[0]);
                     playerFreeze.reason = reason;
@@ -38,7 +40,7 @@ public class FreezeCommand extends CommandManager.Assisted {
                     playerFreeze.timestamp = new Date().getTime();
                     playerFreeze.freeze();
 
-                    Lang.prepare("commands.freeze.expressions.player_freezed")
+                    LangBukkit.prepare("commands.freeze.expressions.player_freezed")
                             .variable("player", target.getName())
                             .sendPlayer(sender);
                 }

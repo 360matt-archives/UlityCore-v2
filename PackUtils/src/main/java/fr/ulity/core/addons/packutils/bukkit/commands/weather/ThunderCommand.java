@@ -1,8 +1,7 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.weather;
 
 import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -26,13 +25,13 @@ public class ThunderCommand extends CommandManager.Assisted {
                 world.setThundering(true);
                 world.setStorm(true);
 
-                Lang.prepare("commands.thunder.expressions.changed_current").sendPlayer(sender);
+                LangBukkit.prepare("commands.thunder.expressions.changed_current").sendPlayer(sender);
             } else if (arg.requireWorld(0)) {
                 world = arg.getWorld(0);
                 world.setThundering(true);
                 world.setStorm(true);
 
-                Lang.prepare("commands.thunder.expressions.changed_world")
+                LangBukkit.prepare("commands.thunder.expressions.changed_world")
                         .variable("world", world.getName())
                         .sendPlayer(sender);
             } else

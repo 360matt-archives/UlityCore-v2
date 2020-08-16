@@ -4,7 +4,7 @@ import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.CommandManager;
 import fr.ulity.core.api.Cooldown;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -31,7 +31,7 @@ public class TpnoCommand extends CommandManager.Assisted {
                 Player origin = null;
                 String path_last = "tpa." + sender.getName() + ".last";
 
-                if (Api.temp.isSet(path_last)) {
+                if (Api.temp.contains(path_last)) {
                     if (arg.is(0)) {
                         if (arg.requirePlayerNoSelf(0))
                             origin = arg.getPlayer(0);
@@ -40,15 +40,15 @@ public class TpnoCommand extends CommandManager.Assisted {
 
                     if (status.equals(Status.SUCCESS)) {
                         if (Api.data.getLong("tpa." + origin.getName() + ".requests." + sender.getName()) < new Date().getTime()) {
-                            Lang.prepare("commands.tpno.expressions.no_requested")
+                            LangBukkit.prepare("commands.tpno.expressions.no_requested")
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
                         } else {
-                            Lang.prepare("commands.tpno.expressions.request_accepted")
+                            LangBukkit.prepare("commands.tpno.expressions.request_accepted")
                                     .variable("player", sender.getName())
                                     .sendPlayer(origin);
 
-                            Lang.prepare("commands.tpno.expressions.accept_result")
+                            LangBukkit.prepare("commands.tpno.expressions.accept_result")
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
 
@@ -60,7 +60,7 @@ public class TpnoCommand extends CommandManager.Assisted {
                     }
 
                 } else
-                    Lang.prepare("commands.tpno.expressions.no_requested").sendPlayer(sender);
+                    LangBukkit.prepare("commands.tpno.expressions.no_requested").sendPlayer(sender);
             } else
                 setStatus(Status.SYNTAX);
         }

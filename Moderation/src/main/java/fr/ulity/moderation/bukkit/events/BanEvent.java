@@ -1,6 +1,6 @@
 package fr.ulity.moderation.bukkit.events;
 
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.api.Ban;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class BanEvent implements Listener {
             Ban playerBanIP = new Ban("ip_" + ip);
 
             if (playerBan.isBan() || playerBanIP.isBan()){
-                messageBanned = Lang.get("commands.ban.expressions.you_are_banned")
+                messageBanned = LangBukkit.get("commands.ban.expressions.you_are_banned")
                         .replaceAll("%staff%", playerBan.responsable)
                         .replaceAll("%reason%", playerBan.reason)
                         .replaceAll("%timeLeft%", playerBan.expire_text);

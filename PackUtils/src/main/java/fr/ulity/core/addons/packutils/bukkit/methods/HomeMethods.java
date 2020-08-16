@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class HomeMethods {
     public static Location getHomeLocation (Player player, String home) {
         String prefix = "player." + player.getName() + ".home." + home;
-        if (Api.data.isSet(prefix)) {
+        if (Api.data.contains(prefix)) {
             FlatFileSection locData = Api.data.getSection(prefix);
 
             World world = Bukkit.getWorld(locData.getString("world"));

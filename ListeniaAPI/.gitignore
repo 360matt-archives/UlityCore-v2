@@ -1,5 +1,4 @@
 ./
-/
 
 *
 
@@ -120,3 +119,4 @@ buildNumber.properties
 # Common working directory
 run/
 /src/
+/src/main/java/net/listenia/api/

@@ -2,8 +2,8 @@ package fr.ulity.deluxegui;
 
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Initializer;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.InitializerBukkit;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.deluxegui.events.OpenInv;
 import fr.ulity.deluxegui.mechanism.GuiManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,25 +21,25 @@ public final class DeluxeGUI extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        Initializer init = new Initializer(this);
-        init.requireVersion("2.4");
+        InitializerBukkit init = new InitializerBukkit(this);
+        init.requireVersion("2.5");
         init.reloadLang();
 
         if (init.ok) {
-            getLogger().info(Lang.prepare("deluxegui.loaded1").getOutput());
-            getLogger().info(Lang.prepare("deluxegui.loaded2").getOutput());
+            getLogger().info(LangBukkit.prepare("deluxegui.loaded1").getOutput());
+            getLogger().info(LangBukkit.prepare("deluxegui.loaded2").getOutput());
 
             config = new Config("config", "/addons/DeluxeGUI");
             ConfigMan.reload();
 
             try {
-                Files.createDirectories(Paths.get(Api.prefix + "/addons/DeluxeGUI"));
+                Files.createDirectories(Paths.get(Api.corePath + "/addons/DeluxeGUI"));
 
-                if (!Files.exists(Paths.get(Api.prefix + "/addons/DeluxeGUI/gui"))) {
-                    Files.createDirectories(Paths.get(Api.prefix + "/addons/DeluxeGUI/gui"));
+                if (!Files.exists(Paths.get(Api.corePath + "/addons/DeluxeGUI/gui"))) {
+                    Files.createDirectories(Paths.get(Api.corePath + "/addons/DeluxeGUI/gui"));
                     new Config("example", "addons/DeluxeGUI/gui")
                             .addDefaultsFromInputStream(DeluxeGUI.class.getResourceAsStream("/fr/ulity/deluxegui/template/example.yml"));
-                    getLogger().info(Lang.prepare("deluxegui.demo").getOutput());
+                    getLogger().info(LangBukkit.prepare("deluxegui.demo").getOutput());
                 }
 
                 GuiManager.loader();
@@ -53,7 +53,7 @@ public final class DeluxeGUI extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info(Lang.prepare("deluxegui.shutdown1").getOutput());
-        getLogger().info(Lang.prepare("deluxegui.shutdown2").getOutput());
+        getLogger().info(LangBukkit.prepare("deluxegui.shutdown1").getOutput());
+        getLogger().info(LangBukkit.prepare("deluxegui.shutdown2").getOutput());
     }
 }

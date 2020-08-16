@@ -9,17 +9,16 @@ import org.bukkit.entity.Player;
 
 public class SpawnMethods {
     public static Location getSpawnLocation () {
-        if (Api.data.isSet("spawn")) {
+        if (Api.data.contains("spawn")) {
             FlatFileSection locData = Api.data.getSection("spawn");
 
             World world = Bukkit.getWorld(locData.getString("world"));
-            System.out.println(world.getName());
 
             double x = locData.getDouble("x");
             double y = locData.getDouble("y");
             double z = locData.getDouble("z");
 
-            return new Location(world, x, y, z);
+            return (world != null) ? new Location(world, x, y, z) : null;
         }
         return null;
     }

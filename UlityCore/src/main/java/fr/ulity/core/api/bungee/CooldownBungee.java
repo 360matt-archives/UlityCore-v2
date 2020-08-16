@@ -2,7 +2,7 @@ package fr.ulity.core.api.bungee;
 
 import fr.ulity.core.api.Config;
 
-import fr.ulity.core.utils.Time;
+import fr.ulity.core.api.bukkit.TimeBukkit;
 
 import java.util.Date;
 
@@ -31,7 +31,7 @@ public class CooldownBungee {
         cooldownConfig.set("cooldown." + type + "." + id, (seconds*1000) + new Date().getTime());
     }
 
-    public void applique (Time time) {
+    public void applique (TimeBukkit time) {
         cooldownConfig.set("cooldown." + type + "." + id, (time.seconds*1000) + new Date().getTime());
     }
 
@@ -43,9 +43,9 @@ public class CooldownBungee {
         cooldownConfig.remove("cooldown." + type + "." + id);
     }
 
-    public Time getTimeLeft () {
+    public TimeBukkit getTimeLeft () {
         long timestamp = cooldownConfig.getLong("cooldown." + type + "." + id);
-        return new Time(
+        return new TimeBukkit(
                 (timestamp > new Date().getTime() ? (int) ((timestamp - new Date().getTime()) / 1000) : 0)
                 , player
         );

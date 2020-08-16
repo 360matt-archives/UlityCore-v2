@@ -1,15 +1,14 @@
 package fr.ulity.core.addons.packutils.bukkit.methods;
 
+import fr.ulity.core.addons.packutils.bukkit.StoredEconomy;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Data;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import java.util.List;
 
-@SuppressWarnings("deprecation")
+
 public class EconomyMethods extends AbstractEconomy {
-    public static Data money = new Data("money", "addons/PackUtils/economy/");
     public static Config moneyConfig = new Config("config", "addons/PackUtils/economy/");
 
     @Override public boolean isEnabled() { return true; }
@@ -35,39 +34,31 @@ public class EconomyMethods extends AbstractEconomy {
     }
 
     @Override
-    public boolean hasAccount(String playerName) {
-        return money.contains("player." + playerName);
-    }
+    public boolean hasAccount(String playerName) { return StoredEconomy.custom.hasAccount(playerName); }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {
-        return money.contains("player." + playerName);
+        return hasAccount(playerName);
     }
 
     @Override
-    public double getBalance(String playerName) {
-        return money.getDouble("player." + playerName);
-    }
+    public double getBalance(String playerName) { return StoredEconomy.custom.get(playerName); }
 
     @Override
-    public double getBalance(String playerName, String world) {
-        return money.getDouble("player." + playerName);
-    }
+    public double getBalance(String playerName, String world) { return getBalance(playerName); }
 
     @Override
     public boolean has(String playerName, double amount) {
-        return money.getDouble("player." + playerName) >= amount;
+        return getBalance(playerName) >= amount;
     }
 
     @Override
-    public boolean has(String playerName, String worldName, double amount) {
-        return money.getDouble("player." + playerName) >= amount;
-    }
+    public boolean has(String playerName, String worldName, double amount) { return has (playerName, amount); }
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        double newBalance = money.getDouble("player." + playerName) - amount;
-        money.set("player." + playerName, newBalance);
+        double newBalance = getBalance(playerName) - amount;
+        StoredEconomy.custom.set(playerName, newBalance);
         return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "ma bite");
     }
 
@@ -78,8 +69,8 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        double newBalance = money.getDouble("player." + playerName) + amount;
-        money.set("player." + playerName, newBalance);
+        double newBalance = getBalance(playerName) + amount;
+        StoredEconomy.custom.set(playerName, newBalance);
         return new EconomyResponse(amount, newBalance, EconomyResponse.ResponseType.SUCCESS, "ma bite");
     }
 

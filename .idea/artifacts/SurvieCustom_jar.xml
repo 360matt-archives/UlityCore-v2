@@ -4,6 +4,7 @@
     <root id="archive" name="SurvieCustom.jar">
       <element id="module-output" name="SurvieCustom" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/fr/mrmicky/FastParticles/1.2.3/FastParticles-1.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/fr/mrmicky/FastBoard/1.1.0/FastBoard-1.1.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

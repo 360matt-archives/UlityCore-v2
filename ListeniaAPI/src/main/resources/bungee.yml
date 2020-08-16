@@ -1,0 +1,5 @@
+name: ListeniaApi
+version: ${project.version}
+main: net.listenia.api.bungee.ListeniaBungee
+description: Plugin principal du serveur Listenia permettant de lier tout le network
+depends: [UlityCore]

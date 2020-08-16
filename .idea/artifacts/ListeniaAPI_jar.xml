@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ListeniaAPI:jar">
+    <output-path>I:/serveurs/Test/plugins</output-path>
+    <root id="archive" name="ListeniaAPI.jar">
+      <element id="module-output" name="ListeniaAPI" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/UlityBotJava/UlityBotJava.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -1,9 +1,9 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-public class Addons {
+public class AddonsBukkit {
     private static boolean isAvailable (String name) { return Bukkit.getPluginManager().isPluginEnabled(name); }
     private static Plugin getInstance (String name) { return Bukkit.getPluginManager().getPlugin(name); }
 

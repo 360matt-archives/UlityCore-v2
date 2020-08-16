@@ -2,7 +2,7 @@ package fr.ulity.moderation.bukkit.api;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.utils.Time;
+import fr.ulity.core.api.bukkit.TimeBukkit;
 
 import java.util.Date;
 
@@ -30,7 +30,7 @@ public class Ban {
 
             if (!playerBan.get("expire").equals(0)) {
                 expire = playerBan.getLong("expire");
-                expire_text = new Time((int)((expire - new Date().getTime())/1000)).text;
+                expire_text = new TimeBukkit((int)((expire - new Date().getTime())/1000)).text;
             }
         }
     }

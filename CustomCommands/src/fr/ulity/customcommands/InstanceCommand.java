@@ -1,7 +1,7 @@
 package fr.ulity.customcommands;
 
 import fr.ulity.core.api.Api;
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,7 +24,7 @@ public class InstanceCommand extends CommandManager.Assisted {
 
 
         if (passed.name != null && !passed.name.equals(""))
-            registerCommand(Api.Bukkit.commandMap);
+            registerCommand(Api.getCommandMap());
     }
 
     @Override

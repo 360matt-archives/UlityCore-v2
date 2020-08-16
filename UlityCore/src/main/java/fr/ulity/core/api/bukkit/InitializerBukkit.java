@@ -1,5 +1,6 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
+import fr.ulity.core.api.Api;
 import fr.ulity.core.bukkit.loaders.IsUpToDate;
 import fr.ulity.core.utils.Version;
 import org.bukkit.Bukkit;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-public final class Initializer {
+public final class InitializerBukkit {
     public static ArrayList<JavaPlugin> lesPlugins = new ArrayList<>();
     public static ArrayList<Class> lesClass = new ArrayList<>();
 
@@ -18,7 +19,7 @@ public final class Initializer {
 
     private final JavaPlugin plugin;
 
-    public Initializer (@NotNull JavaPlugin plugin) {
+    public InitializerBukkit(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
         if (!lesPlugins.contains(plugin)) {
             lesPlugins.add(plugin);
@@ -28,7 +29,7 @@ public final class Initializer {
 
     public boolean reloadLang () {
         try {
-            Lang.reloadOneAddon(plugin);
+            LangBukkit.reloadOneAddon(plugin);
             return true;
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
 
 import com.google.gson.JsonArray;
@@ -29,10 +29,10 @@ import java.util.zip.GZIPOutputStream;
  * Check out https://bStats.org/ to learn more about bStats!
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public final class Metrics {
+public final class MetricsBukkit {
     public static final int B_STATS_VERSION = 1;
     private static final String URL = "https://bStats.org/submitData/bukkit";
-    private boolean enabled;
+    private final boolean enabled;
     private static boolean logFailedRequests;
     private static boolean logSentData;
     private static boolean logResponseStatusText;
@@ -48,7 +48,7 @@ public final class Metrics {
      * @param pluginId The id of the plugin.
      *                 It can be found at <a href="https://bstats.org/what-is-my-plugin-id">What is my plugin id?</a>
      */
-    public Metrics(Plugin plugin, int pluginId) {
+    public MetricsBukkit(Plugin plugin, int pluginId) {
         if (plugin == null)
             throw new IllegalArgumentException("Plugin cannot be null!");
         this.plugin = plugin;
@@ -99,7 +99,7 @@ public final class Metrics {
                 } catch (NoSuchFieldException ignored) { }
             }
             // Register our service
-            Bukkit.getServicesManager().register(Metrics.class, this, plugin, ServicePriority.Normal);
+            Bukkit.getServicesManager().register(MetricsBukkit.class, this, plugin, ServicePriority.Normal);
             if (!found) {
                 // We are the first!
                 startSubmitting();

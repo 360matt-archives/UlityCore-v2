@@ -1,7 +1,6 @@
 package fr.ulity.core.bukkit.loaders;
 
 
-import fr.ulity.core.api.Api;
 import fr.ulity.core.utils.Version;
 import org.bukkit.Bukkit;
 

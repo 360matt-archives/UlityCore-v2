@@ -1,5 +1,5 @@
 name: Moderation
-version: 1.7.2
+version: 1.8
 main: fr.ulity.moderation.bukkit.MainModBukkit
 api-version: 1.15
 prefix: Moderation

@@ -15,7 +15,7 @@ public class Death {
     private static int task;
 
     public static Location getSpawnLocation () {
-        if (Api.data.isSet("spawn")) {
+        if (Api.data.contains("spawn")) {
             FlatFileSection locData = Api.data.getSection("spawn");
 
             World world = Bukkit.getWorld(locData.getString("world"));

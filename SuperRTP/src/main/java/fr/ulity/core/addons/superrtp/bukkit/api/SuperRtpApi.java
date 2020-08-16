@@ -2,7 +2,7 @@ package fr.ulity.core.addons.superrtp.bukkit.api;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.utils.TextV2;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -59,7 +59,13 @@ public class SuperRtpApi {
 
         if (message && section.singleLayerKeySet("extra").contains("message")) {
             // si un message est défini, il serait plus commode de l'envoyer au joueur ;)
-            player.sendMessage(Text.withColours(Text.convertEncodage(section.getString("extra.message"))));
+            player.sendMessage(
+                    new TextV2(new String[]{section.getString("extra.message")})
+                    .setEncoded()
+                    .setColored()
+                    .outputString()
+            );
+
         }
 
     }

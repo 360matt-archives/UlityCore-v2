@@ -3,10 +3,10 @@ package fr.ulity.core.addons.superrtp.bukkit.commands;
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
 import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.Cooldown;
+import fr.ulity.core.api.bukkit.CooldownBukkit;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.core.utils.TextV2;
-import fr.ulity.core.utils.Time;
+import fr.ulity.core.api.bukkit.TimeBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -119,13 +119,13 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
 
                 int cooldown = section.getInt("extra.cooldown");
                 if (!staffBypass && cooldown != 0){
-                    Time cooldownTime = new Time(cooldown, player);
+                    TimeBukkit cooldownTime = new TimeBukkit(cooldown, player);
 
                     description.add(" ");
                     description.add(LangBukkit.get(player, "super_RTP.gui.cooldown")
                             .replaceAll("%cooldown%", cooldownTime.text));
 
-                    Cooldown cooldownObj = new Cooldown("rtp_gui_" + x, player.getName());
+                    CooldownBukkit cooldownObj = new CooldownBukkit("rtp_gui_" + x, player.getName());
                     cooldownObj.setPlayer(player);
 
                     if (cooldownObj.isInitialized() && !cooldownObj.isEnded()) {

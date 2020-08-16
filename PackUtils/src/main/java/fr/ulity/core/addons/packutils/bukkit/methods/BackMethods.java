@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class BackMethods {
     public static Location getLastLocation (Player player) {
         String prefix = "player." + player.getName() + ".lastLocation";
-        if (Api.temp.isSet(prefix)) {
+        if (Api.temp.contains(prefix)) {
             FlatFileSection locData = Api.temp.getSection(prefix);
 
             World world = Bukkit.getWorld(locData.getString("world"));

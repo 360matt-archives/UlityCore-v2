@@ -5,8 +5,8 @@ import fr.ulity.core.addons.superrtp.bukkit.events.InventoryEventRTP;
 import fr.ulity.core.addons.superrtp.bukkit.events.InvincibleRTP;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Initializer;
-import fr.ulity.core.api.Metrics;
+import fr.ulity.core.api.bukkit.InitializerBukkit;
+import fr.ulity.core.api.bukkit.MetricsBukkit;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,20 +50,20 @@ public final class MainBukkitRTP extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        Initializer init = new Initializer(this);
-        init.requireVersion("2.4");
+        InitializerBukkit init = new InitializerBukkit(this);
+        init.requireVersion("2.5");
         init.checkUpdates(80372);
         init.reloadLang();
 
-        Metrics metrics = new Metrics(this, 7891);
-        metrics.addCustomChart(new Metrics.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
+        MetricsBukkit metricsBukkit = new MetricsBukkit(this, 7891);
+        metricsBukkit.addCustomChart(new MetricsBukkit.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
 
         if (init.ok) {
             config = new Config("config", "addons/superRTP");
             ConfigCopy.setDefault();
 
 
-            new CommandRTP(Api.Bukkit.commandMap, this);
+            new CommandRTP(Api.getCommandMap(), this);
 
             getPluginManager().registerEvents(new InventoryEventRTP(), this);
             getPluginManager().registerEvents(new InvincibleRTP(), this);

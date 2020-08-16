@@ -2,6 +2,8 @@ package fr.ulity.moderation.bukkit;
 
 
 import fr.ulity.core.api.*;
+import fr.ulity.core.api.bukkit.InitializerBukkit;
+import fr.ulity.core.api.bukkit.MetricsBukkit;
 import fr.ulity.moderation.bukkit.commands.*;
 import fr.ulity.moderation.bukkit.events.BanEvent;
 import fr.ulity.moderation.bukkit.events.FreezeEvent;
@@ -23,12 +25,12 @@ public final class MainModBukkit extends JavaPlugin {
         plugin = this;
         server = getServer();
 
-        Initializer init = new Initializer(this);
-        init.requireVersion("2.4");
+        InitializerBukkit init = new InitializerBukkit(this);
+        init.requireVersion("2.5");
         init.reloadLang();
         init.checkUpdates(78787);
 
-        Metrics metrics = new Metrics(this, 7588);
+        MetricsBukkit metrics = new MetricsBukkit(this, 7588);
 
         if (init.ok){
             // register config field
@@ -36,22 +38,22 @@ public final class MainModBukkit extends JavaPlugin {
             DefaultConfig.make();
 
             // register commands :
-            new ClearChatCommand(Api.Bukkit.commandMap, this);
-            new ChatCommand(Api.Bukkit.commandMap, this);
-            new MuteCommand(Api.Bukkit.commandMap, this);
-            new TempMuteCommand(Api.Bukkit.commandMap, this);
-            new UnMuteCommand(Api.Bukkit.commandMap, this);
-            new BanCommand(Api.Bukkit.commandMap, this);
-            new TempBanCommand(Api.Bukkit.commandMap, this);
-            new UnBanCommand(Api.Bukkit.commandMap, this);
-            new VanishCommand(Api.Bukkit.commandMap, this);
-            new StaffChatCommand(Api.Bukkit.commandMap, this);
-            new KickCommand(Api.Bukkit.commandMap, this);
-            new BanIpCommand(Api.Bukkit.commandMap, this);
-            new UnBanIpCommand(Api.Bukkit.commandMap, this);
-            new InvSeeCommand(Api.Bukkit.commandMap, this);
-            new FreezeCommand(Api.Bukkit.commandMap, this);
-            new UnFreezeCommand(Api.Bukkit.commandMap, this);
+            new ClearChatCommand(Api.getCommandMap(), this);
+            new ChatCommand(Api.getCommandMap(), this);
+            new MuteCommand(Api.getCommandMap(), this);
+            new TempMuteCommand(Api.getCommandMap(), this);
+            new UnMuteCommand(Api.getCommandMap(), this);
+            new BanCommand(Api.getCommandMap(), this);
+            new TempBanCommand(Api.getCommandMap(), this);
+            new UnBanCommand(Api.getCommandMap(), this);
+            new VanishCommand(Api.getCommandMap(), this);
+            new StaffChatCommand(Api.getCommandMap(), this);
+            new KickCommand(Api.getCommandMap(), this);
+            new BanIpCommand(Api.getCommandMap(), this);
+            new UnBanIpCommand(Api.getCommandMap(), this);
+            new InvSeeCommand(Api.getCommandMap(), this);
+            new FreezeCommand(Api.getCommandMap(), this);
+            new UnFreezeCommand(Api.getCommandMap(), this);
 
             // register/start modules :
             StartModule.start();

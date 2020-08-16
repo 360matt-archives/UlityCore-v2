@@ -2,8 +2,8 @@ package fr.ulity.customcommands;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Initializer;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.InitializerBukkit;
+import fr.ulity.core.utils.TextV2;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -14,8 +14,8 @@ public class Main extends JavaPlugin {
     public void onEnable () {
         plugin = this;
 
-        Initializer init = new Initializer(this);
-        init.requireVersion("2.3.1");
+        InitializerBukkit init = new InitializerBukkit(this);
+        init.requireVersion("2.5");
 
         if (init.ok) {
             Config commands = new Config("commands", "addons/CustomCommands");
@@ -27,11 +27,11 @@ public class Main extends JavaPlugin {
 
                 PassInfoCommand passed = new PassInfoCommand();
                 passed.name = section.getString("name");
-                passed.description = Text.withColours(section.getString("description"));
-                passed.text = Text.withColours(section.getString("text"));
+                passed.description = TextV2.getColored(section.getString("description"));
+                passed.text = TextV2.getColored(section.getString("text"));
                 passed.type = section.getString("type");
-                passed.permissionMessage = Text.withColours(section.getString("permissionMessage"));
-                passed.usage = Text.withColours(section.getString("usage"));
+                passed.permissionMessage = TextV2.getColored(section.getString("permissionMessage"));
+                passed.usage = TextV2.getColored(section.getString("usage"));
                 passed.command = section.getString("command");
 
                 new InstanceCommand(passed);

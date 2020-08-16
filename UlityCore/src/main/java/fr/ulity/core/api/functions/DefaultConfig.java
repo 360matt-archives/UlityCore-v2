@@ -5,11 +5,11 @@ import fr.ulity.core.api.Api;
 
 public class DefaultConfig extends Yaml {
     public DefaultConfig() {
-        super("config", Api.prefix);
+        super("config", Api.corePath);
 
-        if (Api.type.equals("bungeecord"))
+        if (Api.type.equals(Api.PluginType.BUNGEE))
             isBungee();
-        else if (Api.type.equals("bukkit"))
+        else if (Api.type.equals(Api.PluginType.BUKKIT))
             isBukkit();
     }
 

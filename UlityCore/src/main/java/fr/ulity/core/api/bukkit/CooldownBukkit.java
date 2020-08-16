@@ -1,22 +1,24 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
+import fr.ulity.core.api.Config;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.core.utils.Time;
 
 import java.util.Date;
 
-public class Cooldown {
+public class CooldownBukkit {
     public String type;
     public String id = "default";
 
-    private Object player = Lang.defaultLang;
+    private Object player = LangBukkit.defaultLang;
 
     private static final Config cooldownConfig = new Config("cooldown");
 
-    public Cooldown (String type) {
+    public CooldownBukkit(String type) {
         this.type = type;
     }
 
-    public Cooldown (String type, String id) {
+    public CooldownBukkit(String type, String id) {
         this.type = type;
         this.id = id;
     }

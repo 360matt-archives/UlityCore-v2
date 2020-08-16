@@ -4,6 +4,10 @@
     <file url="file://$PROJECT_DIR$/DeluxeGUI/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DeluxeGUI/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DeluxeGUI/src/main/resources/fr/ulity/deluxegui/template/example.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DeluxeKit/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DeluxeKit/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ListeniaAPI/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ListeniaAPI/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Moderation/src/main/resources/fr/ulity/moderation/bukkit/languages/fr.yml" charset="UTF-8" />
@@ -13,8 +17,10 @@
     <file url="file://$PROJECT_DIR$/SuperRTP/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SurvieCustom/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SurvieCustom/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Tesssty/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Tesssty/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/UlityCore/src/main/java/fr/ulity/core/api/Lang.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UlityCore/src/main/java/fr/ulity/core/api/bukkit/LangBukkit.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/UlityCore/src/main/resources/fr/ulity/core/bukkit/languages/fr.yml" charset="UTF-8" />
   </component>

@@ -7,6 +7,16 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="io.cloudrepo.snapshots" />
+      <option name="name" value="io.cloudrepo.snapshots" />
+      <option name="url" value="https://frostbyte.mycloudrepo.io/public/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="io.cloudrepo.snapshot" />
+      <option name="name" value="io.cloudrepo.snapshot" />
+      <option name="url" value="https://frostbyte.mycloudrepo.io/public/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="papermc" />
       <option name="name" value="papermc" />
       <option name="url" value="https://papermc.io/repo/repository/maven-public/" />

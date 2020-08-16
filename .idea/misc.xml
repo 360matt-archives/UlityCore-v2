@@ -19,7 +19,17 @@
         <option value="$PROJECT_DIR$/PackUtils/pom.xml" />
         <option value="$PROJECT_DIR$/SurvieCustom/pom.xml" />
         <option value="$PROJECT_DIR$/DeluxeGUI/pom.xml" />
+        <option value="$PROJECT_DIR$/DeluxeKit/pom.xml" />
+        <option value="$PROJECT_DIR$/Tesssty/pom.xml" />
+        <option value="$PROJECT_DIR$/ListeniaAPI/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/ListeniaAPI/api-bungeecord/pom.xml" />
+        <option value="$PROJECT_DIR$/ListeniaAPI/api-common/pom.xml" />
+        <option value="$PROJECT_DIR$/ListeniaAPI/api-spigot/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">

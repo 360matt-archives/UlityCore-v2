@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="DeluxeGUI:jar">
+  <artifact type="jar" name="DeluxeGUI:jar">
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="DeluxeGUI.jar">
       <element id="module-output" name="DeluxeGUI" />

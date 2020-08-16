@@ -4,7 +4,7 @@ import fr.ulity.core.api.bukkit.CommandManager;
 
 import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.core.utils.TextV2;
-import fr.ulity.core.utils.Time;
+import fr.ulity.core.api.bukkit.TimeBukkit;
 import fr.ulity.moderation.bukkit.api.Mute;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -39,7 +39,7 @@ public class TempMuteCommand extends CommandManager.Assisted {
                         ? new TextV2(args).setColored().setBeginging(2).outputString()
                         : LangBukkit.get("commands.mute.expressions.unknown_reason");
 
-                Time time = new Time(args[1]);
+                TimeBukkit time = new TimeBukkit(args[1]);
 
                 Mute playerMute = new Mute(arg.get(0));
                 playerMute.reason = reason;

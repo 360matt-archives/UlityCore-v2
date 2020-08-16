@@ -1,7 +1,7 @@
 package fr.ulity.core.api;
 
-import fr.ulity.core.api.functions.Storage;
+import de.leonhard.storage.Json;
 
-public class Temp extends Storage {
+public class Temp extends Json {
     public Temp () { super("temp", "temps"); }
 }

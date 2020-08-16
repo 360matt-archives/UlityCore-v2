@@ -1,22 +1,22 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
+import fr.ulity.core.api.Api;
+import fr.ulity.core.api.Config;
 import fr.ulity.core.bukkit.MainBukkit;
 import fr.ulity.core.utils.ListingResources;
-import fr.ulity.core.utils.Text;
-// import net.md_5.bungee.api.chat.TextComponent;
+import fr.ulity.core.utils.TextV2;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lang {
+public class LangBukkit {
     public static HashMap<String, HashMap<String, Config>> langConfigs = new HashMap<>();
     public static String defaultLang = Api.config.getString("global.lang");
 
@@ -35,7 +35,7 @@ public class Lang {
     }
 
     public static void reloadOneAddon (JavaPlugin plugin) throws IOException, URISyntaxException {
-        HashMap<String, Config> addonsLanguages = new HashMap<String, Config>();
+        HashMap<String, Config> addonsLanguages = new HashMap<>();
 
         String path = (plugin.getClass().getPackage().getName() + "/languages/").replaceAll("\\.", "/");
         for (String x : ListingResources.getResourceListing(plugin.getClass(), path)) {
@@ -57,10 +57,10 @@ public class Lang {
 
     }
 
-    public static void reload () throws IOException, URISyntaxException {
+    public static <T> void reload () throws IOException, URISyntaxException {
         defaultLang = Api.config.getString("global.lang");
 
-        for (JavaPlugin p : Initializer.lesPlugins)
+        for (JavaPlugin p : InitializerBukkit.lesPlugins)
             reloadOneAddon(p);
         reloadOneAddon(MainBukkit.plugin);
 
@@ -71,38 +71,23 @@ public class Lang {
         }
     }
 
-    public static void reloadCore (JavaPlugin plugin) throws IOException, URISyntaxException {
+    public static void reloadCore () throws IOException, URISyntaxException {
         reloadOneAddon(MainBukkit.plugin);
     }
 
     public static String preferedPlayerLangByName (String playername, String clientLang) {
         final String path = "player." + playername + ".lang";
-        return (Api.data.isSet(path)) ? Api.data.getString(path) : clientLang;
+        return (Api.data.contains(path)) ? Api.data.getString(path) : clientLang;
     }
 
 
     public static String getLangOfPlayer (Object arg) {
         if (arg instanceof String)
             return (String) arg;
-        try {
-            Class.forName("org.bukkit.entity.Player");
-
-            if (arg instanceof org.bukkit.entity.Player) {
-                org.bukkit.entity.Player player = ((org.bukkit.entity.Player) arg);
-                return preferedPlayerLangByName(player.getName(), player.getLocale().toLowerCase().split("_")[0]);
-            } else return defaultLang;
-        } catch (ClassNotFoundException ignored) {
-            try {
-                Class.forName("net.md_5.bungee.api.connection.ProxiedPlayer");
-                if (arg instanceof net.md_5.bungee.api.connection.ProxiedPlayer) {
-                    net.md_5.bungee.api.connection.ProxiedPlayer player = (net.md_5.bungee.api.connection.ProxiedPlayer) arg;
-                    return preferedPlayerLangByName(player.getName(), player.getLocale().getLanguage());
-                } else return defaultLang;
-            } catch (Exception e) {
-                System.out.println(e);
-                return "";
-            }
-        }
+        if (arg instanceof org.bukkit.entity.Player) {
+            org.bukkit.entity.Player player = ((org.bukkit.entity.Player) arg);
+            return preferedPlayerLangByName(player.getName(), player.getLocale().toLowerCase().split("_")[0]);
+        } else return defaultLang;
     }
 
     private static Config getOptimalLang (Object arg, String exp) {
@@ -155,7 +140,7 @@ public class Lang {
         public void sendPlayer (org.bukkit.command.CommandSender player) { player.sendMessage(getOutput(player)); }
 
         public String getOutput (Object lang) {
-            String output = Lang.get(lang, exp);
+            String output = LangBukkit.get(lang, exp);
             for (Map.Entry<String,String> x : vars.entrySet())
                 output = output.replaceAll("%" + x.getKey() + "%", x.getValue());
             return prefix + output + suffix;
@@ -170,11 +155,16 @@ public class Lang {
 
     /* API use */
 
-    public static Prepared prepare (String exp) { return new Prepared(exp); }
+    public static LangBukkit.Prepared prepare (String exp) { return new LangBukkit.Prepared(exp); }
 
     public static String get (Object lang, String exp){
         Config langFile = getOptimalLang(lang, exp);
-        return (langFile != null) ? Text.withColours(Text.convertEncodage(langFile.getString(exp))) : "";
+        return (langFile != null)
+                ? new TextV2(new String[]{langFile.getString(exp)})
+                .setColored()
+                .setEncoded()
+                .outputString()
+                : "";
     }
     public static String get (String exp){
         return get(defaultLang, exp);
@@ -190,7 +180,12 @@ public class Lang {
 
     public static String[] getStringArray (Object lang, String exp) {
         Config langFile = getOptimalLang(lang, exp);
-        return (langFile != null) ? Text.convertEncodage(langFile.getList(exp).toArray(new String[0])) : new String[0];
+
+        return (langFile != null)
+                ? new TextV2(langFile.getList(exp))
+                .setEncoded()
+                .outputArray()
+                : new String[0];
     }
     public static String[] getStringArray (String exp) {
         return getStringArray(defaultLang, exp);
@@ -199,10 +194,10 @@ public class Lang {
     public static String[] getStringArrayColor (Object lang, String exp) {
         String[] array = getStringArray(lang, exp);
 
-        if (array.length != 0)
-            array = Arrays.stream(array).map(Text::withColours).toArray(String[]::new);
-
-        return array;
+        return new TextV2(array)
+                .setEncoded()
+                .setColored()
+                .outputArray();
     }
     public static String[] getStringArrayColor (String exp) {
         return getStringArrayColor(defaultLang, exp);

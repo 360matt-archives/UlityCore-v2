@@ -2,9 +2,8 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.HomeMethods;
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import org.bukkit.Bukkit;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -47,11 +46,11 @@ public class DelhomeCommand extends CommandManager.Assisted implements Listener 
 
                 if (HomeMethods.isHomeExist(player, args[0])) {
                     HomeMethods.delHome(player, args[0]);
-                    Lang.prepare("commands.delhome.expressions.deleted")
+                    LangBukkit.prepare("commands.delhome.expressions.deleted")
                             .variable("home", args[0])
                             .sendPlayer(player);
                 } else
-                    Lang.prepare("commands.delhome.expressions.unknown_home")
+                    LangBukkit.prepare("commands.delhome.expressions.unknown_home")
                             .variable("home", args[0])
                             .sendPlayer(player);
 

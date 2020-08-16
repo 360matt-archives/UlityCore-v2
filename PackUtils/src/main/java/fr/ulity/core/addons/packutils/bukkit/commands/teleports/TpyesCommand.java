@@ -4,7 +4,7 @@ import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.TeleportMethods;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.Cooldown;
+import fr.ulity.core.api.bukkit.CooldownBukkit;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -49,7 +49,7 @@ public class TpyesCommand extends CommandManager.Assisted {
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
 
-                            Cooldown cooldownObj = new Cooldown("tpa", origin.getName() + "_" + sender.getName());
+                            CooldownBukkit cooldownObj = new CooldownBukkit("tpa", origin.getName() + "_" + sender.getName());
                             cooldownObj.clear();
                             Api.data.remove("tpa." + origin.getName() + ".requests." + sender.getName());
                             Api.data.remove("tpa." + sender.getName() + ".last");

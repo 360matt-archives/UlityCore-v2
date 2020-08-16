@@ -1,9 +1,9 @@
 package fr.ulity.moderation.bukkit.commands;
 
 
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -16,7 +16,7 @@ public class KickCommand extends CommandManager.Assisted {
         super(plugin, "kick");
         addPermission("ulity.mod.kick");
         addOneTabbComplete(-1, "ulity.mod.kick", "kick");
-        addListTabbComplete(1, null, null, Lang.getStringArray("commands.kick.reasons_predefined"));
+        addListTabbComplete(1, null, null, LangBukkit.getStringArray("commands.kick.reasons_predefined"));
         registerCommand(commandMap);
     }
 
@@ -27,28 +27,30 @@ public class KickCommand extends CommandManager.Assisted {
                 Player player = arg.getPlayer(0);
 
                 if (player.hasPermission("ulity.mod")){
-                    Lang.prepare("commands.kick.expressions.cant_kick_staff")
+                    LangBukkit.prepare("commands.kick.expressions.cant_kick_staff")
                             .variable("player", player.getName())
                             .sendPlayer(sender);
                 } else{
-                    String reason = (args.length >= 2) ? Text.fullColor(args, 1) : Lang.get("commands.kick.expressions.unknown_reason");
+                    String reason = (args.length >= 2)
+                            ? new TextV2(args).setColored().setBeginging(1).outputString()
+                            : LangBukkit.get("commands.kick.expressions.unknown_reason");
 
-                    if (Lang.getBoolean("commands.ban.broadcast.enabled")) {
+                    if (LangBukkit.getBoolean("commands.ban.broadcast.enabled")) {
                         String keyName = (args.length >= 2) ? "message" : "message_without_reason";
                         Bukkit.broadcastMessage(
-                                Lang.prepare("commands.kick.broadcast." + keyName)
+                                LangBukkit.prepare("commands.kick.broadcast." + keyName)
                                 .variable("player", player.getName())
                                 .variable("staff", sender.getName())
                                 .variable("reason", reason)
                                 .getOutput()
                         );
                     } else
-                        Lang.prepare("commands.kick.expressions.result")
+                        LangBukkit.prepare("commands.kick.expressions.result")
                                 .variable("player", player.getName())
                                 .sendPlayer(sender);
 
                     player.kickPlayer(
-                            Lang.prepare("commands.kick.expressions.you_are_kicked")
+                            LangBukkit.prepare("commands.kick.expressions.you_are_kicked")
                                     .variable("staff", sender.getName())
                                     .variable("reason", reason)
                                     .getOutput(player)

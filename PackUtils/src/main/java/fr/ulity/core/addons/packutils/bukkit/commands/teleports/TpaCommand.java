@@ -3,7 +3,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.api.Api;
 import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.Cooldown;
+import fr.ulity.core.api.bukkit.CooldownBukkit;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -43,7 +43,7 @@ public class TpaCommand extends CommandManager.Assisted {
                 }
 
                 if (status.equals(Status.SUCCESS)) {
-                    Cooldown cooldownObj = new Cooldown("tpa", sender.getName() + "_" + target.getName());
+                    CooldownBukkit cooldownObj = new CooldownBukkit("tpa", sender.getName() + "_" + target.getName());
                     cooldownObj.setPlayer(player);
 
                     if (!cooldownObj.isInitialized() && !cooldownObj.isEnded()) {

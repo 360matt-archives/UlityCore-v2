@@ -1,39 +1,39 @@
-package fr.ulity.core.utils;
+package fr.ulity.core.api.bungee;
 
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Time {
+public class TimeBungee {
     public int seconds;
     public int milliseconds;
     public String text = "";
 
-    private String playerLang = Lang.defaultLang;
+    private String playerLang = LangBukkit.defaultLang;
 
-    public Time(String text) {
+    public TimeBungee (String text) {
         SecondFromText(text);
         this.milliseconds = this.seconds*1000;
         TextFromSeconds(this.seconds);
     }
-    public Time(String text, Object lang) {
-        this.playerLang = Lang.getLangOfPlayer(lang);
+    public TimeBungee (String text, Object lang) {
+        this.playerLang = LangBukkit.getLangOfPlayer(lang);
 
         SecondFromText(text);
         this.milliseconds = this.seconds*1000;
         TextFromSeconds(this.seconds);
     }
 
-    public Time(int seconds) {
+    public TimeBungee (int seconds) {
         this.seconds = seconds;
         this.milliseconds = this.seconds*1000;
         TextFromSeconds(this.seconds);
     }
-    public Time(int seconds, Object player) {
-        this.playerLang = Lang.getLangOfPlayer(player);
+    public TimeBungee (int seconds, Object player) {
+        this.playerLang = LangBukkit.getLangOfPlayer(player);
 
         this.seconds = seconds;
         this.milliseconds = this.seconds*1000;
@@ -59,7 +59,7 @@ public class Time {
     }
 
     private String exp(String exp) {
-        return ((exp.equals("separator") ? "" : " ")) + Lang.get(playerLang, "period." + exp);
+        return ((exp.equals("separator") ? "" : " ")) + LangBukkit.get(playerLang, "period." + exp);
     }
 
     private void TextFromSeconds (int seconds) {

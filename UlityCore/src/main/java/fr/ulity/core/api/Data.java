@@ -1,9 +1,12 @@
 package fr.ulity.core.api;
 
-import fr.ulity.core.api.functions.Storage;
+import de.leonhard.storage.Json;
 
-public class Data extends Storage {
-    public Data() { super("data"); }
-    public Data(String file) { super(file); }
+import java.io.File;
+
+public class Data extends Json {
+    public Data() { super("data", ""); }
+    public Data(String file) { super(new File(file)); }
     public Data(String file, String path) { super(file, path); }
+    public Data(File file) { super(file); }
 }

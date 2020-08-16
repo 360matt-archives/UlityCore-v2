@@ -2,7 +2,7 @@ package fr.ulity.moderation.bukkit.api;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.api.Config;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -60,7 +60,7 @@ public class Freeze {
                         looped.append(" \n");
                     player.sendMessage(looped.toString());
 
-                    player.sendMessage(Lang.get(player, "commands.freeze.expressions.notification")
+                    player.sendMessage(LangBukkit.get(player, "commands.freeze.expressions.notification")
                             .replaceAll("%reason%", reason)
                             .replaceAll("%staff%", responsable));
                 }

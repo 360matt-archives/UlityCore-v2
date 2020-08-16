@@ -8,19 +8,19 @@ import java.io.File;
 public class Config extends Yaml {
 
     public Config() {
-        super("config", Api.prefix + "/");
+        super("config", Api.corePath + "/");
         new DefaultConfig();
     }
 
     public Config(String name) {
-        super(name, Api.prefix + "/");
+        super(name, Api.corePath + "/");
 
         if (name.equals("config"))
             new DefaultConfig();
     }
 
     public Config(String name, String path) {
-        super(name, Api.prefix + "/" + path);
+        super(name, Api.corePath + "/" + path);
 
         if (name.equals("config") && path.equals(""))
             new DefaultConfig();

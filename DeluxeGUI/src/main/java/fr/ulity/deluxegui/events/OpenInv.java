@@ -1,6 +1,6 @@
 package fr.ulity.deluxegui.events;
 
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.deluxegui.TranslateVars;
 import fr.ulity.deluxegui.mechanism.GuiManager;
 import fr.ulity.deluxegui.mechanism.structure.Content;
@@ -73,7 +73,7 @@ public class OpenInv implements Listener {
                                 // loop contents and now found the correspondant content
 
                                 if (!e.getWhoClicked().hasPermission(xc.extra.permissions))
-                                    Lang.prepare("global.no_perm").sendPlayer((Player) e.getWhoClicked());
+                                    LangBukkit.prepare("global.no_perm").sendPlayer((Player) e.getWhoClicked());
                                 else {
                                     for (String cmd : xc.action.run)
                                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), TranslateVars.forText(cmd, vars));

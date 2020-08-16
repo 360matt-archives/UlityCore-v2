@@ -2,8 +2,8 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.SpawnMethods;
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -25,7 +25,7 @@ public class SpawnCommand extends CommandManager.Assisted {
         Location spawnLoc = SpawnMethods.getSpawnLocation();
 
         if (spawnLoc == null)
-            Lang.prepare("commands.spawn.expressions.not_defined").sendPlayer(sender);
+            LangBukkit.prepare("commands.spawn.expressions.not_defined").sendPlayer(sender);
         else if (arg.inRange(0, 1)) {
             Player origin = null;
 
@@ -37,20 +37,26 @@ public class SpawnCommand extends CommandManager.Assisted {
 
             if (status.equals(Status.SUCCESS)) {
                 assert origin != null;
-                Lang.prepare("commands.spawn.expressions.prevent_teleport").sendPlayer(origin);
 
-                if (!origin.getName().equals(sender.getName()))
-                    Lang.prepare("commands.spawn.expressions.others_result")
-                            .variable("player", origin.getName())
-                            .sendPlayer(sender);
+                if (origin.hasPermission("ulity.packutils.spawn.bypass") || origin.hasPermission("grade.staff")) {
+                    origin.teleport(spawnLoc);
+                    LangBukkit.prepare("commands.spawn.expressions.teleported").sendPlayer(origin);
+                } else {
+                    LangBukkit.prepare("commands.spawn.expressions.prevent_teleport").sendPlayer(origin);
 
-                Player finalOrigin = origin;
-                Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
-                    if (finalOrigin.isOnline()) {
-                        finalOrigin.teleport(spawnLoc);
-                        Lang.prepare("commands.spawn.expressions.teleported").sendPlayer(finalOrigin);
-                    }
-                }, 20*5L);
+                    if (!origin.getName().equals(sender.getName()))
+                        LangBukkit.prepare("commands.spawn.expressions.others_result")
+                                .variable("player", origin.getName())
+                                .sendPlayer(sender);
+
+                    Player finalOrigin = origin;
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
+                        if (finalOrigin.isOnline()) {
+                            finalOrigin.teleport(spawnLoc);
+                            LangBukkit.prepare("commands.spawn.expressions.teleported").sendPlayer(finalOrigin);
+                        }
+                    }, 20*5L);
+                }
             }
         } else
             setStatus(Status.SYNTAX);

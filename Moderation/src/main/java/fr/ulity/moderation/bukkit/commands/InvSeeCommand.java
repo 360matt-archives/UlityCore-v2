@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -28,7 +28,7 @@ public class InvSeeCommand extends CommandManager.Assisted {
                     PlayerInventory inventory = target.getInventory();
                     ((Player) sender).openInventory(inventory);
 
-                    Lang.prepare("commands.invsee.expressions.inventory_opened")
+                    LangBukkit.prepare("commands.invsee.expressions.inventory_opened")
                             .variable("player", target.getName())
                             .sendPlayer(sender);
                 }

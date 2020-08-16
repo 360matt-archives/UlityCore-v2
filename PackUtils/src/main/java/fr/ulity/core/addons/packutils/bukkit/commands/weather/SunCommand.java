@@ -1,6 +1,6 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.weather;
 
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;

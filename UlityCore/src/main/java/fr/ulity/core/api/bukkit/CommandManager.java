@@ -1,4 +1,4 @@
-package fr.ulity.core.api;
+package fr.ulity.core.api.bukkit;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -68,11 +68,11 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
         }
         private void operateStatus () {
             if (status.equals(Status.PLAYER_ONLY))
-                sender.sendMessage(Lang.get(sender, "global.player_only"));
+                sender.sendMessage(LangBukkit.get(sender, "global.player_only"));
             else if (status.equals(Status.SYNTAX))
                 sender.sendMessage(ChatColor.RED + getUsage());
             else if (status.equals(Status.NOPERM))
-                sender.sendMessage(Lang.get(sender, "global.no_perm"));
+                sender.sendMessage(LangBukkit.get(sender, "global.no_perm"));
         }
 
         public static class Arg {
@@ -107,39 +107,39 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
 
             public boolean require (int ind) {
                 if (is(ind)) return true;
-                else Lang.prepare("arg_needed.default").sendPlayer(sender);
+                else LangBukkit.prepare("arg_needed.default").sendPlayer(sender);
                 return false;
             }
             public boolean requirePlayer (int ind) {
                 if (isPlayer(ind)) return true;
                 else if (is(ind))
-                    Lang.prepare("global.invalid_player")
+                    LangBukkit.prepare("global.invalid_player")
                             .variable("player", get(ind))
                             .sendPlayer(sender);
                 else
-                    Lang.prepare("arg_needed.player").sendPlayer(sender);
+                    LangBukkit.prepare("arg_needed.player").sendPlayer(sender);
                 return false;
             }
             public boolean requireWorld (int ind) {
                 if (isWorld(ind)) return true;
                 else if (is(ind))
-                    Lang.prepare("global.invalid_world")
+                    LangBukkit.prepare("global.invalid_world")
                             .variable("world", get(ind))
                             .sendPlayer(sender);
                 else
-                    Lang.prepare("arg_needed.world").sendPlayer(sender);
+                    LangBukkit.prepare("arg_needed.world").sendPlayer(sender);
                 return false;
             }
             public boolean requirePlayerNoSelf (int ind) {
                 if (requirePlayer(ind)) {
                     if (!getPlayer(ind).getName().equals(sender.getName())) return true;
-                    else Lang.prepare("global.no_self").sendPlayer(sender);
+                    else LangBukkit.prepare("global.no_self").sendPlayer(sender);
                 }
                 return false;
             }
             public boolean requireNumber (int ind) {
                 if (isNumber(ind)) return true;
-                else Lang.prepare("arg_needed.number").sendPlayer(sender);
+                else LangBukkit.prepare("arg_needed.number").sendPlayer(sender);
                 return false;
             }
             public boolean inRange (int minimal, int maximal) {
@@ -377,8 +377,8 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
      * @return vrai si la commande a bien été enregistrée
      */
     protected boolean registerCommand(CommandMap commandMap) {
-        if (getUsage().equals("/" + getName())) setUsage(Lang.get("commands." + getName() + ".usage"));
-        if (getDescription().equals("")) setDescription(Lang.get("commands." + getName() + ".description"));
+        if (getUsage().equals("/" + getName())) setUsage(LangBukkit.get("commands." + getName() + ".usage"));
+        if (getDescription().equals("")) setDescription(LangBukkit.get("commands." + getName() + ".description"));
 
         return !register && commandMap.register("", this);
     }
@@ -412,7 +412,7 @@ public abstract class CommandManager<T extends JavaPlugin> extends Command imple
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull String command, String[] arg) {
         if (getPermission() != null && !commandSender.hasPermission(getPermission()))
-            commandSender.sendMessage((getPermissionMessage() == null) ? Lang.get("plugin.no_perm") : getPermissionMessage());
+            commandSender.sendMessage((getPermissionMessage() == null) ? LangBukkit.get("plugin.no_perm") : getPermissionMessage());
         else
             onCommand(commandSender, this, command, arg);
         return true;

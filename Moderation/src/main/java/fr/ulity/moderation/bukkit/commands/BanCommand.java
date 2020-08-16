@@ -1,6 +1,6 @@
 package fr.ulity.moderation.bukkit.commands;
 
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.core.utils.TextV2;
 import fr.ulity.moderation.bukkit.api.Ban;

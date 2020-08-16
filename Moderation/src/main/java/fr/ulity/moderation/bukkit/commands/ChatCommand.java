@@ -1,7 +1,7 @@
 package fr.ulity.moderation.bukkit.commands;
 
 import fr.ulity.core.api.Api;
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import fr.ulity.moderation.bukkit.MainModBukkit;
 import fr.ulity.moderation.bukkit.events.ChatDisabledEvent;

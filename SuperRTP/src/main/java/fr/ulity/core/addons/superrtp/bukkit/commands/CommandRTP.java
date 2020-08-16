@@ -2,10 +2,10 @@ package fr.ulity.core.addons.superrtp.bukkit.commands;
 
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.Cooldown;
-import fr.ulity.core.api.Lang;
-import fr.ulity.core.utils.Text;
+import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core.utils.TextV2;
 import fr.ulity.core.utils.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,9 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 public class CommandRTP extends CommandManager.Assisted implements Listener {
     private static Inventory preInvMenu = null;
@@ -39,7 +37,7 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
         if (preInvMenu != null && cacheStat)
             return preInvMenu;
         else {
-            Inventory teleportInvMenu = Bukkit.createInventory(null, 6 * 9, Lang.get(player, "commands.rtp.expressions.menu_title"));
+            Inventory teleportInvMenu = Bukkit.createInventory(null, 6 * 9, LangBukkit.get(player, "commands.rtp.expressions.menu_title"));
             for (int k = 0; k <= (6 * 9) - 1; k++) {
                 int randomNum = ThreadLocalRandom.current().nextInt(0, 7 + 1);
                 Material randomMaterial = null;
@@ -78,7 +76,11 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
 
             for (String x : MainBukkitRTP.config.singleLayerKeySet("gui")) {
                 FlatFileSection section = MainBukkitRTP.config.getSection("gui." + x);
-                String title = Text.withColours(Text.convertEncodage(section.getString("title")));
+                String title = new TextV2(new String[]{section.getString("title")})
+                        .setColored()
+                        .setEncoded()
+                        .outputString();
+
                 MainBukkitRTP.items.put(title, x);
 
                 boolean staffBypass = MainBukkitRTP.config.getBoolean("global.staff_bypass") && player.hasPermission("ulity.superrtp.bypass");
@@ -89,19 +91,21 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
                 }
                 catch (Exception e) {
                     material = Material.DIRT;
-                    System.out.println(Lang.get(player, "super_RTP.staff_error.invalid_material")
+                    System.out.println(LangBukkit.get(player, "super_RTP.staff_error.invalid_material")
                             .replaceAll("%name%", title)
                             .replaceAll("%material%", section.getString("item.material")));
                 }
 
-                List<String> description = Text.convertEncodage(section.getList("description").stream()
-                        .map(object -> Objects.toString(object, null))
-                        .collect(Collectors.toList()));
+
+                List<String> description = new TextV2(section.getList("description"))
+                        .setColored()
+                        .setEncoded()
+                        .outputList();
                 
                 double price = section.getDouble("extra.cost");
                 if (!staffBypass && price != 0){
                     description.add(" ");
-                    description.add(Lang.get(player, "super_RTP.gui.cost_price")
+                    description.add(LangBukkit.get(player, "super_RTP.gui.cost_price")
                             .replaceAll("%price%", Double.toString(price)));
                 }
 
@@ -109,7 +113,7 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
 
                 if (!staffBypass && !permission.equals("")) {
                     description.add(" ");
-                    description.add(Lang.get(player, "super_RTP.gui.permission")
+                    description.add(LangBukkit.get(player, "super_RTP.gui.permission")
                             .replaceAll("%stat%", (player.hasPermission(permission)) ? "&a✔" : "&c❌"));
                 }
 
@@ -118,27 +122,27 @@ public class CommandRTP extends CommandManager.Assisted implements Listener {
                     Time cooldownTime = new Time(cooldown, player);
 
                     description.add(" ");
-                    description.add(Lang.get(player, "super_RTP.gui.cooldown")
+                    description.add(LangBukkit.get(player, "super_RTP.gui.cooldown")
                             .replaceAll("%cooldown%", cooldownTime.text));
 
                     Cooldown cooldownObj = new Cooldown("rtp_gui_" + x, player.getName());
                     cooldownObj.setPlayer(player);
 
                     if (cooldownObj.isInitialized() && !cooldownObj.isEnded()) {
-                        description.add(Lang.get(player, "super_RTP.gui.cooldown_left")
+                        description.add(LangBukkit.get(player, "super_RTP.gui.cooldown_left")
                                 .replaceAll("%cooldown%", cooldownObj.getTimeLeft().text));
                     }
                 }
 
                 if (staffBypass) {
                     description.add(" ");
-                    description.add(Lang.get("super_RTP.gui.staff_mod"));
+                    description.add(LangBukkit.get("super_RTP.gui.staff_mod"));
                 }
 
                 ItemStack itemStack = new ItemStack(material, 1);
                 ItemMeta iteamMeta = itemStack.getItemMeta();
-                iteamMeta.setDisplayName(Text.withColours(Text.convertEncodage(section.getString("title"))));
-                iteamMeta.setLore(Text.withColours(description));
+                iteamMeta.setDisplayName(title);
+                iteamMeta.setLore(description);
                 itemStack.setItemMeta(iteamMeta);
 
                 int place = (((section.getInt("item.line")-1)*9) + section.getInt("item.column")) - 1;

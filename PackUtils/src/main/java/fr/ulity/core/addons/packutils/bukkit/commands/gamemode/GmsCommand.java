@@ -2,7 +2,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.gamemode;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.GamemodeMethods;
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;

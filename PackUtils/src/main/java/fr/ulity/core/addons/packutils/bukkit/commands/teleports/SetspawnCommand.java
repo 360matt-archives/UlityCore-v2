@@ -2,7 +2,7 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.SpawnMethods;
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;

@@ -1,6 +1,6 @@
 package net.listenia.survie.surviecore.commands;
 
-import fr.ulity.core.api.CommandManager;
+import fr.ulity.core.api.bukkit.CommandManager;
 import net.listenia.survie.surviecore.SurvieCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;

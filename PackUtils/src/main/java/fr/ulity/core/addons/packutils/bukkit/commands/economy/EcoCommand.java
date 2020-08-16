@@ -1,9 +1,10 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.economy;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
+import fr.ulity.core.addons.packutils.bukkit.StoredEconomy;
 import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -22,42 +23,42 @@ public class EcoCommand extends CommandManager.Assisted {
     @Override
     public void exec(CommandSender sender, Command command, String label, String[] args) {
         if (arg.get(0).equals("clear")) {
-            EconomyMethods.money.clear();
-            Lang.prepare("commands.eco.expressions.all_accounts_cleared").sendPlayer(sender);
+            StoredEconomy.custom.clearAll();
+            LangBukkit.prepare("commands.eco.expressions.all_accounts_cleared").sendPlayer(sender);
         } else if (arg.is(0) && arg.requirePlayer(1)) {
             Player playerHandle = arg.getPlayer(1);
 
             if (args[0].equalsIgnoreCase("set") && arg.requireNumber(2)) {
-                EconomyMethods.money.set("player." + playerHandle.getName(), Double.parseDouble(args[2]));
+                StoredEconomy.custom.set("player." + playerHandle.getName(), Double.parseDouble(args[2]));
                 if (!sender.getName().equals(playerHandle.getName())) {
-                    Lang.prepare("commands.eco.expressions.sender.sold_set")
+                    LangBukkit.prepare("commands.eco.expressions.sender.sold_set")
                             .variable("player", playerHandle.getName())
                             .variable("money", args[2])
                             .sendPlayer(sender);
                 }
-                Lang.prepare("commands.eco.expressions.player.sold_set")
+                LangBukkit.prepare("commands.eco.expressions.player.sold_set")
                         .variable("money", args[2])
                         .sendPlayer(playerHandle);
             } else if (args[0].equalsIgnoreCase("add") && arg.requireNumber(2)) {
                 new EconomyMethods().depositPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
                 if (!sender.getName().equals(playerHandle.getName())) {
-                    Lang.prepare("commands.eco.expressions.sender.sold_added")
+                    LangBukkit.prepare("commands.eco.expressions.sender.sold_added")
                             .variable("player", playerHandle.getName())
                             .variable("added", args[2])
                             .sendPlayer(sender);
                 }
-                Lang.prepare("commands.eco.expressions.player.sold_added")
+                LangBukkit.prepare("commands.eco.expressions.player.sold_added")
                         .variable("added", args[2])
                         .sendPlayer(playerHandle);
             } else if (args[0].equalsIgnoreCase("remove") && arg.requireNumber(2)) {
                 new EconomyMethods().withdrawPlayer(playerHandle.getName(), Double.parseDouble(args[2]));
                 if (!sender.getName().equals(playerHandle.getName())) {
-                    Lang.prepare("commands.eco.expressions.sender.sold_taked")
+                    LangBukkit.prepare("commands.eco.expressions.sender.sold_taked")
                             .variable("player", playerHandle.getName())
                             .variable("taked", args[2])
                             .sendPlayer(sender);
                 }
-                Lang.prepare("commands.eco.expressions.player.sold_taked")
+                LangBukkit.prepare("commands.eco.expressions.player.sold_taked")
                         .variable("taked", args[2])
                         .sendPlayer(playerHandle);
             } else

@@ -1,8 +1,8 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.time;
 
 
-import fr.ulity.core.api.CommandManager;
-import fr.ulity.core.api.Lang;
+import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core.api.bukkit.LangBukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -25,12 +25,12 @@ public class DayCommand extends CommandManager.Assisted {
                 world = getPlayer().getWorld();
                 world.setTime(1000);
 
-                Lang.prepare("commands.day.expressions.changed_current").sendPlayer(sender);
+                LangBukkit.prepare("commands.day.expressions.changed_current").sendPlayer(sender);
             } else if (arg.requireWorld(0)) {
                 world = arg.getWorld(0);
                 world.setTime(1000);
 
-                Lang.prepare("commands.day.expressions.changed_world")
+                LangBukkit.prepare("commands.day.expressions.changed_world")
                         .variable("world", world.getName())
                         .sendPlayer(sender);
             } else

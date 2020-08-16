@@ -15,8 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class GuiManager {
@@ -25,7 +23,7 @@ public class GuiManager {
     public static void loader () {
         menus.clear();
 
-        try (Stream<Path> walk = Files.walk(Paths.get(Api.prefix + "/addons/DeluxeGUI/gui"))) {
+        try (Stream<Path> walk = Files.walk(Paths.get(Api.corePath + "/addons/DeluxeGUI/gui"))) {
 
             walk.map(Path::toString)
                     .filter(f -> f.contains(".yml"))

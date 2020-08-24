@@ -1,22 +1,30 @@
 package fr.ulity.core.addons.packutils.bukkit;
 
-import fr.ulity.core.api.Data;
+
+import fr.ulity.core.addons.packutils.api.UserEconomy;
 
 public abstract class StoredEconomy {
     public static StoredEconomy custom = new StoredEconomy() {
-        public Data money = new Data("money", "addons/PackUtils/economy/");
 
         @Override
-        public void set(String playername, double amount) { money.set("player." + playername, amount); }
+        public void set(String playername, double amount) {
+            new UserEconomy(playername).setAmount(amount);
+        }
 
         @Override
-        public double get(String playername) { return money.getDouble("player." + playername); }
+        public double get(String playername) {
+            return new UserEconomy(playername).getAmount();
+        }
 
         @Override
-        public boolean hasAccount(String playername) { return money.contains("player." + playername); }
+        public boolean hasAccount(String playername) {
+            return true;
+        }
 
         @Override
-        public void clearAll() { money.clear(); }
+        public void clearAll() {
+
+        }
     };
 
 

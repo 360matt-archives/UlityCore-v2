@@ -3,8 +3,9 @@ package fr.ulity.core.addons.superrtp.bukkit.events;
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
 import fr.ulity.core.addons.superrtp.bukkit.api.SuperRtpApi;
-import fr.ulity.core.api.bukkit.CooldownBukkit;
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.modules.datas.UserCooldown;
+import fr.ulity.core_v3.modules.language.Lang;
+import fr.ulity.core_v3.modules.language.PreparedLang;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class InventoryEventRTP implements Listener {
     private static void onInventory (InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
-        if (e.getView().getTitle().equals(LangBukkit.get(player, "commands.rtp.expressions.menu_title"))) {
+        if (e.getView().getTitle().equals(Lang.get(player, "commands.rtp.expressions.menu_title"))) {
 
             if (e.getClick().isRightClick())
                 e.setCancelled(true);
@@ -47,10 +48,9 @@ public class InventoryEventRTP implements Listener {
                                 // si le joueur est autorisé à utiliser ce item
 
                                 int cooldown = section.getInt("extra.cooldown");
-                                CooldownBukkit cooldownObj = new CooldownBukkit("rtp_gui_" + x, player.getName());
-                                cooldownObj.setPlayer(player);
+                                UserCooldown cooldownObj = new UserCooldown( player.getName(), "rtp_gui_" + x);
 
-                                if (staffBypass || cooldown == 0 || !cooldownObj.isInitialized() || cooldownObj.isEnded()) {
+                                if (staffBypass || cooldown == 0 || !cooldownObj.isWaiting()) {
                                     // si le joueur n'a pas un délai en cours
 
                                     int cost = section.getInt("extra.cost");
@@ -94,11 +94,11 @@ public class InventoryEventRTP implements Listener {
 
                                                     } else {
                                                         // si le monde n'existe pas, n'est pas chargé
-                                                        LangBukkit.prepare("super_RTP.fails.world_missing")
+                                                        Lang.prepare("super_RTP.fails.world_missing")
                                                                 .variable("title", title)
                                                                 .variable("world", worldName)
                                                                 .sendPlayer(player);
-                                                        LangBukkit.Prepared prepared = LangBukkit.prepare("super_RTP.staff_error.unknown_world")
+                                                        PreparedLang prepared = Lang.prepare("super_RTP.staff_error.unknown_world")
                                                                 .variable("title", title)
                                                                 .variable("world", worldName);
                                                         for (Player onlinePlayer : Bukkit.getOnlinePlayers())
@@ -106,46 +106,46 @@ public class InventoryEventRTP implements Listener {
                                                     }
                                                 } else {
                                                     // si la propriété "randomWorld" est mal configurée
-                                                    LangBukkit.prepare("super_RTP.fails.location_no_set")
+                                                    Lang.prepare("super_RTP.fails.location_no_set")
                                                             .variable("title", title)
                                                             .sendPlayer(player);
-                                                    LangBukkit.Prepared prepared = LangBukkit.prepare("super_RTP.staff_error.location_no_set")
+                                                    PreparedLang prepared = Lang.prepare("super_RTP.staff_error.location_no_set")
                                                             .variable("title", title);
                                                     for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                                                         prepared.sendPlayer(onlinePlayer);
                                                 }
                                             } else {
                                                 // si la propriété "randomWorld" n'existe pas
-                                                LangBukkit.prepare("super_RTP.fails.location_no_set")
+                                                Lang.prepare("super_RTP.fails.location_no_set")
                                                         .variable("title", title)
                                                         .sendPlayer(player);
-                                                LangBukkit.Prepared prepared = LangBukkit.prepare("super_RTP.staff_error.location_no_set")
+                                                PreparedLang prepared = Lang.prepare("super_RTP.staff_error.location_no_set")
                                                         .variable("title", title);
                                                 for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                                                     prepared.sendPlayer(onlinePlayer);
                                             }
                                         } else { // si le joueur n'a pas assez de money
-                                            LangBukkit.prepare("super_RTP.err_messages.no_money")
+                                            Lang.prepare("super_RTP.err_messages.no_money")
                                                     .variable("left", String.valueOf(cost - obtain.eco.getBalance(player)))
                                                     .variable("title", title)
                                                     .sendPlayer(player);
                                         }
                                     } else { // si l'économie n'est pas disponible
-                                        LangBukkit.prepare("super_RTP.fails.economy_missing")
+                                        Lang.prepare("super_RTP.fails.economy_missing")
                                                 .variable("title", title)
                                                 .sendPlayer(player);
-                                        LangBukkit.Prepared prepared = LangBukkit.prepare("super_RTP.staff_error.economy_not_supported")
+                                        PreparedLang prepared = Lang.prepare("super_RTP.staff_error.economy_not_supported")
                                                 .variable("title", title);
                                         for (Player onlinePlayer : Bukkit.getOnlinePlayers())
                                             prepared.sendPlayer(onlinePlayer);
                                     }
                                 } else { // si un cooldown est en cours pour le joueur
-                                    LangBukkit.prepare("super_RTP.err_messages.no_finished_cooldown")
+                                    Lang.prepare("super_RTP.err_messages.no_finished_cooldown")
                                             .variable("left", cooldownObj.getTimeLeft().text)
                                             .sendPlayer(player);
                                 }
                             } else { // si le joueur n'a pas la permission
-                                LangBukkit.prepare("super_RTP.err_messages.no_permission")
+                                Lang.prepare("super_RTP.err_messages.no_permission")
                                         .variable("title", title)
                                         .sendPlayer(player);
                             }

@@ -2,30 +2,29 @@ package fr.ulity.core.addons.packutils.bukkit.commands.gamemode;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.GamemodeMethods;
-import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.bukkit.BukkitAPI;
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
+import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public class GmsCommand extends CommandManager.Assisted {
+public class GmsCommand extends CommandBukkit {
 
-    public GmsCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "gms");
-        addDescription(LangBukkit.get("commands.gmX.description"));
-        addUsage(LangBukkit.get("commands.gmX.usage"));
-        addPermission("ulity.packutils.gamemode");
-        addPermission("ulity.packutils.gms");
+    public GmsCommand() {
+        super("gms");
+        setDescription(Lang.get("commands.gmX.description"));
+        setUsage(Lang.get("commands.gmX.usage"));
+        setDescription("ulity.packutils.gms");
 
-        if (MainBukkitPackUtils.enabler.canEnable(getName()))
-            registerCommand(commandMap);
+        if (!MainBukkitPackUtils.enabler.canEnable(getName()))
+            unregister(BukkitAPI.commandMap);
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (arg.inRange(0, 1)) {
             Player target = null;
             if (arg.is(0)) {

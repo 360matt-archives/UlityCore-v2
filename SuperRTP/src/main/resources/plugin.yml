@@ -3,7 +3,7 @@ version: 1.3
 main: fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP
 api-version: 1.15
 prefix: SuperRTP
-depend: [UlityCore, Vault]
+depend: [Vault]
 softdepend: [Vault]
 authors: [360matt]
 description: SuperRTP propose aux joueurs une téléportation aléatoire avec des configurations plus poussés et plus innovantes

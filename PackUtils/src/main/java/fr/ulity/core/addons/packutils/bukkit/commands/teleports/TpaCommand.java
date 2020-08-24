@@ -1,67 +1,64 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.bukkit.CooldownBukkit;
-import fr.ulity.core.api.bukkit.LangBukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
+import fr.ulity.core_v3.Core;
+import fr.ulity.core_v3.bukkit.BukkitAPI;
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
+import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
+import fr.ulity.core_v3.modules.datas.UserCooldown;
+import fr.ulity.core_v3.modules.datas.UserData;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-public class TpaCommand extends CommandManager.Assisted {
+public class TpaCommand extends CommandBukkit {
 
-    public TpaCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "tpa");
-        addPermission("ulity.packutils.tpa");
-        if (MainBukkitPackUtils.enabler.canEnable(getName()))
-            registerCommand(commandMap);
+    public TpaCommand( ) {
+        super("tpa");
+        setPermission("ulity.packutils.tpa");
+        if (!MainBukkitPackUtils.enabler.canEnable(getName()))
+            unregister(BukkitAPI.commandMap);
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (requirePlayer()) {
             if (arg.requirePlayerNoSelf(0)) {
                 Player player = (Player) sender;
                 Player target = arg.getPlayer(0);
 
-                String ignore_path = "player." + target.getName() + ".vanish";
+                UserData userData = new UserData(sender.getName());
 
-                if (Api.data.contains(ignore_path)) {
-                    if (Api.data.getList(ignore_path).contains(sender.getName())) {
-                        // le joueur est bloqué par l'autre joueur
-                        LangBukkit.prepare("commands.tpa.expressions.you_are_bloqued")
-                                .variable("player", target.getName())
-                                .sendPlayer(sender);
-                        setStatus(Status.STOP);
-
-                    }
+                if (userData.getList("ignored").contains(sender.getName())) {
+                    // le joueur est bloqué par l'autre joueur
+                    Lang.prepare("commands.tpa.expressions.you_are_bloqued")
+                            .variable("player", target.getName())
+                            .sendPlayer(sender);
+                    setStatus(Status.STOP);
                 }
 
                 if (status.equals(Status.SUCCESS)) {
-                    CooldownBukkit cooldownObj = new CooldownBukkit("tpa", sender.getName() + "_" + target.getName());
-                    cooldownObj.setPlayer(player);
+                    UserCooldown cooldownObj = new UserCooldown(sender.getName() + "_" + target.getName(), "tpa");
 
-                    if (!cooldownObj.isInitialized() && !cooldownObj.isEnded()) {
-                        LangBukkit.prepare("commands.tpa.expressions.cooldown")
+                    if (!cooldownObj.isWaiting()) {
+                        Lang.prepare("commands.tpa.expressions.cooldown")
                                 .variable("left", cooldownObj.getTimeLeft().text)
                                 .sendPlayer(sender);
                     } else {
-                        LangBukkit.prepare("commands.tpa.expressions.request_sent")
+                        Lang.prepare("commands.tpa.expressions.request_sent")
                                 .variable("player", target.getName())
                                 .sendPlayer(sender);
 
-                        LangBukkit.prepare("commands.tpa.expressions.request_body")
+                        Lang.prepare("commands.tpa.expressions.request_body")
                                 .variable("player", sender.getName())
                                 .sendPlayer(target);
 
                         cooldownObj.applique(120);
-                        Api.data.set("tpa." + sender.getName() + ".requests." + target.getName(), new Date().getTime() + 15000);
-                        Api.temp.set("tpa." + target.getName() + ".last", sender.getName());
+                        Core.temp.set("tpa." + sender.getName() + ".requests." + target.getName(), new Date().getTime() + 15000);
+                        Core.temp.set("tpa." + target.getName() + ".last", sender.getName());
                     }
                 }
             }

@@ -1,30 +1,25 @@
 package net.listenia.survie.surviecore.commands;
 
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.bukkit.CommandManager;
+import fr.ulity.core_v3.Core;
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class RetournerCommand extends CommandManager.Assisted {
-    public RetournerCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "retourner");
-        addDescription("§ePermet de connaitre la position de sa précédente mort");
-        addUsage("§eRécupérer la position: §7/retourner");
-
-        registerCommand(commandMap);
+public class RetournerCommand extends CommandBukkit {
+    public RetournerCommand () {
+        super("retourner");
+        setDescription("§ePermet de connaitre la position de sa précédente mort");
+        setUsage("§eRécupérer la position: §7/retourner");
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec (CommandSender sender, String label, String[] args) {
         if (requirePlayer()) {
             Player p = (Player) sender;
 
-            if (Api.temp.contains("player." + sender.getName() + ".death_lastPosition")) {
-                Location beforeHandle = (Location) Api.temp.get("player." + sender.getName() + ".death_lastPosition");
+            if (Core.temp.contains("player." + sender.getName() + ".death_lastPosition")) {
+                Location beforeHandle = (Location) Core.temp.get("player." + sender.getName() + ".death_lastPosition");
 
                 if (p.getWorld().getName().equals("Spawn"))
                     p.sendMessage("§7Rooh t'es mort au spawn ! Fais un petit effort quand même !");

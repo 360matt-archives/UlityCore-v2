@@ -1,11 +1,11 @@
 package fr.ulity.core.addons.packutils.bukkit;
 
-import fr.ulity.core.api.Config;
+import fr.ulity.core_v3.modules.storage.ServerConfig;
 
 import java.util.Arrays;
 
 public class CommandEnabler {
-    public static Config disabledCommands = new Config("disabled_commands", "addons/PackUtils/");
+    public static ServerConfig disabledCommands = new ServerConfig("disabled_commands", "");
 
     public CommandEnabler () {
         disabledCommands.setDefault("disabled", Arrays.asList("OneDisabledCommand", "SecondDisabledCommand"));

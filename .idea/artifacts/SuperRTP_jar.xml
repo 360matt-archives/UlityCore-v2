@@ -3,6 +3,8 @@
     <output-path>I:/serveurs/Test/plugins</output-path>
     <root id="archive" name="SuperRTP.jar">
       <element id="module-output" name="SuperRTP" />
+      <element id="module-output" name="UlityCore_v3" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/JavaFactoryDev/LightningStorage/3.1.8/LightningStorage-3.1.8.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

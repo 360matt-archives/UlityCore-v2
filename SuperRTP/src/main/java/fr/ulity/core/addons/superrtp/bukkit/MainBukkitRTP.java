@@ -3,22 +3,20 @@ package fr.ulity.core.addons.superrtp.bukkit;
 import fr.ulity.core.addons.superrtp.bukkit.commands.CommandRTP;
 import fr.ulity.core.addons.superrtp.bukkit.events.InventoryEventRTP;
 import fr.ulity.core.addons.superrtp.bukkit.events.InvincibleRTP;
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.Config;
-import fr.ulity.core.api.bukkit.InitializerBukkit;
-import fr.ulity.core.api.bukkit.MetricsBukkit;
+import fr.ulity.core_v3.Core;
+import fr.ulity.core_v3.modules.loaders.BukkitLoader;
+import fr.ulity.core_v3.modules.storage.ServerConfig;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Arrays;
+
 import java.util.HashMap;
 
 import static org.bukkit.Bukkit.getPluginManager;
 
-public final class MainBukkitRTP extends JavaPlugin {
+public final class MainBukkitRTP extends BukkitLoader {
     public static MainBukkitRTP plugin;
-    public static Config config;
+    public static ServerConfig config;
     public static HashMap<String, String> items = new HashMap<>();
 
     public static HashMap<String, HashMap<String, Object>> invincible = new HashMap<>();
@@ -49,25 +47,16 @@ public final class MainBukkitRTP extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        Core.initialize(this);
 
-        InitializerBukkit init = new InitializerBukkit(this);
-        init.requireVersion("2.5");
-        init.checkUpdates(80372);
-        init.reloadLang();
+        config = new ServerConfig("config");
+        ConfigCopy.setDefault();
 
-        MetricsBukkit metricsBukkit = new MetricsBukkit(this, 7891);
-        metricsBukkit.addCustomChart(new MetricsBukkit.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
+        new CommandRTP();
 
-        if (init.ok) {
-            config = new Config("config", "addons/superRTP");
-            ConfigCopy.setDefault();
+        getPluginManager().registerEvents(new InventoryEventRTP(), this);
+        getPluginManager().registerEvents(new InvincibleRTP(), this);
 
-
-            new CommandRTP(Api.getCommandMap(), this);
-
-            getPluginManager().registerEvents(new InventoryEventRTP(), this);
-            getPluginManager().registerEvents(new InvincibleRTP(), this);
-        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package fr.ulity.moderation.bukkit.events;
 
-import fr.ulity.moderation.bukkit.api.Freeze;
+import fr.ulity.moderation.api.sanctions.FreezeUser;
+import fr.ulity.moderation.api.sanctions.freeze.BukkitFreezeSystem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,51 +23,58 @@ public class FreezeEvent implements Listener {
 
     @EventHandler
     private static void onJoin (PlayerJoinEvent e) {
-        Freeze playerFreeze = new Freeze(e.getPlayer().getName());
-        if (playerFreeze.isFreeze() && isNotMod(e.getPlayer())) playerFreeze.recallFreeze();
-        else playerFreeze.recallUnFreeze();
+        FreezeUser playerFreeze = new FreezeUser(e.getPlayer().getName());
+        if (playerFreeze.isFrozen() && isNotMod(e.getPlayer()))
+            new BukkitFreezeSystem().recallFreeze(e.getPlayer().getName());
+        else
+            new BukkitFreezeSystem().recallUnFreeze(e.getPlayer().getName());
     }
 
     @EventHandler
     private static void onChat (AsyncPlayerChatEvent e) {
-        e.setCancelled(e.isCancelled() || (new Freeze(e.getPlayer().getName()).isFreeze() && isNotMod(e.getPlayer())));
+        e.setCancelled(e.isCancelled() || (new FreezeUser(e.getPlayer().getName()).isFrozen() && isNotMod(e.getPlayer())));
     }
 
     @EventHandler
     private static void onPvP (EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
-            if (new Freeze(e.getEntity().getName()).isFreeze() && isNotMod((Player) e.getEntity()))
+            if (new FreezeUser(e.getEntity().getName()).isFrozen() && isNotMod((Player) e.getEntity()))
                 e.setCancelled(true);
         }
         else if (e.getDamager() instanceof Player)
-            if (new Freeze(e.getDamager().getName()).isFreeze() && isNotMod((Player) e.getDamager()))
+            if (new FreezeUser(e.getDamager().getName()).isFrozen() && isNotMod((Player) e.getDamager()))
                 e.setCancelled(true);
     }
 
     @EventHandler
     private static void onPlace (BlockPlaceEvent e) {
-        e.setCancelled(e.isCancelled() || (new Freeze(e.getPlayer().getName()).isFreeze() && isNotMod(e.getPlayer())));
+        e.setCancelled(e.isCancelled() || (new FreezeUser(e.getPlayer().getName()).isFrozen() && isNotMod(e.getPlayer())));
     }
 
     @EventHandler
     private static void onBreak (BlockBreakEvent e) {
-        e.setCancelled(e.isCancelled() || (new Freeze(e.getPlayer().getName()).isFreeze() && isNotMod(e.getPlayer())));
+        e.setCancelled(e.isCancelled() || (new FreezeUser(e.getPlayer().getName()).isFrozen() && isNotMod(e.getPlayer())));
     }
 
      @EventHandler
     private static void onInteract (PlayerInteractEvent e) {
-        if (new Freeze(e.getPlayer().getName()).isFreeze() && isNotMod(e.getPlayer()))
+        if (new FreezeUser(e.getPlayer().getName()).isFrozen() && isNotMod(e.getPlayer()))
             e.setCancelled(true);
     }
 
     @EventHandler
     private static void onCommand (PlayerCommandPreprocessEvent e) {
-        e.setCancelled(e.isCancelled() || (new Freeze(e.getPlayer().getName()).isFreeze() && isNotMod(e.getPlayer())));
+        e.setCancelled(e.isCancelled() || (new FreezeUser(e.getPlayer().getName()).isFrozen() && isNotMod(e.getPlayer())));
     }
 
     @EventHandler
     private static void onDamage (EntityDamageEvent e) {
         if (e.getEntity() instanceof Player)
-            e.setCancelled(e.isCancelled() || (new Freeze(e.getEntity().getName()).isFreeze() && isNotMod((Player) e.getEntity())));
+            e.setCancelled(e.isCancelled() || (new FreezeUser(e.getEntity().getName()).isFrozen() && isNotMod((Player) e.getEntity())));
     }
+
+
+
+
+
 }

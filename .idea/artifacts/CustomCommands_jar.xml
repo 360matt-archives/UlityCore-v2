@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="CustomCommands:jar">
-    <output-path>I:/serveurs/Test/plugins</output-path>
-    <root id="archive" name="CustomCommands.jar">
-      <element id="module-output" name="CustomCommands" />
-    </root>
-  </artifact>
-</component>

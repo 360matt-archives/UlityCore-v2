@@ -3,7 +3,7 @@ version: 1.2
 main: fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils
 api-version: 1.15
 prefix: PackUtils
-depend: [UlityCore, Vault]
+depend: [Vault]
 authors: [360matt]
 description: Copier Essentials ? noooooon ... on le refait ! 
 website: https://discord.gg/jBFE4Bu

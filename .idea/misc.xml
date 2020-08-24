@@ -14,14 +14,12 @@
         <option value="$PROJECT_DIR$/Moderation/pom.xml" />
         <option value="$PROJECT_DIR$/Moderation-2/pom.xml" />
         <option value="$PROJECT_DIR$/Mooooo/pom.xml" />
-        <option value="$PROJECT_DIR$/UlityCore/pom.xml" />
         <option value="$PROJECT_DIR$/SuperRTP/pom.xml" />
         <option value="$PROJECT_DIR$/PackUtils/pom.xml" />
         <option value="$PROJECT_DIR$/SurvieCustom/pom.xml" />
-        <option value="$PROJECT_DIR$/DeluxeGUI/pom.xml" />
-        <option value="$PROJECT_DIR$/DeluxeKit/pom.xml" />
-        <option value="$PROJECT_DIR$/Tesssty/pom.xml" />
         <option value="$PROJECT_DIR$/ListeniaAPI/pom.xml" />
+        <option value="$PROJECT_DIR$/../UlityCore_v3/pom.xml" />
+        <option value="$PROJECT_DIR$/Test_v3/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

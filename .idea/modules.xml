@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CustomCommands/CustomCommands.iml" filepath="$PROJECT_DIR$/CustomCommands/CustomCommands.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DeluxeGUI/DeluxeGUI.iml" filepath="$PROJECT_DIR$/DeluxeGUI/DeluxeGUI.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DeluxeKit/DeluxeKit.iml" filepath="$PROJECT_DIR$/DeluxeKit/DeluxeKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/ListeniaAPI/ListeniaAPI.iml" filepath="$PROJECT_DIR$/ListeniaAPI/ListeniaAPI.iml" />
       <module fileurl="file://$PROJECT_DIR$/Moderation/Moderation.iml" filepath="$PROJECT_DIR$/Moderation/Moderation.iml" />
       <module fileurl="file://$PROJECT_DIR$/PackUtils/PackUtils.iml" filepath="$PROJECT_DIR$/PackUtils/PackUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/SuperRTP/SuperRTP.iml" filepath="$PROJECT_DIR$/SuperRTP/SuperRTP.iml" />
       <module fileurl="file://$PROJECT_DIR$/SurvieCustom/SurvieCustom.iml" filepath="$PROJECT_DIR$/SurvieCustom/SurvieCustom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Tesssty/Tesssty.iml" filepath="$PROJECT_DIR$/Tesssty/Tesssty.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UlityCore/UlityCore.iml" filepath="$PROJECT_DIR$/UlityCore/UlityCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test_v3/Test_v3.iml" filepath="$PROJECT_DIR$/Test_v3/Test_v3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../UlityCore_v3/UlityCore_v3.iml" filepath="$PROJECT_DIR$/../UlityCore_v3/UlityCore_v3.iml" />
     </modules>
   </component>
 </project>

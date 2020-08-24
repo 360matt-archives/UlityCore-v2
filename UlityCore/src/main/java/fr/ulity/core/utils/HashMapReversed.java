@@ -14,6 +14,12 @@ public class HashMapReversed<K,V> extends HashMap<K, V> {
         return super.put(key, value);
     }
 
+    public V remove(Object key) {
+        V v = super.remove(key);
+        reverseMap.remove(v, key);
+        return v;
+    }
+
     public K getKey(V value){
         return reverseMap.get(value);
     }

@@ -68,14 +68,14 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <artifactId>spigot-fr.ulity.moderation.api</artifactId>
             <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.ulity</groupId>
-            <artifactId>core</artifactId>
-            <version>2.5</version>
+            <artifactId>core-v3</artifactId>
+            <version>3.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

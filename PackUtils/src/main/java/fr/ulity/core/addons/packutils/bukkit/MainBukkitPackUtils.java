@@ -8,11 +8,10 @@ import fr.ulity.core.addons.packutils.bukkit.commands.time.DayCommand;
 import fr.ulity.core.addons.packutils.bukkit.commands.time.NightCommand;
 import fr.ulity.core.addons.packutils.bukkit.commands.weather.*;
 import fr.ulity.core.addons.packutils.bukkit.methods.EconomyMethods;
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.Config;
-import fr.ulity.core.api.bukkit.InitializerBukkit;
-import fr.ulity.core.api.bukkit.MetricsBukkit;
 
+
+import fr.ulity.core_v3.Core;
+import fr.ulity.core_v3.modules.storage.ServerConfig;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
@@ -22,62 +21,55 @@ import java.util.Arrays;
 
 public final class MainBukkitPackUtils extends JavaPlugin {
     public static MainBukkitPackUtils plugin;
-    public static Config config;
+    public static ServerConfig config;
 
     public static CommandEnabler enabler;
 
     @Override
     public void onEnable() {
         plugin = this;
+        Core.initialize(this);
 
         Plugin vault = getServer().getPluginManager().getPlugin("Vault");
         getServer().getServicesManager().register(Economy.class, new EconomyMethods(), vault, ServicePriority.Highest);
 
-        InitializerBukkit init = new InitializerBukkit(this);
-        init.requireVersion("2.5");
-        init.checkUpdates(81641);
-        init.reloadLang();
 
-        if (init.ok) {
-            MetricsBukkit metricsBukkit = new MetricsBukkit(this, 8230);
-            metricsBukkit.addCustomChart(new MetricsBukkit.SimplePie("others_plugins", () -> Arrays.toString(getServer().getPluginManager().getPlugins())));
+        config = new ServerConfig("config");
+        DefaultConfig.applique();
 
-            config = new Config("config", "addons/PackUtils");
-            DefaultConfig.applique();
+        enabler = new CommandEnabler();
 
-            enabler = new CommandEnabler();
+            new GamemodeCommand();
+            new GmcCommand();
+            new GmsCommand();
+            new GmaCommand();
+            new GmpCommand();
 
-            new GamemodeCommand(Api.getCommandMap(), this);
-            new GmcCommand(Api.getCommandMap(), this);
-            new GmsCommand(Api.getCommandMap(), this);
-            new GmaCommand(Api.getCommandMap(), this);
-            new GmpCommand(Api.getCommandMap(), this);
+            new FlyCommand();
+            new TpCommand();
+            new TpaCommand();
+            new TpyesCommand();
+            new TpnoCommand();
+            new TopCommand();
+            new BackCommand();
+            new SetspawnCommand();
+            new SpawnCommand();
+            new SethomeCommand();
+            new HomeCommand();
+            new DelhomeCommand();
 
-            new FlyCommand(Api.getCommandMap(), this);
-            new TpCommand(Api.getCommandMap(), this);
-            new TpaCommand(Api.getCommandMap(), this);
-            new TpyesCommand(Api.getCommandMap(), this);
-            new TpnoCommand(Api.getCommandMap(), this);
-            new TopCommand(Api.getCommandMap(), this);
-            new BackCommand(Api.getCommandMap(), this);
-            new SetspawnCommand(Api.getCommandMap(), this);
-            new SpawnCommand(Api.getCommandMap(), this);
-            new SethomeCommand(Api.getCommandMap(), this);
-            new HomeCommand(Api.getCommandMap(), this);
-            new DelhomeCommand(Api.getCommandMap(), this);
+            new EcoCommand();
+            new BalanceCommand();
+            new PayCommand();
 
-            new EcoCommand(Api.getCommandMap(), this);
-            new BalanceCommand(Api.getCommandMap(), this);
-            new PayCommand(Api.getCommandMap(), this);
+            new SunCommand();
+            new RainCommand();
+            new ThunderCommand();
 
-            new SunCommand(Api.getCommandMap(), this);
-            new RainCommand(Api.getCommandMap(), this);
-            new ThunderCommand(Api.getCommandMap(), this);
+            new DayCommand();
+            new NightCommand();
 
-            new DayCommand(Api.getCommandMap(), this);
-            new NightCommand(Api.getCommandMap(), this);
 
-        }
 
 
     }

@@ -2,36 +2,36 @@ package fr.ulity.core.addons.packutils.bukkit.commands.gamemode;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.GamemodeMethods;
-import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.bukkit.BukkitAPI;
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
+import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class GamemodeCommand extends CommandManager.Assisted {
+public class GamemodeCommand extends CommandBukkit {
 
-    public GamemodeCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "gamemode");
-        addPermission("ulity.packutils.gamemode");
-        addAliases("gm");
+    public GamemodeCommand() {
+        super("gamemode");
+        setPermission("ulity.packutils.gamemode");
+        setAliases(Arrays.asList("gm"));
 
         addListTabbComplete(0, null, null, Arrays.asList(
-                LangBukkit.get("packutils.gamemode.type.creative"),
-                LangBukkit.get("packutils.gamemode.type.survival"),
-                LangBukkit.get("packutils.gamemode.type.adventure"),
-                LangBukkit.get("packutils.gamemode.type.spectator")).toArray(new String[0]));
+                Lang.get("packutils.gamemode.type.creative"),
+                Lang.get("packutils.gamemode.type.survival"),
+                Lang.get("packutils.gamemode.type.adventure"),
+                Lang.get("packutils.gamemode.type.spectator")).toArray(new String[0]));
 
-        if (MainBukkitPackUtils.enabler.canEnable(getName()))
-            registerCommand(commandMap);
+        if (!MainBukkitPackUtils.enabler.canEnable(getName()))
+            unregister(BukkitAPI.commandMap);
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (arg.inRange(1, 2)) {
             Player target = null;
 
@@ -43,13 +43,13 @@ public class GamemodeCommand extends CommandManager.Assisted {
                 target = (Player) sender;
 
             if (status.equals(Status.SUCCESS)) {
-                if (arg.compare(args[0], "0", LangBukkit.get("packutils.gamemode.type.survival")))
+                if (arg.compare(args[0], "0", Lang.get("packutils.gamemode.type.survival")))
                     GamemodeMethods.define(target, GameMode.SURVIVAL, sender);
-                else if (arg.compare(args[0], "1", LangBukkit.get("packutils.gamemode.type.creative")))
+                else if (arg.compare(args[0], "1", Lang.get("packutils.gamemode.type.creative")))
                     GamemodeMethods.define(target, GameMode.CREATIVE, sender);
-                else if (arg.compare(args[0], "2", LangBukkit.get("packutils.gamemode.type.adventure")))
+                else if (arg.compare(args[0], "2", Lang.get("packutils.gamemode.type.adventure")))
                     GamemodeMethods.define(target, GameMode.ADVENTURE, sender);
-                else if (arg.compare(args[0], "3", LangBukkit.get("packutils.gamemode.type.spectator")))
+                else if (arg.compare(args[0], "3", Lang.get("packutils.gamemode.type.spectator")))
                     GamemodeMethods.define(target, GameMode.SPECTATOR, sender);
                 else
                     setStatus(Status.SYNTAX);

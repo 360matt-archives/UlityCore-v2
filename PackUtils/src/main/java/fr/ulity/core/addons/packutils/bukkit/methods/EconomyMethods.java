@@ -1,7 +1,7 @@
 package fr.ulity.core.addons.packutils.bukkit.methods;
 
 import fr.ulity.core.addons.packutils.bukkit.StoredEconomy;
-import fr.ulity.core.api.Config;
+import fr.ulity.core_v3.modules.storage.ServerConfig;
 import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class EconomyMethods extends AbstractEconomy {
-    public static Config moneyConfig = new Config("config", "addons/PackUtils/economy/");
+    public static ServerConfig config = new ServerConfig("config");
 
     @Override public boolean isEnabled() { return true; }
 
@@ -25,12 +25,12 @@ public class EconomyMethods extends AbstractEconomy {
 
     @Override
     public String currencyNamePlural() {
-        return moneyConfig.getOrSetDefault("name.plurial", "coins");
+        return config.getOrSetDefault("name.plurial", "coins");
     }
 
     @Override
     public String currencyNameSingular() {
-        return moneyConfig.getOrSetDefault("name.singular", "coin");
+        return config.getOrSetDefault("name.singular", "coin");
     }
 
     @Override

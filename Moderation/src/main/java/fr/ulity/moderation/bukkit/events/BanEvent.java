@@ -1,11 +1,15 @@
 package fr.ulity.moderation.bukkit.events;
 
-import fr.ulity.core.api.bukkit.LangBukkit;
-import fr.ulity.moderation.bukkit.api.Ban;
+
+import fr.ulity.core_v3.modules.language.Lang;
+import fr.ulity.core_v3.utils.Time;
+import fr.ulity.moderation.api.sanctions.BanUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+
+import java.util.Date;
 
 public class BanEvent implements Listener {
 
@@ -14,24 +18,33 @@ public class BanEvent implements Listener {
         Player p = e.getPlayer();
 
         if (!p.hasPermission("ulity.mod.ban")){
-            String messageBanned;
+            String messageBanned = null;
 
-            Ban playerBan = new Ban(p.getName());
+            BanUser playerBan = new BanUser(p.getName());
 
             String ip = e.getAddress().getAddress().toString()
                     .replaceAll("/", "")
                     .replaceAll("\\.", "_");
 
-            Ban playerBanIP = new Ban("ip_" + ip);
+            BanUser playerBanIP = new BanUser("ip_" + ip);
 
-            if (playerBan.isBan() || playerBanIP.isBan()){
-                messageBanned = LangBukkit.get("commands.ban.expressions.you_are_banned")
-                        .replaceAll("%staff%", playerBan.responsable)
-                        .replaceAll("%reason%", playerBan.reason)
-                        .replaceAll("%timeLeft%", playerBan.expire_text);
+            if (playerBan.isBanned()) {
+                messageBanned = Lang.prepare("commands.ban.expressions.you_are_banned")
+                        .variable("staff", playerBan.staff)
+                        .variable("reason", playerBan.reason)
+                        .variable("timeLeft", new Time((int) (playerBan.expire.getTime() - new Date().getTime())).text)
+                        .getOutput();
 
-                e.disallow(PlayerLoginEvent.Result.KICK_BANNED, messageBanned);
-            }
+            } else if (playerBanIP.isBanned()) {
+                messageBanned = Lang.prepare("commands.ban.expressions.you_are_banned")
+                        .variable("staff", playerBanIP.staff)
+                        .variable("reason", playerBanIP.reason)
+                        .variable("timeLeft", new Time((int) (playerBanIP.expire.getTime() - new Date().getTime())).text)
+                        .getOutput();
+            } else return;
+
+            e.disallow(PlayerLoginEvent.Result.KICK_BANNED, messageBanned);
+
        }
     }
 }

@@ -7,14 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="PackUtils" />
-        <module name="DeluxeGUI" />
         <module name="ListeniaAPI" />
         <module name="Moderation" />
-        <module name="UlityCore" />
-        <module name="Tesssty" />
+        <module name="Test_v3" />
         <module name="SurvieCustom" />
-        <module name="DeluxeKit" />
         <module name="SuperRTP" />
+        <module name="UlityCore_v3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,7 +24,9 @@
       <module name="SuperRTP" target="1.8" />
       <module name="SurvieCustom" target="1.8" />
       <module name="Tesssty" target="1.8" />
+      <module name="Test_v3" target="1.8" />
       <module name="UlityCore" target="1.8" />
+      <module name="UlityCore_v3" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

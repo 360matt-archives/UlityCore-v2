@@ -3,7 +3,7 @@ package net.listenia.survie.surviecore.animations;
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.mrmicky.fastparticle.FastParticle;
 import fr.mrmicky.fastparticle.ParticleType;
-import fr.ulity.core.api.Api;
+import fr.ulity.core_v3.modules.storage.ServerData;
 import net.listenia.survie.surviecore.SurvieCore;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -14,17 +14,21 @@ public class Death {
     private static int count = 0;
     private static int task;
 
+    private static ServerData serverData = new ServerData("spawn", "PackUtils");
+
     public static Location getSpawnLocation () {
-        if (Api.data.contains("spawn")) {
-            FlatFileSection locData = Api.data.getSection("spawn");
+        if (serverData.contains("spawn")) {
+            FlatFileSection locData = serverData.getSection("spawn");
 
             World world = Bukkit.getWorld(locData.getString("world"));
 
             double x = locData.getDouble("x");
             double y = locData.getDouble("y");
             double z = locData.getDouble("z");
+            float pitch = locData.getFloat("pitch");
+            float yaw = locData.getFloat("yaw");
 
-            return new Location(world, x, y, z);
+            return (world != null) ? new Location(world, x, y, z, yaw, pitch) : null;
         }
         return null;
     }

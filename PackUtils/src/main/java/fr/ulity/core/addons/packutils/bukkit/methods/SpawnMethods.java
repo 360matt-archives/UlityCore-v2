@@ -1,35 +1,33 @@
 package fr.ulity.core.addons.packutils.bukkit.methods;
 
-import de.leonhard.storage.sections.FlatFileSection;
-import fr.ulity.core.api.Api;
+import fr.ulity.core_v3.modules.storage.ServerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class SpawnMethods {
+    private static final ServerConfig serverConfig = new ServerConfig("spawn");
+
     public static Location getSpawnLocation () {
-        if (Api.data.contains("spawn")) {
-            FlatFileSection locData = Api.data.getSection("spawn");
+        World world = Bukkit.getWorld(serverConfig.getString("world"));
 
-            World world = Bukkit.getWorld(locData.getString("world"));
+        double x = serverConfig.getDouble("x");
+        double y = serverConfig.getDouble("y");
+        double z = serverConfig.getDouble("z");
+        float pitch = serverConfig.getFloat("pitch");
+        float yaw = serverConfig.getFloat("yaw");
 
-            double x = locData.getDouble("x");
-            double y = locData.getDouble("y");
-            double z = locData.getDouble("z");
-
-            return (world != null) ? new Location(world, x, y, z) : null;
-        }
-        return null;
+        return (world != null) ? new Location(world, x, y, z, yaw, pitch) : null;
     }
 
     public static void setSpawnLocation (Player player) {
-        FlatFileSection locData = Api.data.getSection("spawn");
-
         Location playerLoc = player.getLocation();
-        locData.set("world", playerLoc.getWorld().getName());
-        locData.set("x", playerLoc.getX());
-        locData.set("y", playerLoc.getY());
-        locData.set("z", playerLoc.getZ());
+        serverConfig.set("world", playerLoc.getWorld().getName());
+        serverConfig.set("x", playerLoc.getX());
+        serverConfig.set("y", playerLoc.getY());
+        serverConfig.set("z", playerLoc.getZ());
+        serverConfig.set("pitch", playerLoc.getPitch());
+        serverConfig.set("yaw", playerLoc.getYaw());
     }
 }

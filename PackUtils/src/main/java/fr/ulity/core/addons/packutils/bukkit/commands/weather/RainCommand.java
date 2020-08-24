@@ -1,22 +1,21 @@
 package fr.ulity.core.addons.packutils.bukkit.commands.weather;
 
-import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.bukkit.LangBukkit;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class RainCommand extends CommandManager.Assisted {
-    public RainCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "rain");
-        addPermission("ulity.SuperRTP.commands.rain");
-        registerCommand(commandMap);
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
+import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
+import fr.ulity.core_v3.modules.language.Lang;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
+
+public class RainCommand extends CommandBukkit {
+    public RainCommand() {
+        super("rain");
+        setPermission("ulity.SuperRTP.commands.rain");
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
 
         if (arg.inRange(0, 1)) {
             World world;
@@ -25,13 +24,13 @@ public class RainCommand extends CommandManager.Assisted {
                 world.setThundering(false);
                 world.setStorm(true);
 
-                LangBukkit.prepare("commands.rain.expressions.changed_current").sendPlayer(sender);
+                Lang.prepare("commands.rain.expressions.changed_current").sendPlayer(sender);
             } else if (arg.requireWorld(0)) {
                 world = arg.getWorld(0);
                 world.setThundering(false);
                 world.setStorm(true);
 
-                LangBukkit.prepare("commands.rain.expressions.changed_world")
+                Lang.prepare("commands.rain.expressions.changed_world")
                         .variable("world", world.getName())
                         .sendPlayer(sender);
             } else

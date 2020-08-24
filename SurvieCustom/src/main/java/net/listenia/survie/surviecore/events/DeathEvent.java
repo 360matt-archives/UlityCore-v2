@@ -1,6 +1,6 @@
 package net.listenia.survie.surviecore.events;
 
-import fr.ulity.core.api.Api;
+import fr.ulity.core_v3.Core;
 import net.listenia.survie.surviecore.animations.Death;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +27,7 @@ public class DeathEvent implements Listener {
                 e.setCancelled(true);
 
                 e.getEntity().sendMessage("§eTu es mort ! Pas de chance ...\n§eSi tu souhaite retrouver les coordonnées, tapes §6/retourner");
-                Api.temp.set("player." + player.getName() + ".death_lastPosition", player.getLocation());
+                Core.temp.set("player." + player.getName() + ".death_lastPosition", player.getLocation());
 
                 lastKilled.put(player.getName(), new Date().getTime() + 10000);
 

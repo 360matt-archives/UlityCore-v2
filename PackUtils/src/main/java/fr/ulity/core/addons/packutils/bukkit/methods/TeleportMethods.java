@@ -1,6 +1,6 @@
 package fr.ulity.core.addons.packutils.bukkit.methods;
 
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,16 +16,16 @@ public class TeleportMethods {
         origin.teleport(target);
 
         if (executor.getName().equals(target.getName()) && !executor.getName().equals(target.getName()))
-            LangBukkit.prepare("packutils.teleport.teleported_by_you.player_to_you")
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_you")
                     .variable("player", origin.getName())
                     .sendPlayer(origin);
-        else if (!executor.getName().equals(target.getName()))
-            LangBukkit.prepare("packutils.teleport.teleported_by_you.player_to_player")
+        else if (!executor.getName().equals(target.getName()) && !executor.getName().equals(origin.getName()))
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_player")
                     .variable("player1", origin.getName())
                     .variable("player2", target.getName())
                     .sendPlayer(executor);
 
-        LangBukkit.prepare("packutils.teleport.notification.teleported_to_player")
+        Lang.prepare("packutils.teleport.notification.teleported_to_player")
                 .variable("player", target.getName())
                 .sendPlayer(origin);
 
@@ -38,13 +38,13 @@ public class TeleportMethods {
         String locText = locTarget.getBlockX() + " " + locTarget.getBlockY() + " " + locTarget.getBlockZ();
 
         if (!executor.getName().equals(origin.getName())) {
-            LangBukkit.prepare("packutils.teleport.teleported_by_you.player_to_coords")
+            Lang.prepare("packutils.teleport.teleported_by_you.player_to_coords")
                     .variable("player", origin.getName())
                     .variable("coords", locText)
                     .sendPlayer(executor);
         }
 
-        LangBukkit.prepare("packutils.teleport.notification.teleported_to_coords")
+        Lang.prepare("packutils.teleport.notification.teleported_to_coords")
                 .variable("coords", locText)
                 .sendPlayer(origin);
 

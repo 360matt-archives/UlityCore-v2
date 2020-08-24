@@ -2,7 +2,7 @@ package fr.ulity.core.addons.superrtp.bukkit.events;
 
 import fr.ulity.core.addons.superrtp.bukkit.MainBukkitRTP;
 import fr.ulity.core.addons.superrtp.bukkit.api.SuperRtpApi;
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -41,7 +41,7 @@ public class InvincibleRTP implements Listener {
 
                     SuperRtpApi.playerRTP(player, player.getWorld(), (String) MainBukkitRTP.invincible.get(player.getName()).get("x"));
 
-                    BossBar bossBar = Bukkit.createBossBar(LangBukkit.get("super_RTP.fails.unsafe_location"), BarColor.RED, BarStyle.SEGMENTED_10);
+                    BossBar bossBar = Bukkit.createBossBar(Lang.get("super_RTP.fails.unsafe_location"), BarColor.RED, BarStyle.SEGMENTED_10);
                     bossBar.setProgress(1D);
                     bossBar.addPlayer(player);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitRTP.plugin, new Runnable() {

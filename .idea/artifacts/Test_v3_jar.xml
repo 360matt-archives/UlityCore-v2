@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Test_v3:jar">
+    <output-path>I:/serveurs/Test/plugins</output-path>
+    <root id="archive" name="Test_v3.jar">
+      <element id="module-output" name="Test_v3" />
+      <element id="module-output" name="UlityCore_v3" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/JavaFactoryDev/LightningStorage/3.1.8/LightningStorage-3.1.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/esotericsoftware/yamlbeans/yamlbeans/1.13/yamlbeans-1.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20190722/json-20190722.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

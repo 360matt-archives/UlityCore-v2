@@ -2,57 +2,57 @@ package fr.ulity.core.addons.packutils.bukkit.commands.teleports;
 
 import fr.ulity.core.addons.packutils.bukkit.MainBukkitPackUtils;
 import fr.ulity.core.addons.packutils.bukkit.methods.TeleportMethods;
-import fr.ulity.core.api.Api;
-import fr.ulity.core.api.bukkit.CommandManager;
-import fr.ulity.core.api.bukkit.CooldownBukkit;
-import fr.ulity.core.api.bukkit.LangBukkit;
+import fr.ulity.core_v3.Core;
+import fr.ulity.core_v3.bukkit.BukkitAPI;
+import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
+import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
+import fr.ulity.core_v3.modules.datas.UserCooldown;
+import fr.ulity.core_v3.modules.language.Lang;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 
-public class TpyesCommand extends CommandManager.Assisted {
+public class TpyesCommand extends CommandBukkit {
 
-    public TpyesCommand(CommandMap commandMap, JavaPlugin plugin) {
-        super(plugin, "tpyes");
-        addPermission("ulity.packutils.tpyes");
-        if (MainBukkitPackUtils.enabler.canEnable(getName()))
-            registerCommand(commandMap);
+    public TpyesCommand() {
+        super("tpyes");
+        setPermission("ulity.packutils.tpyes");
+        if (!MainBukkitPackUtils.enabler.canEnable(getName()))
+            unregister(BukkitAPI.commandMap);
     }
 
     @Override
-    public void exec(CommandSender sender, Command command, String label, String[] args) {
+    public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (requirePlayer()) {
             String path_last = "tpa." + sender.getName() + ".last";
 
-            if (Api.temp.contains(path_last)) {
+            if (Core.temp.contains(path_last)) {
                 if (arg.inRange(0, 1)) {
-                    Player origin = Bukkit.getPlayer(Api.temp.getString(path_last));
+                    Player origin = Bukkit.getPlayer(Core.temp.getString(path_last));
                     if (arg.is(0) && arg.requirePlayerNoSelf(0))
                         origin = arg.getPlayer(0);
 
                     if (status.equals(Status.SUCCESS)) {
-                        if (Api.data.getLong("tpa." + origin.getName() + ".requests." + sender.getName()) < new Date().getTime()) {
-                            LangBukkit.prepare("commands.tpyes.expressions.no_requested")
+                        if (Core.temp.getLong("tpa." + origin.getName() + ".requests." + sender.getName()) < new Date().getTime()) {
+                            Lang.prepare("commands.tpyes.expressions.no_requested")
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
                         } else {
-                            LangBukkit.prepare("commands.tpyes.expressions.request_accepted")
+                            Lang.prepare("commands.tpyes.expressions.request_accepted")
                                     .variable("player", sender.getName())
                                     .sendPlayer(origin);
 
-                            LangBukkit.prepare("commands.tpyes.expressions.accept_result")
+                            Lang.prepare("commands.tpyes.expressions.accept_result")
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
 
-                            CooldownBukkit cooldownObj = new CooldownBukkit("tpa", origin.getName() + "_" + sender.getName());
-                            cooldownObj.clear();
-                            Api.data.remove("tpa." + origin.getName() + ".requests." + sender.getName());
-                            Api.data.remove("tpa." + sender.getName() + ".last");
+                            UserCooldown cooldownObj = new UserCooldown( origin.getName() + "_" + sender.getName(), "tpa");
+                            cooldownObj.remove();
+                            Core.temp.remove("tpa." + origin.getName() + ".requests." + sender.getName());
+                            Core.temp.remove("tpa." + sender.getName() + ".last");
 
                             Player player = (Player) sender;
                             Player finalOrigin = origin;
@@ -60,11 +60,11 @@ public class TpyesCommand extends CommandManager.Assisted {
                                 @Override
                                 public void run() {
                                     if (!finalOrigin.isOnline() && player.isOnline()) {
-                                        LangBukkit.prepare("commands.tpyes.expressions.disconnected")
+                                        Lang.prepare("commands.tpyes.expressions.disconnected")
                                                 .variable("player", finalOrigin.getName())
                                                 .sendPlayer(sender);
                                     } else if (!player.isOnline() && finalOrigin.isOnline()) {
-                                        LangBukkit.prepare("commands.tpyes.expressions.disconnected")
+                                        Lang.prepare("commands.tpyes.expressions.disconnected")
                                                 .variable("player", sender.getName())
                                                 .sendPlayer(finalOrigin);
                                     } else {
@@ -78,7 +78,7 @@ public class TpyesCommand extends CommandManager.Assisted {
                 } else
                     setStatus(Status.SYNTAX);
             } else
-                sender.sendMessage(LangBukkit.get(sender, "commands.tpyes.expressions.no_requested"));
+                sender.sendMessage(Lang.get(sender, "commands.tpyes.expressions.no_requested"));
         }
     }
 }

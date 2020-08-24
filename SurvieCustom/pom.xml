@@ -89,8 +89,8 @@
         </dependency>
         <dependency>
             <groupId>fr.ulity</groupId>
-            <artifactId>core</artifactId>
-            <version>2.5</version>
+            <artifactId>core-v3</artifactId>
+            <version>3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -103,6 +103,12 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.listenia</groupId>
+            <artifactId>fr.ulity.moderation.api</artifactId>
+            <version>1.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -14,18 +14,12 @@ public class BukkitFreezeSystem {
 
     public static void regListener () {
         if (SocketClient.isEnabled()) {
-            new SocketClient.SocketListener("freeze") {
-                @Override
-                public void receive(JSONObject json) {
-                    new BukkitFreezeSystem().recallFreeze(json.getString("player"));
-                }
-            };
-            new SocketClient.SocketListener("unfreeze") {
-                @Override
-                public void receive(JSONObject json) {
-                    new BukkitFreezeSystem().recallUnFreeze(json.getString("player"));
-                }
-            };
+            SocketClient.listen("freeze", (x) -> {
+                new BukkitFreezeSystem().recallFreeze(x.getString("player"));
+            });
+            SocketClient.listen("unfreeze", (x) -> {
+                new BukkitFreezeSystem().recallUnFreeze(x.getString("player"));
+            });
         }
     }
 

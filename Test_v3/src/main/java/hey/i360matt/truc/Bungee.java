@@ -7,6 +7,7 @@ public class Bungee extends BungeeLoader {
 
     @Override
     public void onEnable() {
+        Core.initialize(this);
 
 
     }

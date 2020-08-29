@@ -49,28 +49,25 @@ public class TpyesCommand extends CommandBukkit {
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
 
-                            UserCooldown cooldownObj = new UserCooldown( origin.getName() + "_" + sender.getName(), "tpa");
+                            UserCooldown cooldownObj = new UserCooldown( origin.getName(), "tpa" + "_" + sender.getName());
                             cooldownObj.remove();
                             Core.temp.remove("tpa." + origin.getName() + ".requests." + sender.getName());
                             Core.temp.remove("tpa." + sender.getName() + ".last");
 
                             Player player = (Player) sender;
                             Player finalOrigin = origin;
-                            Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!finalOrigin.isOnline() && player.isOnline()) {
-                                        Lang.prepare("commands.tpyes.expressions.disconnected")
-                                                .variable("player", finalOrigin.getName())
-                                                .sendPlayer(sender);
-                                    } else if (!player.isOnline() && finalOrigin.isOnline()) {
-                                        Lang.prepare("commands.tpyes.expressions.disconnected")
-                                                .variable("player", sender.getName())
-                                                .sendPlayer(finalOrigin);
-                                    } else {
-                                        TeleportMethods teleporting = new TeleportMethods(sender);
-                                        teleporting.tpPlayer(finalOrigin, player);
-                                    }
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(MainBukkitPackUtils.plugin, () -> {
+                                if (!finalOrigin.isOnline() && player.isOnline()) {
+                                    Lang.prepare("commands.tpyes.expressions.disconnected")
+                                            .variable("player", finalOrigin.getName())
+                                            .sendPlayer(sender);
+                                } else if (!player.isOnline() && finalOrigin.isOnline()) {
+                                    Lang.prepare("commands.tpyes.expressions.disconnected")
+                                            .variable("player", sender.getName())
+                                            .sendPlayer(finalOrigin);
+                                } else {
+                                    TeleportMethods teleporting = new TeleportMethods(sender);
+                                    teleporting.tpPlayer(finalOrigin, player);
                                 }
                             }, 20 * 5L);
                         }

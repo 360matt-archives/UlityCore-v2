@@ -23,7 +23,7 @@ public class StaffchatCmd extends CommandBukkit {
             Bukkit.broadcast(
                     Lang.prepare("commands.staffchat.output")
                             .variable("player", sender.getName())
-                            .variable("mesagge", new Text(args).setColored().outputString())
+                            .variable("message", new Text(args).setColored().outputString())
                             .getOutput(),
                     "ulity.mod"
             );

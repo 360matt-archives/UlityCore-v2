@@ -48,7 +48,7 @@ commands:
       request_sent: "&7Votre demande a bien été envoyé à &b%player%"
       request_body: |-
         &b%player% &7souhaite se téléporter vers vous
-        &7[ &a/tpyes &7%player% | &c/tpno &7player% ]
+        &7[ &a/tpyes &7%player% | &c/tpno &7%player% ]
   tpyes:
     usage: "&eAccepter une demande: &7/tpyes [Joueur]"
     description: "Permet d'accepter la demande de téléportation d'un joueur"

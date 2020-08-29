@@ -4,7 +4,8 @@ import fr.ulity.core_v3.modules.commandHandlers.CommandBukkit;
 import fr.ulity.core_v3.modules.commandHandlers.bukkit.Status;
 import fr.ulity.core_v3.modules.language.Lang;
 import fr.ulity.core_v3.utils.Text;
-import fr.ulity.moderation.api.sanctions.BanUser;
+
+import fr.ulity.moderation.api.sanctions.BanIP;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -33,14 +34,16 @@ public class BanipCmd extends CommandBukkit {
                             ? new Text(args).setColored().setBeginging(1).outputString()
                             : Lang.get("commands.banip.expressions.unknown_reason");
 
-                    String ip = player.getAddress().getAddress().toString().replaceAll("/", "").replaceAll("\\.", "_");
+                    String ip = player.getAddress().getAddress().getHostAddress()
+                            .replaceAll("/", "")
+                            .replaceAll("\\.", "_");
 
-                    BanUser playerBan = new BanUser("ip_" + ip);
-                    playerBan.when = new Date();
-                    playerBan.reason = reason;
-                    playerBan.expire = new Date();
-                    playerBan.staff = sender.getName();
-                    playerBan.ban();
+                    BanIP banIP = new BanIP(ip);
+                    banIP.when = new Date();
+                    banIP.reason = reason;
+                    banIP.expire = new Date();
+                    banIP.staff = sender.getName();
+                    banIP.ban();
 
                     if (Lang.getBoolean("commands.banip.broadcast.enabled")) {
                         String keyName = (args.length >= 2) ? "message" : "message_without_reason";

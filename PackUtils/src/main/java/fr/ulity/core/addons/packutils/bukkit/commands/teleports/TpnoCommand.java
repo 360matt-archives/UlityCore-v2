@@ -52,7 +52,7 @@ public class TpnoCommand extends CommandBukkit {
                                     .variable("player", origin.getName())
                                     .sendPlayer(sender);
 
-                            UserCooldown cooldownObj = new UserCooldown(origin.getName() + "_" + sender.getName(), "tpa");
+                            UserCooldown cooldownObj = new UserCooldown(origin.getName(), "tpa" + "_" + sender.getName());
                             cooldownObj.remove();
                             Core.temp.remove("tpa." + origin.getName() + ".requests." + sender.getName());
                             Core.temp.remove("tpa." + sender.getName() + ".last");

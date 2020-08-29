@@ -3,13 +3,14 @@ package fr.ulity.moderation.api.sanctions;
 import de.leonhard.storage.sections.FlatFileSection;
 import fr.ulity.core_v3.messaging.SocketClient;
 import fr.ulity.core_v3.utils.Time;
+import fr.ulity.moderation.api.IPSanctions;
 import fr.ulity.moderation.api.UserSanctions;
 
 import java.util.Date;
 import java.util.HashMap;
 
-public class BanUser {
-    private UserSanctions userSanctions;
+public class BanIP {
+    private IPSanctions ipSanctions;
     private FlatFileSection active;
 
     public String staff;
@@ -18,18 +19,18 @@ public class BanUser {
     public Date expire;
     public Time left;
 
-    String playername;
+    String ip;
 
-    public BanUser (String playername) {
-        this.playername = playername;
-        userSanctions = new UserSanctions(playername);
-        active = userSanctions.getSection("sanctions.ban.active");
+    public BanIP (String ip) {
+        this.ip = ip;
+        ipSanctions = new IPSanctions(ip);
+        active = ipSanctions.getSection("sanctions.ban.active");
         refresh();
     }
 
     public boolean isBanned () {
         refresh();
-        if (userSanctions.contains("sanctions.ban.active"))
+        if (ipSanctions.contains("sanctions.ban.active"))
             return getLeft().seconds != 0;
         return false;
     }
@@ -55,8 +56,8 @@ public class BanUser {
         if (isBanned()) {
             refresh();
 
-            int next = userSanctions.singleLayerKeySet("sanctions.ban.archived").size()+1;
-            FlatFileSection archived = userSanctions.getSection("sanctions.ban.archived." + next);
+            int next = ipSanctions.singleLayerKeySet("sanctions.ban.archived").size()+1;
+            FlatFileSection archived = ipSanctions.getSection("sanctions.ban.archived." + next);
             archived.set("staff", this.staff);
             archived.set("reason", this.reason);
             archived.set("when", this.when.getTime());
@@ -64,12 +65,12 @@ public class BanUser {
             archived.set("left", this.left.seconds);
             archived.set("unban_reason", reason);
 
-            userSanctions.remove("sanctions.ban.active");
+            ipSanctions.remove("sanctions.ban.active");
 
 
             if (SocketClient.isEnabled()) {
                 HashMap<String, Object> data = new HashMap<>();
-                data.put("player", this.playername);
+                data.put("ip", this.ipSanctions);
                 data.put("staff", this.staff);
                 data.put("reason", this.reason);
                 data.put("when", this.when);
@@ -77,7 +78,7 @@ public class BanUser {
                 data.put("left", this.left);
                 data.put("unban_reason", reason);
 
-                SocketClient.send("all", "unban", data);
+                SocketClient.send("all", "unbanip", data);
             }
 
         }
@@ -96,13 +97,13 @@ public class BanUser {
 
         if (SocketClient.isEnabled()) {
             HashMap<String, Object> data = new HashMap<>();
-            data.put("player", playername);
+            data.put("ip", ipSanctions);
             data.put("staff", staff);
             data.put("reason", reason);
             data.put("when", when);
             data.put("expire", expire);
 
-            SocketClient.send("all", "ban", data);
+            SocketClient.send("all", "banip", data);
         }
     }
 

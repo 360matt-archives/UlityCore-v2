@@ -24,8 +24,6 @@ public class DeathEvent implements Listener {
 
 
             if (player.getHealth() - e.getDamage() <= 0) {
-                e.setCancelled(true);
-
                 e.getEntity().sendMessage("§eTu es mort ! Pas de chance ...\n§eSi tu souhaite retrouver les coordonnées, tapes §6/retourner");
                 Core.temp.set("player." + player.getName() + ".death_lastPosition", player.getLocation());
 

@@ -27,7 +27,6 @@ public class TpaCommand extends CommandBukkit {
     public void exec(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
         if (requirePlayer()) {
             if (arg.requirePlayerNoSelf(0)) {
-                Player player = (Player) sender;
                 Player target = arg.getPlayer(0);
 
                 UserData userData = new UserData(sender.getName());
@@ -41,9 +40,9 @@ public class TpaCommand extends CommandBukkit {
                 }
 
                 if (status.equals(Status.SUCCESS)) {
-                    UserCooldown cooldownObj = new UserCooldown(sender.getName() + "_" + target.getName(), "tpa");
+                    UserCooldown cooldownObj = new UserCooldown(sender.getName(), "tpa" + "_" + target.getName());
 
-                    if (!cooldownObj.isWaiting()) {
+                    if (cooldownObj.isWaiting()) {
                         Lang.prepare("commands.tpa.expressions.cooldown")
                                 .variable("left", cooldownObj.getTimeLeft().text)
                                 .sendPlayer(sender);

@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class InventoryEventRTP implements Listener {
 
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGHEST)
     private static void onInventory (InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 

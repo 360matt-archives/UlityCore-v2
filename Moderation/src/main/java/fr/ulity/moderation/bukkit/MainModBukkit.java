@@ -44,6 +44,7 @@ public final class MainModBukkit extends BukkitLoader {
         new TempmuteCmd();
         new UnbanCmd();
         new UnfreezeCmd();
+        new UnbanIpCmd();
         new UnmuteCmd();
         new VanishCmd();
 

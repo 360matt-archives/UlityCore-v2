@@ -11,7 +11,7 @@ loadbefore: [Essentials]
 
 
 permissions:
-  ulity.mod:
+  ulity.moderation.mods:
     default: op
     children:
       ulity.mod.ban: true

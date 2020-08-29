@@ -3,6 +3,7 @@ package fr.ulity.moderation.bukkit.events;
 
 import fr.ulity.core_v3.modules.language.Lang;
 import fr.ulity.core_v3.utils.Time;
+import fr.ulity.moderation.api.sanctions.BanIP;
 import fr.ulity.moderation.api.sanctions.BanUser;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,26 +21,25 @@ public class BanEvent implements Listener {
         if (!p.hasPermission("ulity.mod.ban")){
             String messageBanned = null;
 
-            BanUser playerBan = new BanUser(p.getName());
-
-            String ip = e.getAddress().getAddress().toString()
+            String ip = e.getAddress().getHostAddress()
                     .replaceAll("/", "")
                     .replaceAll("\\.", "_");
 
-            BanUser playerBanIP = new BanUser("ip_" + ip);
+            BanUser banUser = new BanUser(p.getName());
+            BanIP banIP = new BanIP(ip);
 
-            if (playerBan.isBanned()) {
+            if (banUser.isBanned()) {
                 messageBanned = Lang.prepare("commands.ban.expressions.you_are_banned")
-                        .variable("staff", playerBan.staff)
-                        .variable("reason", playerBan.reason)
-                        .variable("timeLeft", new Time((int) (playerBan.expire.getTime() - new Date().getTime())).text)
+                        .variable("staff", banUser.staff)
+                        .variable("reason", banUser.reason)
+                        .variable("timeLeft", new Time((int) (banUser.expire.getTime() - new Date().getTime())).text)
                         .getOutput();
 
-            } else if (playerBanIP.isBanned()) {
+            } else if (banIP.isBanned()) {
                 messageBanned = Lang.prepare("commands.ban.expressions.you_are_banned")
-                        .variable("staff", playerBanIP.staff)
-                        .variable("reason", playerBanIP.reason)
-                        .variable("timeLeft", new Time((int) (playerBanIP.expire.getTime() - new Date().getTime())).text)
+                        .variable("staff", banIP.staff)
+                        .variable("reason", banIP.reason)
+                        .variable("timeLeft", new Time((int) (banIP.expire.getTime() - new Date().getTime())).text)
                         .getOutput();
             } else return;
 

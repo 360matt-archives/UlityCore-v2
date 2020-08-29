@@ -14,7 +14,6 @@ public class FreezeUser {
     public String staff;
     public String reason;
     public Date when;
-    public Date expire;
 
     String playername;
 
@@ -54,7 +53,6 @@ public class FreezeUser {
                 data.put("staff", this.staff);
                 data.put("reason", this.reason);
                 data.put("when", this.when);
-                data.put("expire", this.expire);
 
                 SocketClient.send("all", "unban", data);
             }
@@ -66,7 +64,6 @@ public class FreezeUser {
         active.set("staff", this.staff);
         active.set("reason", this.reason);
         active.set("when", new Date().getTime());
-        active.set("expire", this.expire.getTime());
 
         if (SocketClient.isEnabled()) {
             HashMap<String, Object> data = new HashMap<>();
@@ -74,7 +71,6 @@ public class FreezeUser {
             data.put("staff", this.staff);
             data.put("reason", this.reason);
             data.put("when", this.when);
-            data.put("expire", this.expire);
 
             SocketClient.send("all", "unban", data);
         }

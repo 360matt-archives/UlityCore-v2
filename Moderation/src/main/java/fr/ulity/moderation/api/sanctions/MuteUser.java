@@ -28,8 +28,9 @@ public class MuteUser {
     }
 
     public boolean isMuted () {
+        refresh();
         if (userSanctions.contains("sanctions.mute.active"))
-            return active.getLong("expire") != 0;
+            return getLeft().seconds != 0;
         return false;
     }
 
